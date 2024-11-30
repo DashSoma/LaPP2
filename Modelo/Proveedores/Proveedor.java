@@ -1,10 +1,11 @@
 package Modelo.Proveedores;
 
 /**
- * 
+ *
  * @author Crisp
  */
 public class Proveedor {
+
     private int id;
     private String nombre;
     private String contacto;
@@ -26,18 +27,35 @@ public class Proveedor {
         return direccion;
     }
 
-    public void setContacto(String contacto) {
-        this.contacto = contacto;
+    public void setId(int id) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("El ID debe ser mayor a 0.");
+        }
+        this.id = id;
+    }
+
+    public void setNombre(String nombre) {
+        if (nombre == null || nombre.isEmpty()) {
+            throw new IllegalArgumentException("El nombre no puede ser nulo o vacío");
+        }
+        this.nombre = nombre;
     }
     
-    public void setId(int id) {
-    if (id <= 0) {
-        throw new IllegalArgumentException("El ID debe ser mayor a 0.");
+    public void setContacto(String contacto) {
+        if (contacto == null || contacto.isEmpty()) {
+            throw new IllegalArgumentException("El telefono no puede ser nulo o vacío");
+        }
+        this.contacto = contacto;
     }
-    this.id = id;
-}
-   
-    public Proveedor(int id, String nombre, String contacto, String direccion) {
+
+    public void setDireccion(String direccion) {
+        if (direccion == null || direccion.isEmpty()) {
+            throw new IllegalArgumentException("El correo no puede ser nulo o vacío");
+        }
+        this.direccion = direccion;
+    }
+
+    protected Proveedor(int id, String nombre, String contacto, String direccion) {
         this.id = id;
         this.nombre = nombre;
         this.contacto = contacto;
@@ -45,7 +63,11 @@ public class Proveedor {
     }
 
     public Proveedor(String nombre, String contacto, String direccion) {
+<<<<<<< Updated upstream
        this.id =0;
+=======
+        this.id =0;
+>>>>>>> Stashed changes
         this.nombre = nombre;
         this.contacto = contacto;
         this.direccion = direccion;
@@ -55,5 +77,11 @@ public class Proveedor {
         this.id = id;
     }
     
-    
+    public Proveedor() {
+        this.id = 0;
+        this.nombre = "";
+        this.contacto = "";
+        this.direccion = "";
+    }
+
 }
