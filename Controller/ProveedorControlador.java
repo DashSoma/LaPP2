@@ -14,7 +14,9 @@ import java.util.List;
  */
 public class ProveedorControlador {
 
-    private final ProveedorDAO proveedorDAO;
+    private CustomerDAO dao;
+    private final View view;
+    private final CustomerMapper mapper;
 
     public ProveedorControladorConnection connection) {
         this.proveedorDAO = new ProveedorDAO(connection);
