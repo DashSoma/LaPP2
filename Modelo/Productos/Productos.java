@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import javax.swing.JOptionPane;
 
 /**
- * Clase que representa a un colaborador
- * @author Cristisn y Reyman 
+ *
+ * @author Cristian 
  */
 public class Productos {
     private int codigo;
@@ -16,8 +16,6 @@ public class Productos {
     private String proveedor;
     private LocalDate fechaPIngresado = LocalDate.now();
     
-
-  
     public Productos(int codigo, String nombre, String categoria, int precio, int cantDisponible, String proveedor, LocalDate fechaDespido) {
         this.codigo = codigo;
         this.nombre = nombre;       

@@ -1,7 +1,7 @@
 package Modelo.Proveedores;
 
 /**
- * Clase que representa los puestos de trabajo.
+
  * 
  * @author Cristian y Reyman 
  */
