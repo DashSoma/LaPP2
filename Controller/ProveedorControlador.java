@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 /**
  *
- * @author dashs
+ * @author La comadre dashs
  */
 public class ProveedorControlador {
 

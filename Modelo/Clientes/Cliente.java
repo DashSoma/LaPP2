@@ -41,12 +41,11 @@ public class Cliente {
         return numeroCompras;
     }
 
-    public String setCedula(String cedula) {
+    public void setCedula(String cedula) {
         if (cedula == null || cedula.trim().isEmpty()) {
             throw new IllegalArgumentException("La cédula debe ser un número positivo.");
         }
-        this.cedula =cedula;
-        return null;
+        this.cedula = cedula;
     }
 
     public void setNombreCompleto(String nombreCompleto) {
@@ -84,7 +83,7 @@ public class Cliente {
         this.numeroCompras = numeroCompras;
     }
 
-    public Cliente(String cedula, String nombreCompleto, String direccion, String telefono, String correoElectronico, int numeroCompras) {
+    public Cliente(String cedula, String nombreCompleto, String direccion, String telefono, String correoElectronico) {
         setCedula(cedula);
         setNombreCompleto(nombreCompleto);
         setDireccion(direccion);
@@ -92,9 +91,4 @@ public class Cliente {
         setCorreoElectronico(correoElectronico);
         setNumeroCompras(numeroCompras);
     }
-
-    public Cliente() {
-
-    }
-
 }
