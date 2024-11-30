@@ -4,6 +4,7 @@
  */
 package Vistas;
 
+import Modelo.Clientes.Cliente;
 import java.util.List;
 
 /**
@@ -16,4 +17,5 @@ public interface Vista<Ent> {
     public void showMessage(String msg);
     public void showError(String err);
     public boolean validateRequired();
+    public void showCliente(Cliente cliente);
 }
