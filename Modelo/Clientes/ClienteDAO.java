@@ -29,7 +29,7 @@ public class ClienteDAO extends DAO<ClienteDTO> {
         }
         String query = "Call tiendaelectronica(?,?,?,?,?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, dto.getCedula());
+            stmt.setString(1, dto.getCedula());
             stmt.setString(2, dto.getNombreCompleto());
             stmt.setString(3, dto.getDireccion());
             stmt.setString(4, dto.getTelefono());
@@ -50,7 +50,7 @@ public class ClienteDAO extends DAO<ClienteDTO> {
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     return new ClienteDTO(
-                            rs.getInt(1),
+                            rs.getString(1),
                             rs.getString(2),
                             rs.getString(3),
                             rs.getString(4),
@@ -70,7 +70,7 @@ public class ClienteDAO extends DAO<ClienteDTO> {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     list.add(new ClienteDTO(
-                            rs.getInt(1),
+                            rs.getString(1),
                             rs.getString(2),
                             rs.getString(3),
                             rs.getString(4),
@@ -88,7 +88,7 @@ public class ClienteDAO extends DAO<ClienteDTO> {
         }
         String query = "Call tiendaelectronica(?,?,?,?,?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, dto.getCedula());
+            stmt.setString(1, dto.getCedula());
             stmt.setString(2, dto.getNombreCompleto());
             stmt.setString(3, dto.getDireccion());
             stmt.setString(4, dto.getTelefono());

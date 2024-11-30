@@ -10,13 +10,13 @@ package Modelo.Clientes;
  */
 public class ClienteDTO {
 
-    private final int cedula;
+    private final String cedula;
     private final String nombreCompleto;
     private final String direccion;
     private final String telefono;
     private final String correoElectronico;
 
-    public int getCedula() {
+    public String getCedula() {
         return cedula;
     }
 
@@ -36,7 +36,7 @@ public class ClienteDTO {
         return correoElectronico;
     }
 
-   public ClienteDTO(int cedula, String nombreCompleto, String direccion, String telefono, String correoElectronico) {
+   public ClienteDTO(String cedula, String nombreCompleto, String direccion, String telefono, String correoElectronico) {
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;
         this.direccion = direccion;
