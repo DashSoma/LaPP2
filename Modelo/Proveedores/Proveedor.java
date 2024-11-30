@@ -45,7 +45,7 @@ public class Proveedor {
     }
 
     public Proveedor(String nombre, String contacto, String direccion) {
-       // this.id =0;
+       this.id =0;
         this.nombre = nombre;
         this.contacto = contacto;
         this.direccion = direccion;

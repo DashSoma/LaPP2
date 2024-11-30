@@ -4,16 +4,12 @@
  */
 package Modelo.Productos;
 
-import DateBase.DataBase;
 import Modelo.Mapper.Mapper;
-import Modelo.Proveedores.Proveedor;
-import Modelo.Proveedores.ProveedorDAO;
 import Utils.UtilDate;
-import java.sql.SQLException;
 
 /**
  *
- * @author dashs
+ * @author La comadre Dash
  */
 public class ProductoMapper implements Mapper<Productos, ProductoDTO> {
 
@@ -25,26 +21,28 @@ public class ProductoMapper implements Mapper<Productos, ProductoDTO> {
                 ent.getCategoria(),
                 ent.getPrecio(),
                 ent.getCantDisponible(),
-                ent.getProveedor().getId(),
+                ent.getProveedor(),
                 UtilDate.toSqlDate(ent.getFechaPIngresado())
         );
     }
 
     @Override
-    public Productos toEnt(ProductoDTO dto) {
-        try{
-        return new Producto(
+public Productos toEnt(ProductoDTO dto) {
+    try {
+        return new Productos(
                 dto.getCodigo(),
                 dto.getNombre(),
                 dto.getCategoria(),
                 dto.getPrecio(),
                 dto.getCantDisponible(),
-                new Proveedor().toEnt(new ProveedorDAO(DataBase.DataBase.getConnection()).read(dto.getProveedor())),
+                dto.getProveedor(),
                 UtilDate.toLocalDate(dto.getFechaPIngresado())
         );
-        }catch (SQLException ex) {
-            throw new RuntimeException("Error while mapping RentalContractDTO to RentalContract", ex);
-        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        return null;
     }
-    
+}
+
+
 }

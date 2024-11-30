@@ -10,6 +10,7 @@ import Modelo.Productos.ProductosDAO;
 import Vistas.Vista;
 import java.util.List;
 import java.util.Objects;
+import java.sql.SQLException;
 import java.util.stream.Collectors;
 
 /**
@@ -30,7 +31,7 @@ public class ProductoControlador {
         }
     }
 
-    public void create(ProductosDTO producto) {
+    public void create(ProductoDTO producto) {
         if (producto == null || !validateRequired(producto)) {
             vista.showError("Faltan datos requeridos");
             return;
@@ -49,7 +50,7 @@ public class ProductoControlador {
 
     public void read(int codigo) {
         try {
-            ProductosDTO producto = dao.read(codigo);
+            ProductoDTO producto = dao.read(codigo);
             if (producto != null) {
                 vista.show(producto);
             } else {
