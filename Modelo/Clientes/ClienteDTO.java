@@ -7,10 +7,10 @@ package Modelo.Clientes;
 
 /**
  *
- * @authorDaniTini
+ * @author munoz
  */
 public class ClienteDTO {
-      private final int cedula;
+    private final int cedula;
     private final String nombreCompleto;
     private final String direccion;
     private final String telefono;
