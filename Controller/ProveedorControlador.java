@@ -40,31 +40,21 @@ public class ProveedorControlador {
     }
     
     public void create(Proveedor proveedor){
-//        if(proveedor==null || !validateRequired(proveedor)) {
-//            vista.showError("Faltan datos requeridos");
-//            return;
-//        }
-//        try {
-//            if (!validatePK(proveedor.getId())){
-//                vista.showError("La cedula ingresada ya se encuentra registrada");
-//                return;
-//            }
-//            dao.create(mapper.toDTO(proveedor));
-//            vista.showMessage("Datos guardados correctamente");
-//        } catch (SQLException ex) {
-//            vista.showError("Ocurrio un error al guardar los datos: "+ ex.getMessage());
-//        }
-    if (proveedor == null || !validateRequired(proveedor)) {
-        vista.showError("Todos los campos son obligatorios.");
-        return;
-    }
-    try {
-        dao.create(proveedor); // Llama al método de inserción en el DAO
-        vista.showMessage("Proveedor agregado correctamente.");
-        readAll(); // Refresca la tabla con los datos actualizados
-    } catch (SQLException ex) {
-        vista.showError("Error al insertar el proveedor: " + ex.getMessage());
-}
+        if(proveedor==null || !validateRequired(proveedor)) {
+            vista.showError("Faltan datos requeridos");
+            return;
+        }
+        try {
+            if (!validatePK(proveedor.getId())){
+                vista.showError("La cedula ingresada ya se encuentra registrada");
+                return;
+            }
+            dao.create(mapper.toDTO(proveedor));
+            vista.showMessage("Datos guardados correctamente");
+        } catch (SQLException ex) {
+            vista.showError("Ocurrio un error al guardar los datos: "+ ex.getMessage());
+        }
+    
 
     }
     
