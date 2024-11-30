@@ -63,11 +63,8 @@ public class Proveedor {
     }
 
     public Proveedor(String nombre, String contacto, String direccion) {
-<<<<<<< Updated upstream
        this.id =0;
-=======
         this.id =0;
->>>>>>> Stashed changes
         this.nombre = nombre;
         this.contacto = contacto;
         this.direccion = direccion;
