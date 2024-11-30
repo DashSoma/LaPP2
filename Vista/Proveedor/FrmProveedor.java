@@ -5,6 +5,7 @@
 package Vista.Proveedor;
 
 import Controller.ProveedorControlador;
+import Modelo.Clientes.Cliente;
 import Modelo.Proveedores.Proveedor;
 import Utils.UtilGui;
 import Vistas.Vista;
@@ -388,4 +389,9 @@ public class FrmProveedor extends javax.swing.JInternalFrame implements Vista<Pr
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void showCliente(Cliente cliente) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

@@ -1,6 +1,7 @@
 package Vistas;
 
 import Controller.ProveedorControlador;
+import Modelo.Clientes.Cliente;
 import Modelo.Proveedores.Proveedor;
 import Modelo.Proveedores.ProveedorDAO;
 import Vista.Proveedor.FrmProveedorSearch;
@@ -57,7 +58,7 @@ public class FrmProveedores extends javax.swing.JDialog implements Vista<Proveed
     }
 
     private void cargarDatos() {
-        controlador.readAll(); // Solicita los datos al controlador
+        controlador.readAll(); 
     }
     
     private boolean validarCampos() {
@@ -652,5 +653,10 @@ int filaSeleccionada = tblPuestos.getSelectedRow();
     @Override
     public boolean validateRequired() {
         return validarCampos();
+    }
+
+    @Override
+    public void showCliente(Cliente cliente) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
