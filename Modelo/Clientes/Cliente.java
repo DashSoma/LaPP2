@@ -10,14 +10,14 @@ package Modelo.Clientes;
  */
 public class Cliente {
 
-    private int cedula;
+    private String cedula;
     private String nombreCompleto;
     private String direccion;
     private String telefono;
     private String correoElectronico;
     private int numeroCompras;
 
-    public int getCedula() {
+    public String getCedula() {
         return cedula;
     }
 
@@ -41,11 +41,12 @@ public class Cliente {
         return numeroCompras;
     }
 
-    public void setCedula(int cedula) {
-        if (cedula <= 0) {
+    public String setCedula(String cedula) {
+        if (cedula == null || cedula.trim().isEmpty()) {
             throw new IllegalArgumentException("La cédula debe ser un número positivo.");
         }
-        this.cedula = cedula;
+        this.cedula =cedula;
+        return null;
     }
 
     public void setNombreCompleto(String nombreCompleto) {
@@ -83,7 +84,7 @@ public class Cliente {
         this.numeroCompras = numeroCompras;
     }
 
-    public Cliente(int cedula, String nombreCompleto, String direccion, String telefono, String correoElectronico, int numeroCompras) {
+    public Cliente(String cedula, String nombreCompleto, String direccion, String telefono, String correoElectronico, int numeroCompras) {
         setCedula(cedula);
         setNombreCompleto(nombreCompleto);
         setDireccion(direccion);

@@ -351,7 +351,7 @@ public class FrmCliente extends javax.swing.JDialog {
   
         if (!txtCedula.getText().isEmpty() && !txtNombreCompl.getText().isEmpty()) {
             try {
-                client.setCedula(Integer.parseInt(txtCedula.getText()));
+                client.setCedula(txtCedula.getText());
                 client.setNombreCompleto(txtNombreCompl.getText());
                 client.setTelefono(txtTelefono.getText());
                 client.setDireccion(txtDireccion.getText());
@@ -433,8 +433,7 @@ public class FrmCliente extends javax.swing.JDialog {
             client = new Cliente();
 
             if (!txtNombreCompl.getText().isEmpty()) {
-                 //int cedula = Integer.parseInt(txtCedula.getText()); 
-                client.setCedula(Integer.parseInt(txtCedula.getText()));
+                client.setCedula(txtCedula.getText());
                 client.setNombreCompleto(txtNombreCompl.getText());
                 client.setTelefono(txtTelefono.getText());
                 client.setDireccion(txtDireccion.getText());
@@ -474,7 +473,7 @@ public class FrmCliente extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCantActionPerformed
 
-    private boolean existe(int cedula) {
+    private boolean existe(String cedula) {
     for (Cliente c : lista) {
         if (c.getCedula() == cedula) {
             return true;
