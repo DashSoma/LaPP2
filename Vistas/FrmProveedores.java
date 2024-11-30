@@ -1,20 +1,31 @@
 package Vistas;
 
+import Controller.ProveedorControlador;
 import Modelo.Proveedores.Proveedor;
+import Modelo.Proveedores.ProveedorDAO;
+import Vista.Proveedor.FrmProveedorSearch;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.sql.SQLException;
 
 /**
  *
  * @author Christian y Reyman
  */
-public class FrmProveedores extends javax.swing.JDialog {
+public class FrmProveedores extends javax.swing.JDialog implements Vista<Proveedor> {
 
-    //Array Lits y objetos de clases determinadas
-    Proveedor puestos;
     ArrayList<Proveedor> lista;
     DefaultTableModel model;
+
+    ProveedorControlador controlador;
+      Proveedor proveedor;
+      Vista vista;
+      ProveedorDAO dao;
+//    
+//    private ProveedorControlador controlador;
+//    private DefaultTableModel model;
 
     /**
      *
@@ -27,6 +38,9 @@ public class FrmProveedores extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         this.lista = lista;
+        controlador = new ProveedorControlador(this);
+        configurarTabla();
+        cargarDatos();
     }
 
     public FrmProveedores(java.awt.Frame parent, boolean modal) {
@@ -35,6 +49,49 @@ public class FrmProveedores extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         this.lista = new ArrayList<>();
     }
+    
+    private void configurarTabla() {
+        String[] columnas = {"ID", "Nombre", "Contacto", "Dirección"};
+        model = new DefaultTableModel(null, columnas);
+        tblPuestos.setModel(model);
+    }
+
+    private void cargarDatos() {
+        controlador.readAll(); // Solicita los datos al controlador
+    }
+    
+    private boolean validarCampos() {
+        return !txtNombre.getText().trim().isEmpty()
+                && !txtContacto.getText().trim().isEmpty()
+                && !txtDireccion.getText().trim().isEmpty();
+    }
+    
+    private void limpiarCampos() {
+        txtNombre.setText("");
+        txtContacto.setText("");
+        txtDireccion.setText("");
+    }
+    
+    private void actualizarTabla(List<Proveedor> listaProveedores) {
+    model.setRowCount(0); // Limpia la tabla
+    for (Proveedor proveedor : listaProveedores) {
+        model.addRow(new Object[]{
+            proveedor.getId(),
+            proveedor.getNombre(),
+            proveedor.getContacto(),
+            proveedor.getDireccion()
+        });
+    }
+    txtCant.setText(String.valueOf(listaProveedores.size()));}
+
+    public void readFiltered(String filter) {
+    try {
+        List<Proveedor> filteredList = dao.search(filter); // Implementa la búsqueda en el DAO
+        vista.showAll(filteredList);
+    } catch (SQLException ex) {
+        vista.showError("Error al filtrar datos: " + ex.getMessage());
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -290,27 +347,42 @@ public class FrmProveedores extends javax.swing.JDialog {
      * @param evt ActionPerformed
      */
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-        if (!txtNombre.getText().isEmpty() && !txtContacto.getText().isEmpty() && !txtDireccion.getText().isEmpty()) {
-            puestos = new Proveedor();
-            try {
-                puestos.setNombre(txtNombre.getText());
-                puestos.setContacto(txtContacto.getText());
-                puestos.setDireccion(txtDireccion.getText());  // Corregido
+//        if (!txtNombre.getText().isEmpty() && !txtContacto.getText().isEmpty() && !txtDireccion.getText().isEmpty()) {
+//            proveedor = new Proveedor();
+//            try {
+//                proveedor = new Proveedor();
+//                proveedor.setNombre(txtNombre.getText());
+//                proveedor.setContacto(txtContacto.getText());
+//                proveedor.setDireccion(txtDireccion.getText());
+//                lista.add(proveedor);
+//
+//                if (lista.add(proveedor)) {
+//                    JOptionPane.showMessageDialog(this, "Proveedor agregado");
+//                    mostrarTabla();
+//                    btnLimpiarActionPerformed(null);
+//                } else {
+//                    JOptionPane.showMessageDialog(this, "Error al insertar");
+//                }
+//            } catch (Exception e) {
+//                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+//            }
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Faltan datos");
+//        }
 
-                if (lista.add(puestos)) {
-                    JOptionPane.showMessageDialog(this, "Proveedor agregado");
-                    mostrarTabla();
-                    btnLimpiarActionPerformed(null);
-                } else {
-                    JOptionPane.showMessageDialog(this, "Error al insertar");
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-            }
+
+    if (validarCampos()) {
+            Proveedor proveedor = new Proveedor(
+                    txtNombre.getText(),
+                    txtContacto.getText(),
+                    txtDireccion.getText()
+            );
+            controlador.create(proveedor);
+            limpiarCampos();
+            cargarDatos();
         } else {
-            JOptionPane.showMessageDialog(this, "Faltan datos");
+            JOptionPane.showMessageDialog(this, "Por favor complete todos los campos.");
         }
-
 
     }//GEN-LAST:event_btnInsertarActionPerformed
     /**
@@ -319,20 +391,26 @@ public class FrmProveedores extends javax.swing.JDialog {
      * @param evt
      */
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-        String titulos[] = {"Id Puesto", "Nombre", "Contacto", "Dirección"};
-        model = new DefaultTableModel(null, titulos);
+//        String titulos[] = {"Id", "Nombre", "Contacto", "Dirección"};
+//        model = new DefaultTableModel(null, titulos);
+//
+//        for (int i = 0; i < lista.size(); i++) {
+//            proveedor = lista.get(i);
+//            if (proveedor.getNombre().toLowerCase().contains(txtBuscar.getText().toLowerCase())) {
+//                Object nuevaFila[] = {proveedor.getId(), proveedor.getContacto(),
+//                    proveedor.getDireccion()};
+//                model.addRow(nuevaFila);
+//            }
+//        }
+//        tblPuestos.setModel(model);
+//
+//        txtCant.setText(String.valueOf(model.getRowCount()));
 
-        for (int i = 0; i < lista.size(); i++) {
-            puestos = lista.get(i);
-            if (puestos.getNombre().toLowerCase().contains(txtBuscar.getText().toLowerCase())) {
-                Object nuevaFila[] = {puestos.getIdPuesto(), puestos.getContacto(),
-                    puestos.getDireccion()};
-                model.addRow(nuevaFila);
-            }
-        }
-        tblPuestos.setModel(model);
-
-        txtCant.setText(String.valueOf(model.getRowCount()));
+    String textoBusqueda = txtBuscar.getText().trim();
+    controlador.readFiltered(textoBusqueda);
+//
+//    String textoBusqueda = txtBuscar.getText().trim();
+//        controlador.readAll();
     }//GEN-LAST:event_txtBuscarKeyReleased
     /**
      * Evento que se atica cuando se presiona los registros del JTable y se
@@ -341,10 +419,16 @@ public class FrmProveedores extends javax.swing.JDialog {
      * @param evt
      */
     private void tblPuestosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPuestosMousePressed
-        if (evt.getClickCount() == 1) {
-            txtNombre.setText(String.valueOf(tblPuestos.getValueAt(tblPuestos.getSelectedRow(), 1)));
-            txtContacto.setText(String.valueOf(tblPuestos.getValueAt(tblPuestos.getSelectedRow(), 2)));
-            txtDireccion.setText(String.valueOf(tblPuestos.getValueAt(tblPuestos.getSelectedRow(), 3)));
+//        if (evt.getClickCount() == 1) {
+//            txtNombre.setText(String.valueOf(tblPuestos.getValueAt(tblPuestos.getSelectedRow(), 1)));
+//            txtContacto.setText(String.valueOf(tblPuestos.getValueAt(tblPuestos.getSelectedRow(), 2)));
+//            txtDireccion.setText(String.valueOf(tblPuestos.getValueAt(tblPuestos.getSelectedRow(), 3)));
+//        }
+    if (evt.getClickCount() == 1) {
+            int fila = tblPuestos.getSelectedRow();
+            txtNombre.setText(model.getValueAt(fila, 1).toString());
+            txtContacto.setText(model.getValueAt(fila, 2).toString());
+            txtDireccion.setText(model.getValueAt(fila, 3).toString());
         }
     }//GEN-LAST:event_tblPuestosMousePressed
     /**
@@ -353,21 +437,51 @@ public class FrmProveedores extends javax.swing.JDialog {
      * @param evt
      */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        if (tblPuestos.getSelectedRowCount() == 1) {
-            int resp = JOptionPane.showConfirmDialog(this, "¿Desea borrar el resgitro?");
-            if (resp == 0) {  //El usuario quiere eliminar, Respuesta si
-                int fila = tblPuestos.getSelectedRow();
-                if (lista.remove(lista.get(fila))) {
-                    mostrarTabla();
+//        if (tblPuestos.getSelectedRowCount() == 1) {
+//            int resp = JOptionPane.showConfirmDialog(this, "¿Desea borrar el resgitro?");
+//            if (resp == 0) {  //El usuario quiere eliminar, Respuesta si
+//                int fila = tblPuestos.getSelectedRow();
+//                if (lista.remove(lista.get(fila))) {
+//                    mostrarTabla();
+//
+//                } else {
+//                    JOptionPane.showMessageDialog(this, "Error de borrado");
+//                }
+//
+//            }
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Se debe seleccionar 1 registro");
+//        }
 
-                } else {
-                    JOptionPane.showMessageDialog(this, "Error de borrado");
-                }
+int filaSeleccionada = tblPuestos.getSelectedRow();
+    if (filaSeleccionada != -1) {
+        // Obtén el ID del proveedor seleccionado
+        int id = Integer.parseInt(model.getValueAt(filaSeleccionada, 0).toString());
 
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Se debe seleccionar 1 registro");
-        }
+        // Crea un objeto Proveedor usando el constructor que solo necesita el ID
+        Proveedor proveedor = new Proveedor(id);
+
+        // Llama al controlador para eliminar el proveedor
+        controlador.delete(proveedor);
+
+        // Limpia los campos y recarga los datos en la tabla
+        limpiarCampos();
+        cargarDatos();
+    } else {
+        JOptionPane.showMessageDialog(this, "Seleccione un registro para eliminar.");
+    }
+
+//    int filaSeleccionada = tblPuestos.getSelectedRow();
+//    if (filaSeleccionada != -1) {
+//        int id = Integer.parseInt(model.getValueAt(filaSeleccionada, 0).toString());
+//        Proveedor proveedor = new Proveedor();
+//        proveedor.setId(id); // Asigna el ID al objeto Proveedor
+//        controlador.delete(proveedor); // Llama al controlador para eliminarlo
+//        limpiarCampos();
+//        cargarDatos();
+//    } else {
+//        JOptionPane.showMessageDialog(this, "Seleccione un registro para eliminar.");
+//    }
     }//GEN-LAST:event_btnEliminarActionPerformed
     /**
      * Botón para editar un regsitro seleccionado.
@@ -375,39 +489,56 @@ public class FrmProveedores extends javax.swing.JDialog {
      * @param evt
      */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (tblPuestos.getSelectedRowCount() == 1) {
+//        if (tblPuestos.getSelectedRowCount() == 1) {
+//
+//            int fila = tblPuestos.getSelectedRow();
+//            puestos = new Proveedor();
+//
+//            if (!txtNombre.getText().isEmpty()) {
+//
+//                puestos.setIdPuesto(Integer.parseInt(
+//                        tblPuestos.getValueAt(fila, 0).toString()));
+//
+//                puestos.setNombre(txtNombre.getText());
+//                puestos.setContacto(txtContacto.getText());
+//                puestos.setDireccion(txtDireccion.getText());
+//
+//                if (lista.set(fila, puestos) != null) {
+//                    JOptionPane.showMessageDialog(
+//                            this, "Puesto editado");
+//                    mostrarTabla();
+//                    btnLimpiarActionPerformed(null);
+//                } else {
+//                    JOptionPane.showMessageDialog(
+//                            this, "Error al editar");
+//                }
+//
+//            }
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Se debe seleccionar 1 registro");
+//        }
 
-            int fila = tblPuestos.getSelectedRow();
-            puestos = new Proveedor();
-
-            if (!txtNombre.getText().isEmpty()) {
-
-                puestos.setIdPuesto(Integer.parseInt(
-                        tblPuestos.getValueAt(fila, 0).toString()));
-
-                puestos.setNombre(txtNombre.getText());
-                puestos.setContacto(txtContacto.getText());
-                puestos.setDireccion(txtDireccion.getText());
-
-                if (lista.set(fila, puestos) != null) {
-                    JOptionPane.showMessageDialog(
-                            this, "Puesto editado");
-                    mostrarTabla();
-                    btnLimpiarActionPerformed(null);
-                } else {
-                    JOptionPane.showMessageDialog(
-                            this, "Error al editar");
-                }
-
-            }
+    int filaSeleccionada = tblPuestos.getSelectedRow();
+        if (filaSeleccionada != -1 && validarCampos()) {
+            int id = Integer.parseInt(model.getValueAt(filaSeleccionada, 0).toString());
+            Proveedor proveedor = new Proveedor(
+                    id,
+                    txtNombre.getText(),
+                    txtContacto.getText(),
+                    txtDireccion.getText()
+            );
+            controlador.update(proveedor);
+            limpiarCampos();
+            cargarDatos();
         } else {
-            JOptionPane.showMessageDialog(this, "Se debe seleccionar 1 registro");
+            JOptionPane.showMessageDialog(this, "Seleccione un registro válido y complete todos los campos.");
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
 //        Refresca la tabla
-        mostrarTabla();
+//        mostrarTabla();
+        cargarDatos();
     }//GEN-LAST:event_formWindowActivated
 
     private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
@@ -420,37 +551,18 @@ public class FrmProveedores extends javax.swing.JDialog {
      * @param id obtiene el Id y comparar si ya existe
      * @return
      */
-    public boolean existe(int id) {
-        Proveedor puestoBusca;
-        for (int i = 0; i < lista.size(); i++) {
-            puestoBusca = lista.get(i);
-            if (puestoBusca.getIdPuesto() == id) {
-                return true;
-            }
-        }
-        return false;
-    }
+//    public boolean existe(int id) {
+//        Proveedor puestoBusca;
+//        for (int i = 0; i < lista.size(); i++) {
+//            puestoBusca = lista.get(i);
+//            if (puestoBusca.getIdPuesto() == id) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
-    /**
-     * Muestra los datos y títulos en el JTable
-     */
-    public void mostrarTabla() {
-        Proveedor = new Proveedor();
-        String titulos[] = {"Id", "Nombre", "Contacto", "Dirección"};
-        model = new DefaultTableModel(null, titulos);
-
-        for (int i = 0; i < lista.size(); i++) {
-
-            puestos = lista.get(i);
-            Object nuevaFila[] = {puestos.getIdPuesto(), puestos.getNombre(), puestos.getContacto(), puestos.getDireccion()};
-            model.addRow(nuevaFila);
-
-        }
-        tblPuestos.setModel(model);
-
-        txtCant.setText(String.valueOf(model.getRowCount()));
-    }
-
+    
     /**
      * @param args the command line arguments
      */
@@ -477,7 +589,7 @@ public class FrmProveedores extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(FrmProveedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-  
+
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -514,4 +626,31 @@ public class FrmProveedores extends javax.swing.JDialog {
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void show(Proveedor ent) {
+        txtNombre.setText(proveedor.getNombre());
+        txtContacto.setText(proveedor.getContacto());
+        txtDireccion.setText(proveedor.getDireccion());
+    }
+
+    @Override
+    public void showAll(List<Proveedor> ents) {
+        actualizarTabla(ents);
+    }
+
+    @Override
+    public void showMessage(String msg) {
+        JOptionPane.showMessageDialog(this, msg);
+    }
+
+    @Override
+    public void showError(String err) {
+        JOptionPane.showMessageDialog(this, err, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    @Override
+    public boolean validateRequired() {
+        return validarCampos();
+    }
 }

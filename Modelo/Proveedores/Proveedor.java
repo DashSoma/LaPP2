@@ -29,8 +29,15 @@ public class Proveedor {
     public void setContacto(String contacto) {
         this.contacto = contacto;
     }
+    
+    public void setId(int id) {
+    if (id <= 0) {
+        throw new IllegalArgumentException("El ID debe ser mayor a 0.");
+    }
+    this.id = id;
+}
    
-    protected Proveedor(int id, String nombre, String contacto, String direccion) {
+    public Proveedor(int id, String nombre, String contacto, String direccion) {
         this.id = id;
         this.nombre = nombre;
         this.contacto = contacto;
@@ -38,10 +45,15 @@ public class Proveedor {
     }
 
     public Proveedor(String nombre, String contacto, String direccion) {
-        this.id =0;
+       // this.id =0;
         this.nombre = nombre;
         this.contacto = contacto;
         this.direccion = direccion;
     }
+
+    public Proveedor(int id) {
+        this.id = id;
+    }
+    
     
 }

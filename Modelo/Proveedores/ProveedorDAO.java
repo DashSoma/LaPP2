@@ -27,12 +27,12 @@ public class ProveedorDAO extends DAO<ProveedorDTO>{
         if(dto == null || !validatePk(dto.getId())){
             return false;
         }
-        String query = "CALL ProveedorCreate(?,?,?,?)";
+        String query = "CALL ProveedorCreate(?,?,?)";
         try(PreparedStatement stmt = connection.prepareStatement(query)){
-            stmt.setInt(1, dto.getId());
-            stmt.setString(2, dto.getNombre());
-            stmt.setString(3, dto.getContacto());
-            stmt.setString(4, dto.getDireccion());
+//            stmt.setInt(1, dto.getId());
+            stmt.setString(1, dto.getNombre());
+            stmt.setString(2, dto.getContacto());
+            stmt.setString(3, dto.getDireccion());
             return stmt.executeUpdate() > 0;
         } 
     }
@@ -103,5 +103,28 @@ public class ProveedorDAO extends DAO<ProveedorDTO>{
     public boolean validatePk(Object id)throws SQLException{
         return read(id) == null;
     }
+    
+    public List<Proveedor> search(String filter) throws SQLException {
+    List<Proveedor> lista = new ArrayList<>();
+    String query = "SELECT * FROM proveedores WHERE nombre LIKE ? OR contacto LIKE ? OR direccion LIKE ?";
+    try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        stmt.setString(1, "%" + filter + "%");
+        stmt.setString(2, "%" + filter + "%");
+        stmt.setString(3, "%" + filter + "%");
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            Proveedor proveedor = new Proveedor(
+                rs.getInt("id"),
+                rs.getString("nombre"),
+                rs.getString("contacto"),
+                rs.getString("direccion")
+            );
+            lista.add(proveedor);
+        }
+    }
+    return lista;
+}
+
+
     
 }
