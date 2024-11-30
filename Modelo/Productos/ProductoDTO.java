@@ -5,6 +5,7 @@
 package Modelo.Productos;
 
 import java.time.LocalDate;
+import java.sql.Date;
 
 
 /**
@@ -12,13 +13,15 @@ import java.time.LocalDate;
  * @author DaniTini
  */
 public class ProductoDTO {
+
+    
     private final int codigo = 0;
     private final String nombre = null;
     private final String categoria = null;
     private final int precio = 0;
     private final int cantDisponible = 0;
     private final String proveedor = null;
-    private final LocalDate fechaPIngresado = LocalDate.now();
+    private final Date fechaPIngresado = null;
 
     public int getCodigo() {
         return codigo;
@@ -44,11 +47,12 @@ public class ProductoDTO {
         return proveedor;
     }
 
-    public LocalDate getFechaPIngresado() {
+    public Date getFechaPIngresado() {
         return fechaPIngresado;
     }
 
-    
+    public ProductoDTO(int codigo, String nombre, String categoria, int precio, int cantDisponible, String proveedor, Date fechaPIngresado) {
+    }
     
     
 }
