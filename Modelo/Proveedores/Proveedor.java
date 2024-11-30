@@ -5,14 +5,13 @@ package Modelo.Proveedores;
  * @author Crisp
  */
 public class Proveedor {
-//    private static int idIncremental = 1;
-    private int idPuesto;
+    private int id;
     private String nombre;
     private String contacto;
     private String direccion;
 
-    public int getIdPuesto() {
-        return idPuesto;
+    public int getId() {
+        return id;
     }
 
     public String getNombre() {
@@ -31,15 +30,15 @@ public class Proveedor {
         this.contacto = contacto;
     }
    
-    protected Proveedor(int idPuesto, String nombre, String contacto, String direccion) {
-        this.idPuesto = idPuesto;
+    protected Proveedor(int id, String nombre, String contacto, String direccion) {
+        this.id = id;
         this.nombre = nombre;
         this.contacto = contacto;
         this.direccion = direccion;
     }
 
     public Proveedor(String nombre, String contacto, String direccion) {
-        this.idPuesto =0;
+        this.id =0;
         this.nombre = nombre;
         this.contacto = contacto;
         this.direccion = direccion;

@@ -9,13 +9,13 @@ package Modelo.Proveedores;
  * @author dashs
  */
 public class ProveedorDTO {
-    private final int idPuesto;
+    private final int id;
     private final String nombre;
     private final String contacto;
     private final String direccion;
 
-    public int getIdPuesto() {
-        return idPuesto;
+    public int getId() {
+        return id;
     }
 
     public String getNombre() {
@@ -30,8 +30,8 @@ public class ProveedorDTO {
         return direccion;
     }
    
-    public ProveedorDTO(int idPuesto, String nombre, String contacto, String direccion) {
-        this.idPuesto = idPuesto;
+    public ProveedorDTO(int id, String nombre, String contacto, String direccion) {
+        this.id = id;
         this.nombre = nombre;
         this.contacto = contacto;
         this.direccion = direccion;
