@@ -51,7 +51,6 @@ public class FrmClientesSearch extends javax.swing.JDialog {
     public FrmClientesSearch(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
         tableModel = (DefaultTableModel) tblClientes.getModel();
         sorter = new TableRowSorter<>(this.tblClientes.getModel());
         tblClientes.setRowSorter(sorter);
@@ -206,7 +205,7 @@ public class FrmClientesSearch extends javax.swing.JDialog {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void txtFilterKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFilterKeyReleased
-        String searchText=txtFilter.getText();
+        String searchText = txtFilter.getText();
         if (searchText.trim().isEmpty()) {
             sorter.setRowFilter(null);
         } else {
@@ -216,10 +215,11 @@ public class FrmClientesSearch extends javax.swing.JDialog {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         int selectedRow = tblClientes.getSelectedRow();
-        if (selectedRow==-1) return;
+        if (selectedRow == -1) return;
         String id = tblClientes.getValueAt(selectedRow, 0).toString();
-        observer.show(ents.stream().filter(customer -> customer.getId().equals(id)).findFirst().orElse(null));
+        observer.show(ents.stream().filter(cliente -> cliente.getCedula().equals(id)).findFirst().orElse(null));
         this.dispose();
+    
     }//GEN-LAST:event_btnSearchActionPerformed
 
     /**

@@ -40,6 +40,7 @@ public class FrmClientes1 extends javax.swing.JInternalFrame implements Vista<Cl
         cliente = ent;
         if (ent == null) {
             clear();
+            SetEditableStateTxts(true); // Habilita la edición si no hay cliente
             return;
         }
         txtCedula.setText(ent.getCedula());
@@ -47,6 +48,7 @@ public class FrmClientes1 extends javax.swing.JInternalFrame implements Vista<Cl
         txtDireccion.setText(ent.getDireccion());
         txtTelefono.setText(ent.getTelefono());
         txtCorreo.setText(ent.getCorreoElectronico());
+        SetEditableStateTxts(false);
     }
 
     @Override
@@ -62,18 +64,17 @@ public class FrmClientes1 extends javax.swing.JInternalFrame implements Vista<Cl
     @Override
     public void showCliente(Cliente cliente) {
         if (cliente == null) {
-        JOptionPane.showMessageDialog(this, "No se encontró el cliente.", "Error", JOptionPane.ERROR_MESSAGE);
-    } else {
-        JOptionPane.showMessageDialog(this, 
-            "Cedula: " + cliente.getCedula() + "\n" +
-            "Nombre: " + cliente.getNombreCompleto() + "\n" +
-            "Teléfono: " + cliente.getTelefono(), 
-            "Información del Cliente", 
-            JOptionPane.INFORMATION_MESSAGE
-        );
+            JOptionPane.showMessageDialog(this, "No se encontró el cliente.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Cedula: " + cliente.getCedula() + "\n"
+                    + "Nombre: " + cliente.getNombreCompleto() + "\n"
+                    + "Teléfono: " + cliente.getTelefono(),
+                    "Información del Cliente",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+        }
     }
-    }
-    
 
     @Override
     public void showMessage(String msg) {
@@ -87,7 +88,7 @@ public class FrmClientes1 extends javax.swing.JInternalFrame implements Vista<Cl
 
     @Override
     public boolean validateRequired() {
-        return UtilGui.validateFields(txtCedula, txtNombre, txtDireccion, txtTelefono, txtCorreo);
+        return UtilGui.validateFields(txtCedula, txtNombre, txtDireccion, txtCedula, txtNombre);
     }
 
     /**
@@ -106,13 +107,13 @@ public class FrmClientes1 extends javax.swing.JInternalFrame implements Vista<Cl
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        txtCedula = new javax.swing.JFormattedTextField();
         txtNombre = new javax.swing.JTextField();
-        txtDireccion = new javax.swing.JFormattedTextField();
-        txtCorreo = new javax.swing.JTextField();
-        txtTelefono = new javax.swing.JFormattedTextField();
+        txtCedula = new javax.swing.JFormattedTextField();
         jLabel8 = new javax.swing.JLabel();
-        txtEmail1 = new javax.swing.JTextField();
+        txtNumeroCompras = new javax.swing.JTextField();
+        txtDireccion = new javax.swing.JFormattedTextField();
+        txtCorreo = new javax.swing.JFormattedTextField();
+        txtTelefono = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         btnLimpiar = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
@@ -144,36 +145,29 @@ public class FrmClientes1 extends javax.swing.JInternalFrame implements Vista<Cl
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel7.setText("Correo Electronico");
 
-        txtCedula.setEditable(false);
-        txtCedula.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#########"))));
-        txtCedula.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        txtCedula.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtCedulaFocusLost(evt);
-            }
-        });
-
-        txtNombre.setEditable(false);
         txtNombre.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
 
-        txtDireccion.setEditable(false);
-        txtDireccion.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
-        txtDireccion.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        txtDireccion.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtDireccionFocusLost(evt);
-            }
-        });
-
-        txtCorreo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-
-        txtTelefono.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("########"))));
-        txtTelefono.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        txtCedula.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("########"))));
+        txtCedula.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel8.setText("Numero de Compras");
 
-        txtEmail1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        txtNumeroCompras.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+
+        txtDireccion.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("########"))));
+        txtDireccion.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        txtDireccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDireccionActionPerformed(evt);
+            }
+        });
+
+        txtCorreo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("########"))));
+        txtCorreo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+
+        txtTelefono.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("########"))));
+        txtTelefono.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -184,65 +178,67 @@ public class FrmClientes1 extends javax.swing.JInternalFrame implements Vista<Cl
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtEmail1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(34, 34, 34))))
+                        .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addGap(165, 165, 165)
+                                        .addComponent(jLabel7))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(31, 31, 31)
+                                        .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel5)
+                                .addGap(96, 96, 96)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(txtNumeroCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 144, Short.MAX_VALUE))
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtEmail1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel8)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNumeroCompras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -388,15 +384,14 @@ public class FrmClientes1 extends javax.swing.JInternalFrame implements Vista<Cl
                 txtTelefono.getText(),
                 txtCorreo.getText()
         );
-        controller.create(cliente);
-        this.SetEditableStateTxts(false);
+        controller.create(cliente); // Lógica para guardar al cliente
+        SetEditableStateTxts(false); // Deshabilita la edición tras guardar
         changeStateBtns();
-
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         show(cliente);
-        this.SetEditableStateTxts(false);
+        SetEditableStateTxts(false);
         changeStateBtns();
     }//GEN-LAST:event_btnCancelActionPerformed
 
@@ -405,22 +400,8 @@ public class FrmClientes1 extends javax.swing.JInternalFrame implements Vista<Cl
             showError("No hay ningún cliente cargado actualmente");
             return;
         }
-        if (!validateRequired()) {
-            showError("Faltan datos requeridos");
-            return;
-        }
-        String newTelefono = txtTelefono.getText().trim();
-        String newEmail = txtCorreo.getText().trim(); 
-
-       
-        if (!newTelefono.equals(cliente.getTelefono()) || !newEmail.equals(cliente.getCorreoElectronico())) {
-            cliente.setTelefono(newTelefono); 
-            cliente.setCorreoElectronico(newEmail); 
-            controller.update(cliente);
-            showMessage("Datos actualizados correctamente");
-        } else {
-            showMessage("No se realizaron cambios");
-        }
+        SetEditableStateTxts(true); // Habilita la edición
+        txtCedula.setEditable(false);
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -445,23 +426,9 @@ public class FrmClientes1 extends javax.swing.JInternalFrame implements Vista<Cl
         controller.readAll();
     }//GEN-LAST:event_btnSearchActionPerformed
 
-    private void txtCedulaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedulaFocusLost
-        if (!txtCedula.isEditable()) {
-            return;
-        }
-        String id = txtCedula.getText();
-        if (id.trim().isEmpty()) {
-            return;
-        }
-        if (!controller.validatePK(id)) {
-            showError("La cedula ingresada ya se encuentra registrada");
-            txtCedula.setText("");
-        }
-    }//GEN-LAST:event_txtCedulaFocusLost
-
-    private void txtDireccionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDireccionFocusLost
-
-    }//GEN-LAST:event_txtDireccionFocusLost
+    private void txtDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDireccionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDireccionActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -482,10 +449,10 @@ public class FrmClientes1 extends javax.swing.JInternalFrame implements Vista<Cl
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JFormattedTextField txtCedula;
-    private javax.swing.JTextField txtCorreo;
+    private javax.swing.JFormattedTextField txtCorreo;
     private javax.swing.JFormattedTextField txtDireccion;
-    private javax.swing.JTextField txtEmail1;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtNumeroCompras;
     private javax.swing.JFormattedTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 
@@ -494,21 +461,20 @@ public class FrmClientes1 extends javax.swing.JInternalFrame implements Vista<Cl
     }
 
     private void SetEditableStateTxts(boolean b) {
-        boolean value = false;
-        txtCedula.setEditable(value);
-        txtNombre.setEditable(value);
-        txtDireccion.setEditable(value);
-        txtTelefono.setEditable(value);
-        txtCorreo.setEditable(value);
+        boolean editable = false;
+        txtCedula.setEditable(editable);
+        txtNombre.setEditable(editable);
+        txtDireccion.setEditable(editable);
+        txtTelefono.setEditable(editable);
+        txtCorreo.setEditable(editable);
     }
 
     private void clear() {
-        UtilGui.clearTxts(
-                txtCedula,
+        UtilGui.clearTxts(txtCedula,
                 txtNombre,
                 txtDireccion,
-                txtTelefono,
-                txtCorreo);
+                txtCedula,
+                txtNombre);
     }
 
 }
