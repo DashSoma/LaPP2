@@ -12,6 +12,7 @@ import javax.swing.JFrame;
  */
 public class FrmMenu extends javax.swing.JFrame {
 
+    //hola
     /**
      * Creates new form FrmMenu
      */
@@ -19,7 +20,6 @@ public class FrmMenu extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

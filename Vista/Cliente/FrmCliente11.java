@@ -17,7 +17,7 @@ public class FrmCliente11 extends javax.swing.JDialog implements Vista<Cliente> 
 
     ClienteControlador clienteController;
     Cliente cliente;
-
+//hola
     DefaultTableModel model;
 
     public FrmCliente11() {

@@ -17,7 +17,7 @@ import java.util.List;
  * @author munoz
  */
 public class ClienteDAO extends DAO<ClienteDTO> {
-
+//holi
     public ClienteDAO(Connection connection) {
         super(connection);
     }

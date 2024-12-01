@@ -9,7 +9,7 @@ package Modelo.Clientes;
  * @author La comadre Dash
  */
 public class Cliente {
-
+    //holi
     private String cedula;
     private String nombreCompleto;
     private String direccion;
