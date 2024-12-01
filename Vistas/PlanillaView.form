@@ -69,7 +69,7 @@
                   <Component id="lblCant" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtCant" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="23" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -106,10 +106,12 @@
                               <Component id="lblFechaActual" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="cmbMesGenPlant" alignment="0" max="32767" attributes="0"/>
-                              <Component id="dtpFechActual" alignment="0" max="32767" attributes="0"/>
-                              <Component id="fmtAñoPago" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="cmbMesGenPlant" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="fmtAñoPago" max="32767" attributes="0"/>
+                              </Group>
+                              <Component id="txtFecha" min="-2" pref="96" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="23" max="32767" attributes="0"/>
                       </Group>
@@ -123,21 +125,21 @@
                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblFechaActual" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="dtpFechActual" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtFecha" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="cmbMesGenPlant" min="-2" max="-2" attributes="0"/>
                       <Component id="lblMesGenerar" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblAñoGenerar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="fmtAñoPago" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
                   <Component id="btnGenerar" min="-2" pref="38" max="-2" attributes="0"/>
-                  <EmptySpace pref="30" max="32767" attributes="0"/>
+                  <EmptySpace pref="34" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -145,26 +147,26 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="lblFechaActual">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Fecha Actual:"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="Fecha Actual:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblMesGenerar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Mes:"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="Mes:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblA&#xf1;oGenerar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="A&#xf1;o:"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="A&#xf1;o:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="cmbMesGenPlant">
@@ -186,27 +188,28 @@
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbMesGenPlantActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="btnGenerar">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="14" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Generar"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
                 <EtchetBorder/>
               </Border>
             </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="0"/>
-            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGenerarActionPerformed"/>
           </Events>
-        </Component>
-        <Component class="com.github.lgooddatepicker.components.DatePicker" name="dtpFechActual">
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="fmtA&#xf1;oPago">
           <Properties>
@@ -214,6 +217,16 @@
               <Format format="##-##-####" subtype="-1" type="5"/>
             </Property>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="txtFecha">
+          <Properties>
+            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
+              <Format format="##-##-####" subtype="-1" type="5"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFechaActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -271,7 +284,7 @@
                       <Component id="lblAñoMostrar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="fmtAñoMostrar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="64" max="32767" attributes="0"/>
+                  <EmptySpace pref="164" max="32767" attributes="0"/>
                   <Component id="btnMostrarPlanilla" min="-2" pref="35" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
               </Group>
@@ -281,18 +294,18 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="lblMesMostrar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Mes:"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="Mes:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblA&#xf1;oMostrar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="A&#xf1;o:"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="A&#xf1;o:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="cmbMesMostrarP">
@@ -321,10 +334,10 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnMostrarPlanilla">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Mostrar Planilla "/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="Mostrar Planilla "/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMostrarPlanillaActionPerformed"/>
@@ -447,18 +460,18 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="lblFiltrar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Filtrar por:"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="Filtrar por:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblColaborador">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Colaborador:"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="Colaborador:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JCheckBox" name="chkFiltColab">
@@ -467,20 +480,20 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblMes">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Mes: "/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="Mes: "/>
           </Properties>
         </Component>
         <Component class="javax.swing.JCheckBox" name="chkA&#xf1;o">
         </Component>
         <Component class="javax.swing.JLabel" name="lblA&#xf1;o">
           <Properties>
-            <Property name="text" type="java.lang.String" value="A&#xf1;o:"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="A&#xf1;o:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtBuscar">

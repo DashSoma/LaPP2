@@ -62,8 +62,8 @@ public class PlanillaView extends javax.swing.JDialog {
         lblAñoGenerar = new javax.swing.JLabel();
         cmbMesGenPlant = new javax.swing.JComboBox<>();
         btnGenerar = new javax.swing.JButton();
-        dtpFechActual = new com.github.lgooddatepicker.components.DatePicker();
         fmtAñoPago = new javax.swing.JFormattedTextField();
+        txtFecha = new javax.swing.JFormattedTextField();
         pnlMostrarPlanilla = new javax.swing.JPanel();
         lblMesMostrar = new javax.swing.JLabel();
         lblAñoMostrar = new javax.swing.JLabel();
@@ -95,20 +95,25 @@ public class PlanillaView extends javax.swing.JDialog {
 
         pnlGenerar.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED), "Generar Planilla "));
 
-        lblFechaActual.setText("Fecha Actual:");
         lblFechaActual.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblFechaActual.setText("Fecha Actual:");
 
-        lblMesGenerar.setText("Mes:");
         lblMesGenerar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblMesGenerar.setText("Mes:");
 
-        lblAñoGenerar.setText("Año:");
         lblAñoGenerar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblAñoGenerar.setText("Año:");
 
         cmbMesGenPlant.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" }));
+        cmbMesGenPlant.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbMesGenPlantActionPerformed(evt);
+            }
+        });
 
+        btnGenerar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnGenerar.setText("Generar");
         btnGenerar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        btnGenerar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnGenerar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGenerarActionPerformed(evt);
@@ -120,6 +125,17 @@ public class PlanillaView extends javax.swing.JDialog {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+
+        try {
+            txtFecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##-##-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtFecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFechaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlGenerarLayout = new javax.swing.GroupLayout(pnlGenerar);
         pnlGenerar.setLayout(pnlGenerarLayout);
@@ -138,10 +154,11 @@ public class PlanillaView extends javax.swing.JDialog {
                             .addComponent(lblMesGenerar)
                             .addComponent(lblFechaActual))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlGenerarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(cmbMesGenPlant, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(dtpFechActual, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(fmtAñoPago))
+                        .addGroup(pnlGenerarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlGenerarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(cmbMesGenPlant, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(fmtAñoPago))
+                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 23, Short.MAX_VALUE))))
         );
         pnlGenerarLayout.setVerticalGroup(
@@ -150,32 +167,32 @@ public class PlanillaView extends javax.swing.JDialog {
                 .addGap(15, 15, 15)
                 .addGroup(pnlGenerarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFechaActual)
-                    .addComponent(dtpFechActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlGenerarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cmbMesGenPlant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblMesGenerar))
-                .addGap(18, 18, 18)
+                .addGap(46, 46, 46)
                 .addGroup(pnlGenerarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblAñoGenerar)
                     .addComponent(fmtAñoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(86, 86, 86)
                 .addComponent(btnGenerar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pnlMostrarPlanilla.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED), "Mostrar Planilla "));
 
-        lblMesMostrar.setText("Mes:");
         lblMesMostrar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblMesMostrar.setText("Mes:");
 
-        lblAñoMostrar.setText("Año:");
         lblAñoMostrar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblAñoMostrar.setText("Año:");
 
         cmbMesMostrarP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" }));
 
-        btnMostrarPlanilla.setText("Mostrar Planilla ");
         btnMostrarPlanilla.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnMostrarPlanilla.setText("Mostrar Planilla ");
         btnMostrarPlanilla.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMostrarPlanillaActionPerformed(evt);
@@ -221,7 +238,7 @@ public class PlanillaView extends javax.swing.JDialog {
                 .addGroup(pnlMostrarPlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblAñoMostrar)
                     .addComponent(fmtAñoMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
                 .addComponent(btnMostrarPlanilla, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
         );
@@ -254,17 +271,17 @@ public class PlanillaView extends javax.swing.JDialog {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        lblFiltrar.setText("Filtrar por:");
         lblFiltrar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblFiltrar.setText("Filtrar por:");
 
-        lblColaborador.setText("Colaborador:");
         lblColaborador.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblColaborador.setText("Colaborador:");
 
-        lblMes.setText("Mes: ");
         lblMes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblMes.setText("Mes: ");
 
-        lblAño.setText("Año:");
         lblAño.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblAño.setText("Año:");
 
         txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -359,7 +376,7 @@ public class PlanillaView extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCant)
                     .addComponent(txtCant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -421,7 +438,7 @@ public class PlanillaView extends javax.swing.JDialog {
                 planilla = new Planilla();
                 colaborador = listaC.get(i);
 
-                planilla.setFechaCreacion(dtpFechActual.getDate());
+                planilla.setFechaCreacion(txtFecha);
                 planilla.setMesPuesto(cmbMesGenPlant.getSelectedItem().toString());
                 planilla.setFechaPago(fmtAñoPago.getText());
                 planilla.setCedulaEmpleado(colaborador.getCodigo());
@@ -619,6 +636,14 @@ public class PlanillaView extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_btnMostrarPlanillaActionPerformed
+
+    private void cmbMesGenPlantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMesGenPlantActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbMesGenPlantActionPerformed
+
+    private void txtFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFechaActionPerformed
     public void mostrarTabla() {
         String titulos[] = {"Id Planilla", "Fecha Creación", "Mes a Pagar", "Fecha Pago", "Ced Empleado", "Empleado",
             "Sal Base", "Total x Pluses", "Salario Bruto", "Deducc CCSS", "Deducción BP", "Salario Neto"};
@@ -725,7 +750,6 @@ public class PlanillaView extends javax.swing.JDialog {
     private javax.swing.JCheckBox chkFiltMes;
     private javax.swing.JComboBox<String> cmbMesGenPlant;
     private javax.swing.JComboBox<String> cmbMesMostrarP;
-    private com.github.lgooddatepicker.components.DatePicker dtpFechActual;
     private javax.swing.JFormattedTextField fmtAñoMostrar;
     private javax.swing.JFormattedTextField fmtAñoPago;
     private javax.swing.JScrollPane jScrollPane1;
@@ -746,5 +770,6 @@ public class PlanillaView extends javax.swing.JDialog {
     private javax.swing.JTable tblPlanilla;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCant;
+    private javax.swing.JFormattedTextField txtFecha;
     // End of variables declaration//GEN-END:variables
 }
