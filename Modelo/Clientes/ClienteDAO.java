@@ -27,7 +27,7 @@ public class ClienteDAO extends DAO<ClienteDTO> {
         if (dto == null || !validatePK(dto.getCedula())) {
             return false;
         }
-        String query = "Call tiendaelectronica(?,?,?,?,?)";
+        String query = "Call ClienteCreate(?,?,?,?,?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, dto.getCedula());
             stmt.setString(2, dto.getNombreCompleto());
@@ -44,7 +44,7 @@ public class ClienteDAO extends DAO<ClienteDTO> {
         if (id == null || String.valueOf(id).trim().isEmpty()) {
             return null;
         }
-        String query = "Call tiendaelectronica(?)";
+        String query = "Call ClienteRead(?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, String.valueOf(id));
             try (ResultSet rs = stmt.executeQuery()) {
@@ -63,7 +63,7 @@ public class ClienteDAO extends DAO<ClienteDTO> {
 
     @Override
     public List<ClienteDTO> readAll() throws SQLException {
-        String query = "Call tiendaelectronica(?)";
+        String query = "Call ClienteReadAll()";
         List<ClienteDTO> list = new ArrayList<>();
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
 
@@ -86,13 +86,12 @@ public class ClienteDAO extends DAO<ClienteDTO> {
         if (dto == null) {
             return false;
         }
-        String query = "Call tiendaelectronica(?,?,?,?,?)";
+        String query = "Call ClienteUpdate(?,?,?,?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, dto.getCedula());
-            stmt.setString(2, dto.getNombreCompleto());
-            stmt.setString(3, dto.getDireccion());
-            stmt.setString(4, dto.getTelefono());
-            stmt.setString(5, dto.getCorreoElectronico());
+            stmt.setString(2, dto.getDireccion());
+            stmt.setString(3, dto.getTelefono());
+            stmt.setString(4, dto.getCorreoElectronico());
             return stmt.executeUpdate() > 0;
 
         }
@@ -103,7 +102,7 @@ public class ClienteDAO extends DAO<ClienteDTO> {
         if (id == null || String.valueOf(id).trim().isEmpty()) {
             return false;
         }
-        String query = "Call tiendaelectronica(?)";
+        String query = "Call ClienteDelete(?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, String.valueOf(id));
             return stmt.executeUpdate() > 0;

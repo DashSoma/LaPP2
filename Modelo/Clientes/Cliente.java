@@ -15,7 +15,6 @@ public class Cliente {
     private String direccion;
     private String telefono;
     private String correoElectronico;
-    private int numeroCompras;
 
     public String getCedula() {
         return cedula;
@@ -35,10 +34,6 @@ public class Cliente {
 
     public String getCorreoElectronico() {
         return correoElectronico;
-    }
-
-    public int getNumeroCompras() {
-        return numeroCompras;
     }
 
     public void setCedula(String cedula) {
@@ -76,23 +71,22 @@ public class Cliente {
         this.correoElectronico = correoElectronico;
     }
 
-    public void setNumeroCompras(int numeroCompras) {
-        if (numeroCompras < 0) {
-            throw new IllegalArgumentException("El número de compras no puede ser negativo.");
-        }
-        this.numeroCompras = numeroCompras;
-    }
-
     public Cliente(String cedula, String nombreCompleto, String direccion, String telefono, String correoElectronico) {
         setCedula(cedula);
         setNombreCompleto(nombreCompleto);
         setDireccion(direccion);
         setTelefono(telefono);
         setCorreoElectronico(correoElectronico);
-        setNumeroCompras(numeroCompras);
     }
     
     public Cliente() {
         
     }
+
+    @Override
+    public String toString() {
+        return "Cliente{" + "cedula=" + cedula + ", nombreCompleto=" + nombreCompleto + ", direccion=" + direccion + ", telefono=" + telefono + ", correoElectronico=" + correoElectronico + '}';
+    }
+
+   
 }
