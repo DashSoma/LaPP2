@@ -29,7 +29,7 @@ public class ProveedorDAO extends DAO<ProveedorDTO>{
         }
         String query = "CALL ProveedorCreate(?,?,?)";
         try(PreparedStatement stmt = connection.prepareStatement(query)){
-            stmt.setInt(1, dto.getId());
+//            stmt.setInt(1, dto.getId());
             stmt.setString(1, dto.getNombre());
             stmt.setString(2, dto.getContacto());
             stmt.setString(3, dto.getDireccion());
@@ -68,7 +68,7 @@ public class ProveedorDAO extends DAO<ProveedorDTO>{
 
     @Override
     public List<ProveedorDTO> readAll() throws SQLException {
-        String query = "CALL ProveedorReadAll(?)";
+        String query = "CALL ProveedorReadAll";
         List<ProveedorDTO> list = new ArrayList<>();
         try(PreparedStatement stmt = connection.prepareStatement(query)){
             try(ResultSet rs = stmt.executeQuery()){

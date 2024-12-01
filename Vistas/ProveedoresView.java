@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Chrisp
  */
-public class ProveedoresView extends javax.swing.JDialog implements Vista<Proveedor>{
+public class ProveedoresView extends javax.swing.JDialog implements Vista<Proveedor> {
 
     //Array Lits y objetos de clases determinadas
     Proveedor proveedor;
@@ -32,23 +32,23 @@ public class ProveedoresView extends javax.swing.JDialog implements Vista<Provee
         setLocationRelativeTo(null);
         this.lista = lista;
         this.controlador = new ProveedorControlador(this);
-        
+
     }
 
-    
     public ProveedoresView(java.awt.Frame parent, boolean modal, ProveedorControlador controlador) {
-    super(parent, modal);
-    initComponents();
-    setLocationRelativeTo(null);
-    this.controlador = controlador;
-    this.lista = new ArrayList<>();
-}
+        super(parent, modal);
+        initComponents();
+        setLocationRelativeTo(null);
+        this.controlador = controlador;
+        this.lista = new ArrayList<>();
+    }
+
     public ProveedoresView(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
         this.lista = new ArrayList<>();
-   
+
     }
 
     /**
@@ -306,29 +306,29 @@ public class ProveedoresView extends javax.swing.JDialog implements Vista<Provee
      * @param evt ActionPerformed
      */
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-if (txtNombre.getText().isEmpty() || txtContacto.getText().isEmpty() || txtDireccion.getText().isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Faltan datos requeridos", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+        if (txtNombre.getText().isEmpty() || txtContacto.getText().isEmpty() || txtDireccion.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Faltan datos requeridos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-    // Crea un nuevo proveedor con los datos de los campos
-    Proveedor proveedor = new Proveedor();
-    proveedor.setNombre(txtNombre.getText());
-    proveedor.setContacto(txtContacto.getText());
-    proveedor.setDireccion(txtDireccion.getText());
+        // Crea un nuevo proveedor con los datos de los campos
+        Proveedor proveedor = new Proveedor();
+        proveedor.setNombre(txtNombre.getText());
+        proveedor.setContacto(txtContacto.getText());
+        proveedor.setDireccion(txtDireccion.getText());
 
-    try {
-        // Llama al método create del controlador
-        controlador.create(proveedor);
-        
-        // Refresca la tabla después de insertar
-        controlador.readAll();
-        
-        // Limpia los campos
-        btnLimpiarActionPerformed(null);
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error al insertar: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
+        try {
+            // Llama al método create del controlador
+            controlador.create(proveedor);
+
+            // Refresca la tabla después de insertar
+            controlador.readAll();
+
+            // Limpia los campos
+            btnLimpiarActionPerformed(null);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al insertar: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnInsertarActionPerformed
     /**
      * Evento en el cual busca los registros que hay en el JTable.
@@ -426,8 +426,8 @@ if (txtNombre.getText().isEmpty() || txtContacto.getText().isEmpty() || txtDirec
 //        Refresca la tabla
         mostrarTabla();
         txtNombre.setEditable(true);
-txtContacto.setEditable(true);
-txtDireccion.setEditable(true);
+        txtContacto.setEditable(true);
+        txtDireccion.setEditable(true);
     }//GEN-LAST:event_formWindowActivated
 
     private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
@@ -454,17 +454,16 @@ txtDireccion.setEditable(true);
     /**
      * Muestra los datos y títulos en el JTable
      */
-    
     public void mostrarTabla() {
-    controlador.readAll(); // Carga los datos desde la base de datos
-}
+        controlador.readAll(); // Carga los datos desde la base de datos
+    }
 
-    public void Limpiar (){
+    public void Limpiar() {
         txtNombre.setText("");
         txtContacto.setText("");
         txtDireccion.setText("");
     }
-    
+
 //    private void limpiar(){
 //        UtilGui.clearTxts(
 //                txtNombre,
@@ -476,7 +475,6 @@ txtDireccion.setEditable(true);
 //    public void changeStateBtns() {
 //        UtilGui.changeStateButtons(btnInsertar,btnEditar,btnEliminar, btnLimpiar);
 //    }
-    
     /**
      * @param args the command line arguments
      */
@@ -605,8 +603,8 @@ txtDireccion.setEditable(true);
 
     @Override
     public void show(Proveedor ent) {
-        proveedor=ent;
-        if (ent==null) {
+        proveedor = ent;
+        if (ent == null) {
             Limpiar();
             return;
         }
@@ -614,35 +612,34 @@ txtDireccion.setEditable(true);
         txtContacto.setText(ent.getContacto());
         txtDireccion.setText(ent.getDireccion());
 
-    
     }
 
     @Override
     public void showAll(List<Proveedor> ents) {
         if (ents == null || ents.isEmpty()) {
-        // Si no hay datos, limpiar la tabla
-        model = new DefaultTableModel(new String[]{"Id", "Nombre", "Contacto", "Dirección"}, 0);
+            // Si no hay datos, limpiar la tabla
+            model = new DefaultTableModel(new String[]{"Id", "Nombre", "Contacto", "Dirección"}, 0);
+            tblProveedor.setModel(model);
+            txtCant.setText("0");
+            return;
+        }
+
+        String[] titulos = {"Id", "Nombre", "Contacto", "Dirección"};
+        model = new DefaultTableModel(null, titulos);
+
+        // Llenar la tabla con los datos de la lista
+        for (Proveedor proveedor : ents) {
+            Object[] fila = {
+                proveedor.getId(),
+                proveedor.getNombre(),
+                proveedor.getContacto(),
+                proveedor.getDireccion()
+            };
+            model.addRow(fila);
+        }
+
         tblProveedor.setModel(model);
-        txtCant.setText("0");
-        return;
-    }
-
-    String[] titulos = {"Id", "Nombre", "Contacto", "Dirección"};
-    model = new DefaultTableModel(null, titulos);
-
-    // Llenar la tabla con los datos de la lista
-    for (Proveedor proveedor : ents) {
-        Object[] fila = {
-            proveedor.getId(),
-            proveedor.getNombre(),
-            proveedor.getContacto(),
-            proveedor.getDireccion()
-        };
-        model.addRow(fila);
-    }
-
-    tblProveedor.setModel(model);
-    txtCant.setText(String.valueOf(model.getRowCount()));
+        txtCant.setText(String.valueOf(model.getRowCount()));
     }
 
     @Override
@@ -659,7 +656,7 @@ txtDireccion.setEditable(true);
 
     @Override
     public boolean validateRequired() {
-        return UtilGui.validateFields(txtNombre,txtContacto,txtDireccion);
+        return UtilGui.validateFields(txtNombre, txtContacto, txtDireccion);
 
     }
 

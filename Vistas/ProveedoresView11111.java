@@ -2,22 +2,30 @@ package Vistas;
 
 import Controller.ProveedorControlador;
 import Modelo.Proveedores.Proveedor;
+import Utils.UtilDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
  * @author Chrisp
  */
-public class ProveedoresView11111 extends javax.swing.JDialog implements Vista<Proveedor>{
+public class ProveedoresView11111 extends javax.swing.JDialog implements Vista<Proveedor> {
 
     //Array Lits y objetos de clases determinadas
     Proveedor proveedor;
-    ArrayList<Proveedor> lista;
-    DefaultTableModel model;
+//    ArrayList<Proveedor> lista;
+    private DefaultTableModel model;
     ProveedorControlador controlador;
+    TableRowSorter<TableModel> sorter; 
+    List<Proveedor> lista;
+    private Vista vista;
+//    private DefaultTableModel tableModel;
 
     /**
      *
@@ -25,12 +33,36 @@ public class ProveedoresView11111 extends javax.swing.JDialog implements Vista<P
      * @param modal
      * @param lista de puestos.
      */
+//    public ProveedoresView11111(java.awt.Frame parent, boolean modal, ArrayList<Proveedor> lista) {
+//        super(parent, modal);
+//        initComponents();
+//        setLocationRelativeTo(null);
+//        this.lista = lista;
+//        this.controlador = new ProveedorControlador(this);
+//    }
+//
+//    public ProveedoresView11111(java.awt.Frame parent, boolean modal, ProveedorControlador controlador) {
+//        super(parent, modal);
+//        initComponents();
+//        setLocationRelativeTo(null);
+//        this.lista = new ArrayList<>();
+//        this.controlador= controlador;
+//    }
     public ProveedoresView11111(java.awt.Frame parent, boolean modal, ArrayList<Proveedor> lista) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
         this.lista = lista;
         this.controlador = new ProveedorControlador(this);
+
+    }
+
+    public ProveedoresView11111(java.awt.Frame parent, boolean modal, ProveedorControlador controlador) {
+        super(parent, modal);
+        initComponents();
+        setLocationRelativeTo(null);
+        this.controlador = controlador;
+        this.lista = new ArrayList<>();
     }
 
     public ProveedoresView11111(java.awt.Frame parent, boolean modal) {
@@ -38,8 +70,13 @@ public class ProveedoresView11111 extends javax.swing.JDialog implements Vista<P
         initComponents();
         setLocationRelativeTo(null);
         this.lista = new ArrayList<>();
+        this.controlador = new ProveedorControlador(this);
+        model = (DefaultTableModel) tblProveedor.getModel();
+        sorter = new TableRowSorter<>(this.tblProveedor.getModel());
+        tblProveedor.setRowSorter(sorter);
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -57,7 +94,7 @@ public class ProveedoresView11111 extends javax.swing.JDialog implements Vista<P
         lblSalario1 = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblPuestos = new javax.swing.JTable();
+        tblProveedor = new javax.swing.JTable();
         pnlBotones = new javax.swing.JPanel();
         btnInsertar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -67,6 +104,7 @@ public class ProveedoresView11111 extends javax.swing.JDialog implements Vista<P
         txtBuscar = new javax.swing.JTextField();
         lblCant = new javax.swing.JLabel();
         txtCant = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gestión del Proveedor");
@@ -129,8 +167,8 @@ public class ProveedoresView11111 extends javax.swing.JDialog implements Vista<P
                 .addContainerGap(8, Short.MAX_VALUE))
         );
 
-        tblPuestos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tblPuestos.setModel(new javax.swing.table.DefaultTableModel(
+        tblProveedor.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tblProveedor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -138,13 +176,13 @@ public class ProveedoresView11111 extends javax.swing.JDialog implements Vista<P
 
             }
         ));
-        tblPuestos.getTableHeader().setReorderingAllowed(false);
-        tblPuestos.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblProveedor.getTableHeader().setReorderingAllowed(false);
+        tblProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                tblPuestosMousePressed(evt);
+                tblProveedorMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(tblPuestos);
+        jScrollPane1.setViewportView(tblProveedor);
 
         pnlBotones.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -214,6 +252,11 @@ public class ProveedoresView11111 extends javax.swing.JDialog implements Vista<P
         lblBuscar.setText("Buscar: ");
 
         txtBuscar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
         txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtBuscarKeyReleased(evt);
@@ -229,6 +272,13 @@ public class ProveedoresView11111 extends javax.swing.JDialog implements Vista<P
         txtCant.setEditable(false);
         txtCant.setBackground(new java.awt.Color(204, 204, 204));
         txtCant.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        btnBuscar.setText("jButton1");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -248,8 +298,10 @@ public class ProveedoresView11111 extends javax.swing.JDialog implements Vista<P
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addComponent(lblBuscar)
-                                .addGap(42, 42, 42)
-                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(7, 7, 7)
+                                .addComponent(btnBuscar)))
                         .addGap(18, 18, 18)
                         .addComponent(pnlBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -263,7 +315,8 @@ public class ProveedoresView11111 extends javax.swing.JDialog implements Vista<P
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblBuscar)))
+                            .addComponent(lblBuscar)
+                            .addComponent(btnBuscar)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(pnlBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -301,9 +354,14 @@ public class ProveedoresView11111 extends javax.swing.JDialog implements Vista<P
                 proveedor.setContacto(txtContacto.getText());
                 proveedor.setDireccion(txtDireccion.getText());  // Corregido
 
+                controlador.create(proveedor);
+
+                // Refresca la tabla después de insertar
+                controlador.readAll();
                 if (lista.add(proveedor)) {
                     JOptionPane.showMessageDialog(this, "Proveedor agregado");
-                    mostrarTabla();
+//                    mostrarTabla();
+controlador.readAll();
                     btnLimpiarActionPerformed(null);
                 } else {
                     JOptionPane.showMessageDialog(this, "Error al insertar");
@@ -323,20 +381,26 @@ public class ProveedoresView11111 extends javax.swing.JDialog implements Vista<P
      * @param evt
      */
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-        String titulos[] = {"Id Puesto", "Nombre", "Contacto", "Dirección"};
-        model = new DefaultTableModel(null, titulos);
-
-        for (int i = 0; i < lista.size(); i++) {
-            proveedor = lista.get(i);
-            if (proveedor.getNombre().toLowerCase().contains(txtBuscar.getText().toLowerCase())) {
-                Object nuevaFila[] = {proveedor.getId(), proveedor.getContacto(),
-                    proveedor.getDireccion()};
-                model.addRow(nuevaFila);
-            }
+//        String titulos[] = {"Id Puesto", "Nombre", "Contacto", "Dirección"};
+//        model = new DefaultTableModel(null, titulos);
+//
+//        for (int i = 0; i < lista.size(); i++) {
+//            proveedor = lista.get(i);
+//            if (proveedor.getNombre().toLowerCase().contains(txtBuscar.getText().toLowerCase())) {
+//                Object nuevaFila[] = {proveedor.getId(), proveedor.getContacto(),
+//                    proveedor.getDireccion()};
+//                model.addRow(nuevaFila);
+//            }
+//        }
+//        tblProveedor.setModel(model);
+//
+//        txtCant.setText(String.valueOf(model.getRowCount()));
+String searchText=txtBuscar.getText();
+        if (searchText.trim().isEmpty()) {
+            sorter.setRowFilter(null);
+        } else {
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
         }
-        tblPuestos.setModel(model);
-
-        txtCant.setText(String.valueOf(model.getRowCount()));
     }//GEN-LAST:event_txtBuscarKeyReleased
     /**
      * Evento que se atica cuando se presiona los registros del JTable y se
@@ -344,25 +408,25 @@ public class ProveedoresView11111 extends javax.swing.JDialog implements Vista<P
      *
      * @param evt
      */
-    private void tblPuestosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPuestosMousePressed
+    private void tblProveedorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProveedorMousePressed
         if (evt.getClickCount() == 1) {
-            txtNombre.setText(String.valueOf(tblPuestos.getValueAt(tblPuestos.getSelectedRow(), 1)));
-            txtContacto.setText(String.valueOf(tblPuestos.getValueAt(tblPuestos.getSelectedRow(), 2)));
-            txtDireccion.setText(String.valueOf(tblPuestos.getValueAt(tblPuestos.getSelectedRow(), 3)));
+            txtNombre.setText(String.valueOf(tblProveedor.getValueAt(tblProveedor.getSelectedRow(), 1)));
+            txtContacto.setText(String.valueOf(tblProveedor.getValueAt(tblProveedor.getSelectedRow(), 2)));
+            txtDireccion.setText(String.valueOf(tblProveedor.getValueAt(tblProveedor.getSelectedRow(), 3)));
         }
-    }//GEN-LAST:event_tblPuestosMousePressed
+    }//GEN-LAST:event_tblProveedorMousePressed
     /**
      * Botón para eliminar un registro seleccionado.
      *
      * @param evt
      */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        if (tblPuestos.getSelectedRowCount() == 1) {
+        if (tblProveedor.getSelectedRowCount() == 1) {
             int resp = JOptionPane.showConfirmDialog(this, "¿Desea borrar el resgitro?");
             if (resp == 0) {  //El usuario quiere eliminar, Respuesta si
-                int fila = tblPuestos.getSelectedRow();
+                int fila = tblProveedor.getSelectedRow();
                 if (lista.remove(lista.get(fila))) {
-                    mostrarTabla();
+//                    mostrarTabla();
 
                 } else {
                     JOptionPane.showMessageDialog(this, "Error de borrado");
@@ -379,15 +443,15 @@ public class ProveedoresView11111 extends javax.swing.JDialog implements Vista<P
      * @param evt
      */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (tblPuestos.getSelectedRowCount() == 1) {
+        if (tblProveedor.getSelectedRowCount() == 1) {
 
-            int fila = tblPuestos.getSelectedRow();
+            int fila = tblProveedor.getSelectedRow();
             proveedor = new Proveedor();
 
             if (!txtNombre.getText().isEmpty()) {
 
                 proveedor.setId(Integer.parseInt(
-                        tblPuestos.getValueAt(fila, 0).toString()));
+                        tblProveedor.getValueAt(fila, 0).toString()));
 
                 proveedor.setNombre(txtNombre.getText());
                 proveedor.setContacto(txtContacto.getText());
@@ -396,7 +460,7 @@ public class ProveedoresView11111 extends javax.swing.JDialog implements Vista<P
                 if (lista.set(fila, proveedor) != null) {
                     JOptionPane.showMessageDialog(
                             this, "Puesto editado");
-                    mostrarTabla();
+//                    mostrarTabla();
                     btnLimpiarActionPerformed(null);
                 } else {
                     JOptionPane.showMessageDialog(
@@ -411,12 +475,33 @@ public class ProveedoresView11111 extends javax.swing.JDialog implements Vista<P
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
 //        Refresca la tabla
-        mostrarTabla();
+//        mostrarTabla();
+controlador.readAll();
     }//GEN-LAST:event_formWindowActivated
 
     private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBuscarKeyTyped
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+//        int selectedRow = tblProveedor.getSelectedRow();
+//        if (selectedRow==-1) return;
+//        String id = tblProveedor.getValueAt(selectedRow, 0).toString();
+//        vista.show(ents.stream().filter(proveedor -> proveedor.getId().equals(id)).findFirst().orElse(null));
+////        this.dispose();
+        controlador.readAll();
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        // TODO add your handling code here:
+        String searchText=txtBuscar.getText();
+        if (searchText.trim().isEmpty()) {
+            sorter.setRowFilter(null);
+        } else {
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
+        }
+    }//GEN-LAST:event_txtBuscarActionPerformed
 
     /**
      * Método para verificar que el ID sea única
@@ -438,29 +523,29 @@ public class ProveedoresView11111 extends javax.swing.JDialog implements Vista<P
     /**
      * Muestra los datos y títulos en el JTable
      */
-    public void mostrarTabla() {
-        proveedor = new Proveedor();
-        String titulos[] = {"Id", "Nombre", "Contacto", "Dirección"};
-        model = new DefaultTableModel(null, titulos);
+//    public void mostrarTabla() {
+//        proveedor = new Proveedor();
+//        String titulos[] = {"Id", "Nombre", "Contacto", "Dirección"};
+//        model = new DefaultTableModel(null, titulos);
+//
+//        for (int i = 0; i < lista.size(); i++) {
+//
+//            proveedor = lista.get(i);
+//            Object nuevaFila[] = {proveedor.getId(), proveedor.getNombre(), proveedor.getContacto(), proveedor.getDireccion()};
+//            model.addRow(nuevaFila);
+//
+//        }
+//        tblProveedor.setModel(model);
+//
+//        txtCant.setText(String.valueOf(model.getRowCount()));
+//    }
 
-        for (int i = 0; i < lista.size(); i++) {
-
-            proveedor = lista.get(i);
-            Object nuevaFila[] = {proveedor.getId(), proveedor.getNombre(), proveedor.getContacto(), proveedor.getDireccion()};
-            model.addRow(nuevaFila);
-
-        }
-        tblPuestos.setModel(model);
-
-        txtCant.setText(String.valueOf(model.getRowCount()));
-    }
-
-    public void Limpiar (){
+    public void Limpiar() {
         txtNombre.setText("");
         txtContacto.setText("");
         txtDireccion.setText("");
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -631,6 +716,7 @@ public class ProveedoresView11111 extends javax.swing.JDialog implements Vista<P
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnInsertar;
@@ -643,7 +729,7 @@ public class ProveedoresView11111 extends javax.swing.JDialog implements Vista<P
     private javax.swing.JLabel lblSalario1;
     private javax.swing.JPanel pnlBotones;
     private javax.swing.JPanel pnlDatos;
-    private javax.swing.JTable tblPuestos;
+    private javax.swing.JTable tblProveedor;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCant;
     private javax.swing.JTextField txtContacto;
@@ -653,17 +739,47 @@ public class ProveedoresView11111 extends javax.swing.JDialog implements Vista<P
 
     @Override
     public void show(Proveedor ent) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        proveedor=ent;
+        if (ent==null) {
+            Limpiar();
+            return;
+        }
+        txtNombre.setText(ent.getNombre());
+        txtContacto.setText(ent.getContacto());
+        txtDireccion.setText(ent.getDireccion());
     }
 
     @Override
     public void showAll(List<Proveedor> ents) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (ents == null || ents.isEmpty()) {
+            // Si no hay datos, limpiar la tabla
+            model = new DefaultTableModel(new String[]{"Id", "Nombre", "Contacto", "Dirección"}, 0);
+            tblProveedor.setModel(model);
+            txtCant.setText("0");
+            return;
+        }
+
+        String[] titulos = {"Id", "Nombre", "Contacto", "Dirección"};
+        model = new DefaultTableModel(null, titulos);
+
+        // Llenar la tabla con los datos de la lista
+        for (Proveedor proveedor : ents) {
+            Object[] fila = {
+                proveedor.getId(),
+                proveedor.getNombre(),
+                proveedor.getContacto(),
+                proveedor.getDireccion()
+            };
+            model.addRow(fila);
+        }
+
+        tblProveedor.setModel(model);
+        txtCant.setText(String.valueOf(model.getRowCount()));
     }
 
     @Override
     public void showMessage(String msg) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        JOptionPane.showMessageDialog(this, msg, "Informacion", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override
