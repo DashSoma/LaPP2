@@ -2,7 +2,6 @@ package Vistas;
 
 import Controller.ProveedorControlador;
 import Modelo.Proveedores.Proveedor;
-import Utils.UtilGui;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -12,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Chrisp
  */
-public class ProveedoresView extends javax.swing.JDialog implements Vista<Proveedor>{
+public class ProveedoresView11111 extends javax.swing.JDialog implements Vista<Proveedor>{
 
     //Array Lits y objetos de clases determinadas
     Proveedor proveedor;
@@ -26,29 +25,19 @@ public class ProveedoresView extends javax.swing.JDialog implements Vista<Provee
      * @param modal
      * @param lista de puestos.
      */
-    public ProveedoresView(java.awt.Frame parent, boolean modal, ArrayList<Proveedor> lista) {
+    public ProveedoresView11111(java.awt.Frame parent, boolean modal, ArrayList<Proveedor> lista) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
         this.lista = lista;
         this.controlador = new ProveedorControlador(this);
-        
     }
 
-    
-    public ProveedoresView(java.awt.Frame parent, boolean modal, ProveedorControlador controlador) {
-    super(parent, modal);
-    initComponents();
-    setLocationRelativeTo(null);
-    this.controlador = controlador;
-    this.lista = new ArrayList<>();
-}
-    public ProveedoresView(java.awt.Frame parent, boolean modal) {
+    public ProveedoresView11111(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
         this.lista = new ArrayList<>();
-   
     }
 
     /**
@@ -68,7 +57,7 @@ public class ProveedoresView extends javax.swing.JDialog implements Vista<Provee
         lblSalario1 = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblProveedor = new javax.swing.JTable();
+        tblPuestos = new javax.swing.JTable();
         pnlBotones = new javax.swing.JPanel();
         btnInsertar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -108,24 +97,24 @@ public class ProveedoresView extends javax.swing.JDialog implements Vista<Provee
         pnlDatos.setLayout(pnlDatosLayout);
         pnlDatosLayout.setHorizontalGroup(
             pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosLayout.createSequentialGroup()
-                .addGap(31, 31, 31)
+            .addGroup(pnlDatosLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblSalario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblSalario1))
+                    .addComponent(lblSalario1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(txtNombre)
-                        .addComponent(txtContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(txtContacto, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         pnlDatosLayout.setVerticalGroup(
             pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDatosLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(16, 16, 16)
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombre)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -137,11 +126,11 @@ public class ProveedoresView extends javax.swing.JDialog implements Vista<Provee
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSalario1)
                     .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
-        tblProveedor.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tblProveedor.setModel(new javax.swing.table.DefaultTableModel(
+        tblPuestos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tblPuestos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -149,13 +138,13 @@ public class ProveedoresView extends javax.swing.JDialog implements Vista<Provee
 
             }
         ));
-        tblProveedor.getTableHeader().setReorderingAllowed(false);
-        tblProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblPuestos.getTableHeader().setReorderingAllowed(false);
+        tblPuestos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                tblProveedorMousePressed(evt);
+                tblPuestosMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(tblProveedor);
+        jScrollPane1.setViewportView(tblPuestos);
 
         pnlBotones.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -270,9 +259,8 @@ public class ProveedoresView extends javax.swing.JDialog implements Vista<Provee
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
                         .addComponent(pnlDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblBuscar)))
@@ -285,7 +273,7 @@ public class ProveedoresView extends javax.swing.JDialog implements Vista<Provee
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCant)
                     .addComponent(txtCant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         pack();
@@ -306,29 +294,28 @@ public class ProveedoresView extends javax.swing.JDialog implements Vista<Provee
      * @param evt ActionPerformed
      */
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-if (txtNombre.getText().isEmpty() || txtContacto.getText().isEmpty() || txtDireccion.getText().isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Faltan datos requeridos", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+        if (!txtNombre.getText().isEmpty() && !txtContacto.getText().isEmpty() && !txtDireccion.getText().isEmpty()) {
+            proveedor = new Proveedor();
+            try {
+                proveedor.setNombre(txtNombre.getText());
+                proveedor.setContacto(txtContacto.getText());
+                proveedor.setDireccion(txtDireccion.getText());  // Corregido
 
-    // Crea un nuevo proveedor con los datos de los campos
-    Proveedor proveedor = new Proveedor();
-    proveedor.setNombre(txtNombre.getText());
-    proveedor.setContacto(txtContacto.getText());
-    proveedor.setDireccion(txtDireccion.getText());
+                if (lista.add(proveedor)) {
+                    JOptionPane.showMessageDialog(this, "Proveedor agregado");
+                    mostrarTabla();
+                    btnLimpiarActionPerformed(null);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error al insertar");
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Faltan datos");
+        }
 
-    try {
-        // Llama al método create del controlador
-        controlador.create(proveedor);
-        
-        // Refresca la tabla después de insertar
-        controlador.readAll();
-        
-        // Limpia los campos
-        btnLimpiarActionPerformed(null);
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error al insertar: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
+
     }//GEN-LAST:event_btnInsertarActionPerformed
     /**
      * Evento en el cual busca los registros que hay en el JTable.
@@ -347,7 +334,7 @@ if (txtNombre.getText().isEmpty() || txtContacto.getText().isEmpty() || txtDirec
                 model.addRow(nuevaFila);
             }
         }
-        tblProveedor.setModel(model);
+        tblPuestos.setModel(model);
 
         txtCant.setText(String.valueOf(model.getRowCount()));
     }//GEN-LAST:event_txtBuscarKeyReleased
@@ -357,23 +344,23 @@ if (txtNombre.getText().isEmpty() || txtContacto.getText().isEmpty() || txtDirec
      *
      * @param evt
      */
-    private void tblProveedorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProveedorMousePressed
+    private void tblPuestosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPuestosMousePressed
         if (evt.getClickCount() == 1) {
-            txtNombre.setText(String.valueOf(tblProveedor.getValueAt(tblProveedor.getSelectedRow(), 1)));
-            txtContacto.setText(String.valueOf(tblProveedor.getValueAt(tblProveedor.getSelectedRow(), 2)));
-            txtDireccion.setText(String.valueOf(tblProveedor.getValueAt(tblProveedor.getSelectedRow(), 3)));
+            txtNombre.setText(String.valueOf(tblPuestos.getValueAt(tblPuestos.getSelectedRow(), 1)));
+            txtContacto.setText(String.valueOf(tblPuestos.getValueAt(tblPuestos.getSelectedRow(), 2)));
+            txtDireccion.setText(String.valueOf(tblPuestos.getValueAt(tblPuestos.getSelectedRow(), 3)));
         }
-    }//GEN-LAST:event_tblProveedorMousePressed
+    }//GEN-LAST:event_tblPuestosMousePressed
     /**
      * Botón para eliminar un registro seleccionado.
      *
      * @param evt
      */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        if (tblProveedor.getSelectedRowCount() == 1) {
+        if (tblPuestos.getSelectedRowCount() == 1) {
             int resp = JOptionPane.showConfirmDialog(this, "¿Desea borrar el resgitro?");
             if (resp == 0) {  //El usuario quiere eliminar, Respuesta si
-                int fila = tblProveedor.getSelectedRow();
+                int fila = tblPuestos.getSelectedRow();
                 if (lista.remove(lista.get(fila))) {
                     mostrarTabla();
 
@@ -392,15 +379,15 @@ if (txtNombre.getText().isEmpty() || txtContacto.getText().isEmpty() || txtDirec
      * @param evt
      */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (tblProveedor.getSelectedRowCount() == 1) {
+        if (tblPuestos.getSelectedRowCount() == 1) {
 
-            int fila = tblProveedor.getSelectedRow();
+            int fila = tblPuestos.getSelectedRow();
             proveedor = new Proveedor();
 
             if (!txtNombre.getText().isEmpty()) {
 
                 proveedor.setId(Integer.parseInt(
-                        tblProveedor.getValueAt(fila, 0).toString()));
+                        tblPuestos.getValueAt(fila, 0).toString()));
 
                 proveedor.setNombre(txtNombre.getText());
                 proveedor.setContacto(txtContacto.getText());
@@ -425,9 +412,6 @@ if (txtNombre.getText().isEmpty() || txtContacto.getText().isEmpty() || txtDirec
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
 //        Refresca la tabla
         mostrarTabla();
-        txtNombre.setEditable(true);
-txtContacto.setEditable(true);
-txtDireccion.setEditable(true);
     }//GEN-LAST:event_formWindowActivated
 
     private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
@@ -454,28 +438,28 @@ txtDireccion.setEditable(true);
     /**
      * Muestra los datos y títulos en el JTable
      */
-    
     public void mostrarTabla() {
-    controlador.readAll(); // Carga los datos desde la base de datos
-}
+        proveedor = new Proveedor();
+        String titulos[] = {"Id", "Nombre", "Contacto", "Dirección"};
+        model = new DefaultTableModel(null, titulos);
+
+        for (int i = 0; i < lista.size(); i++) {
+
+            proveedor = lista.get(i);
+            Object nuevaFila[] = {proveedor.getId(), proveedor.getNombre(), proveedor.getContacto(), proveedor.getDireccion()};
+            model.addRow(nuevaFila);
+
+        }
+        tblPuestos.setModel(model);
+
+        txtCant.setText(String.valueOf(model.getRowCount()));
+    }
 
     public void Limpiar (){
         txtNombre.setText("");
         txtContacto.setText("");
         txtDireccion.setText("");
     }
-    
-//    private void limpiar(){
-//        UtilGui.clearTxts(
-//                txtNombre,
-//                txtContacto,
-//                txtDireccion
-//        );
-//    }
-//    
-//    public void changeStateBtns() {
-//        UtilGui.changeStateButtons(btnInsertar,btnEditar,btnEliminar, btnLimpiar);
-//    }
     
     /**
      * @param args the command line arguments
@@ -494,14 +478,78 @@ txtDireccion.setEditable(true);
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ProveedoresView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProveedoresView11111.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ProveedoresView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProveedoresView11111.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ProveedoresView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProveedoresView11111.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ProveedoresView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProveedoresView11111.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -570,7 +618,7 @@ txtDireccion.setEditable(true);
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ProveedoresView dialog = new ProveedoresView(new javax.swing.JFrame(), true);
+                ProveedoresView11111 dialog = new ProveedoresView11111(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -595,7 +643,7 @@ txtDireccion.setEditable(true);
     private javax.swing.JLabel lblSalario1;
     private javax.swing.JPanel pnlBotones;
     private javax.swing.JPanel pnlDatos;
-    private javax.swing.JTable tblProveedor;
+    private javax.swing.JTable tblPuestos;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCant;
     private javax.swing.JTextField txtContacto;
@@ -605,62 +653,27 @@ txtDireccion.setEditable(true);
 
     @Override
     public void show(Proveedor ent) {
-        proveedor=ent;
-        if (ent==null) {
-            Limpiar();
-            return;
-        }
-        txtNombre.setText(ent.getNombre());
-        txtContacto.setText(ent.getContacto());
-        txtDireccion.setText(ent.getDireccion());
-
-    
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void showAll(List<Proveedor> ents) {
-        if (ents == null || ents.isEmpty()) {
-        // Si no hay datos, limpiar la tabla
-        model = new DefaultTableModel(new String[]{"Id", "Nombre", "Contacto", "Dirección"}, 0);
-        tblProveedor.setModel(model);
-        txtCant.setText("0");
-        return;
-    }
-
-    String[] titulos = {"Id", "Nombre", "Contacto", "Dirección"};
-    model = new DefaultTableModel(null, titulos);
-
-    // Llenar la tabla con los datos de la lista
-    for (Proveedor proveedor : ents) {
-        Object[] fila = {
-            proveedor.getId(),
-            proveedor.getNombre(),
-            proveedor.getContacto(),
-            proveedor.getDireccion()
-        };
-        model.addRow(fila);
-    }
-
-    tblProveedor.setModel(model);
-    txtCant.setText(String.valueOf(model.getRowCount()));
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void showMessage(String msg) {
-        JOptionPane.showMessageDialog(this, msg, "Informacion", JOptionPane.INFORMATION_MESSAGE);
-
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void showError(String err) {
-        JOptionPane.showMessageDialog(this, err, "Error", JOptionPane.ERROR_MESSAGE);
-
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public boolean validateRequired() {
-        return UtilGui.validateFields(txtNombre,txtContacto,txtDireccion);
-
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

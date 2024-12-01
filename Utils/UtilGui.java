@@ -58,9 +58,9 @@ public class UtilGui {
         }
     }
     
-    public static void changeStateButtons(JButton... btns) {
-        for (JButton btn : btns) {
-            btn.setEnabled(!btn.isEnabled());
-        }
-    }
+//    public static void changeStateButtons(JButton... btns) {
+//        for (JButton btn : btns) {
+//            btn.setEnabled(!btn.isEnabled());
+//        }
+//    }
 }

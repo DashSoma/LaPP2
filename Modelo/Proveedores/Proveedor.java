@@ -55,7 +55,7 @@ public class Proveedor {
         this.direccion = direccion;
     }
 
-    protected Proveedor(int id, String nombre, String contacto, String direccion) {
+    public Proveedor(int id, String nombre, String contacto, String direccion) {
         this.id = id;
         this.nombre = nombre;
         this.contacto = contacto;
@@ -63,22 +63,23 @@ public class Proveedor {
     }
 
     public Proveedor(String nombre, String contacto, String direccion) {
-       this.id =0;
-        this.id =0;
         this.nombre = nombre;
         this.contacto = contacto;
         this.direccion = direccion;
     }
-
-    public Proveedor(int id) {
-        this.id = id;
-    }
     
+    
+    
+//    
+//    
+//    public Proveedor() {
+//        this.id = 1;
+//        this.nombre = "";
+//        this.contacto = "";
+//        this.direccion = "";
+//    }
+
     public Proveedor() {
-        this.id = 0;
-        this.nombre = "";
-        this.contacto = "";
-        this.direccion = "";
     }
 
 }

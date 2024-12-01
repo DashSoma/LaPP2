@@ -11,6 +11,7 @@ import Modelo.Proveedores.ProveedorDTO;
 import Modelo.Proveedores.ProveedorMapper;
 import Vistas.Vista;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -25,10 +26,10 @@ public class ProveedorControlador {
     private final Vista vista;
     private final ProveedorMapper mapper;
 
-    public ProveedorControlador(Vista vista, ProveedorMapper mapper) {
-        this.vista = vista;
-        this.mapper = mapper;
-    }
+//    public ProveedorControlador(Vista vista, ProveedorMapper mapper) {
+//        this.vista = vista;
+//        this.mapper = mapper;
+//    }
     public ProveedorControlador(Vista vista) {
         this.vista = vista;
         mapper=new ProveedorMapper();
@@ -40,21 +41,33 @@ public class ProveedorControlador {
     }
     
     public void create(Proveedor proveedor){
-        if(proveedor==null || !validateRequired(proveedor)) {
-            vista.showError("Faltan datos requeridos");
-            return;
-        }
-        try {
-            if (!validatePK(proveedor.getId())){
-                vista.showError("La cedula ingresada ya se encuentra registrada");
-                return;
-            }
-            dao.create(mapper.toDTO(proveedor));
-            vista.showMessage("Datos guardados correctamente");
-        } catch (SQLException ex) {
-            vista.showError("Ocurrio un error al guardar los datos: "+ ex.getMessage());
-        }
+//        if(proveedor==null || !validateRequired(proveedor)) {
+//            vista.showError("Faltan datos requeridos");
+//            return;
+//        }
+//        try {
+////            if (!validatePK(proveedor.getId())){
+////                vista.showError("El id ingresada ya se encuentra registrada");
+////                return;
+////            }
+//            dao.create(mapper.toDTO(proveedor));
+//            vista.showMessage("Datos guardados correctamente");
+//        } catch (SQLException ex) {
+//            vista.showError("Ocurrio un error al guardar los datos: "+ ex.getMessage());
+//        }
     
+
+if (proveedor == null || !validateRequired(proveedor)) {
+        vista.showError("Faltan datos requeridos");
+        return;
+    }
+    try {
+        // Crear el proveedor en la base de datos
+        dao.create(mapper.toDTO(proveedor));
+        vista.showMessage("Datos guardados correctamente");
+    } catch (SQLException ex) {
+        vista.showError("Ocurrió un error al guardar los datos: " + ex.getMessage());
+    }
 
     }
     
@@ -63,16 +76,33 @@ public class ProveedorControlador {
     }
     
     public void readAll(){
-        try {
-            List<ProveedorDTO> dtoList = dao.readAll();
-            List<Proveedor> proveedorList = dtoList.stream()
-                    .map(mapper::toEnt)
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toList());
-            vista.showAll(proveedorList);
-        } catch (SQLException ex) {
-            vista.showError("Error al cargar los datos: "+ ex.getMessage());
-        }
+//        try {
+//            List<ProveedorDTO> dtoList = dao.readAll();
+//            List<Proveedor> proveedorList = dtoList.stream()
+//                    .map(mapper::toEnt)
+//                    .filter(Objects::nonNull)
+//                    .collect(Collectors.toList());
+//            vista.showAll(proveedorList);
+//        } catch (SQLException ex) {
+//            vista.showError("Error al cargar los datos: "+ ex.getMessage());
+//        }
+//        
+try {
+        // Obtener los datos desde el DAO
+        List<ProveedorDTO> dtoList = dao.readAll();
+
+        // Convertir los DTOs a entidades
+        List<Proveedor> proveedorList = dtoList.stream()
+                .map(mapper::toEnt)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+
+        // Enviar los datos a la vista
+        vista.showAll(proveedorList);
+
+    } catch (SQLException ex) {
+        vista.showError("Error al cargar los datos: " + ex.getMessage());
+    }
     }
     
     public void update(Proveedor proveedor){
@@ -123,12 +153,17 @@ if (proveedor == null || proveedor.getId() <= 0) {
 //                && proveedor.getDireccion() != null && !proveedor.getDireccion().trim().isEmpty();
 //    }
     
+//    public boolean validateRequired(Proveedor proveedor) {
+//    return proveedor.getNombre() != null && !proveedor.getNombre().trim().isEmpty()
+//            && proveedor.getContacto() != null && !proveedor.getContacto().trim().isEmpty()
+//            && proveedor.getDireccion() != null && !proveedor.getDireccion().trim().isEmpty();
+//}
+
     public boolean validateRequired(Proveedor proveedor) {
     return proveedor.getNombre() != null && !proveedor.getNombre().trim().isEmpty()
             && proveedor.getContacto() != null && !proveedor.getContacto().trim().isEmpty()
             && proveedor.getDireccion() != null && !proveedor.getDireccion().trim().isEmpty();
 }
-
 
     public boolean validatePK(int id) {
         try {

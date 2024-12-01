@@ -17,8 +17,6 @@ public class Cliente {
     private String correoElectronico;
     private int numeroCompras;
 
-    
-
     public String getCedula() {
         return cedula;
     }

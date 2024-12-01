@@ -29,12 +29,20 @@ public class ProveedorDAO extends DAO<ProveedorDTO>{
         }
         String query = "CALL ProveedorCreate(?,?,?)";
         try(PreparedStatement stmt = connection.prepareStatement(query)){
-//            stmt.setInt(1, dto.getId());
+            stmt.setInt(1, dto.getId());
             stmt.setString(1, dto.getNombre());
             stmt.setString(2, dto.getContacto());
             stmt.setString(3, dto.getDireccion());
             return stmt.executeUpdate() > 0;
         } 
+
+//    String query = "INSERT INTO proveedor (nombre, contacto, direccion) VALUES (?, ?, ?)";
+//    try (PreparedStatement ps = connection.prepareStatement(query)) {
+//        ps.setString(1, dto.getNombre());
+//        ps.setString(2, dto.getContacto());
+//        ps.setString(3, dto.getDireccion());
+//        ps.executeUpdate();
+//    }
     }
 
     @Override
