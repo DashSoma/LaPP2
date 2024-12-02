@@ -1,6 +1,6 @@
 package Vista.Proveedor;
 
-import Controller.ProveedorControlador;
+import Controlador.ProveedorControlador;
 import Vistas.*;
 import Modelo.Proveedores.Proveedor;
 import javax.swing.JOptionPane;

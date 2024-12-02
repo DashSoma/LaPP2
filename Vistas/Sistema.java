@@ -4,7 +4,7 @@
  */
 package Vistas;
 
-import Controller.ClienteControlador;
+import Controlador.ClienteControlador;
 import Modelo.Clientes.Cliente;
 import java.util.List;
 import javax.swing.JOptionPane;

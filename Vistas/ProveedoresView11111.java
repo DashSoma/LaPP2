@@ -1,6 +1,6 @@
 package Vistas;
 
-import Controller.ProveedorControlador;
+import Controlador.ProveedorControlador;
 import Modelo.Proveedores.Proveedor;
 import Utils.UtilDate;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package Vista.Cliente;
 
-import Controller.ClienteControlador;
+import Controlador.ClienteControlador;
 import Vistas.*;
 import Modelo.Clientes.Cliente;
 import java.util.ArrayList;
@@ -116,7 +116,6 @@ public class FrmCliente11 extends javax.swing.JDialog implements Vista<Cliente> 
 
         jPanel1.setBackground(new java.awt.Color(255, 127, 0));
 
-        btnInsertar.setBackground(new java.awt.Color(40, 167, 69));
         btnInsertar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnInsertar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/insert.png"))); // NOI18N
         btnInsertar.setText("Insertar");
@@ -131,7 +130,6 @@ public class FrmCliente11 extends javax.swing.JDialog implements Vista<Cliente> 
             }
         });
 
-        btnEditar.setBackground(new java.awt.Color(221, 47, 47));
         btnEditar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/edit.png"))); // NOI18N
         btnEditar.setText("Editar");
@@ -146,7 +144,6 @@ public class FrmCliente11 extends javax.swing.JDialog implements Vista<Cliente> 
             }
         });
 
-        btnEliminar.setBackground(new java.awt.Color(221, 47, 47));
         btnEliminar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/delete.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
@@ -161,7 +158,6 @@ public class FrmCliente11 extends javax.swing.JDialog implements Vista<Cliente> 
             }
         });
 
-        btnLimpiar.setBackground(new java.awt.Color(40, 167, 69));
         btnLimpiar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/clean.png"))); // NOI18N
         btnLimpiar.setText("Limpiar");
@@ -329,7 +325,7 @@ public class FrmCliente11 extends javax.swing.JDialog implements Vista<Cliente> 
                         .addGap(18, 18, 18)
                         .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblTelefono)
-                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblEmail)
