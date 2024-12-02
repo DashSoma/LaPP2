@@ -48,15 +48,12 @@ public class ProductoControlador {
     }
 
     public void create(Productos producto) {
-        if (producto == null || !validateRequired(producto)) {
+          if (producto == null || !validateRequired(producto)) {
             vista.showError("Faltan datos requeridos");
             return;
         }
         try {
-            if (!validatePK(producto.getCodigo())) {
-                vista.showError("La cédula ingresada ya se encuentra registrada");
-                return;
-            }
+            // Crear el proveedor en la base de datos
             dao.create(mapper.toDTO(producto));
             vista.showMessage("Datos guardados correctamente");
         } catch (SQLException ex) {
