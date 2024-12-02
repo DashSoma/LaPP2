@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Utils;
 
 import javax.swing.JButton;
@@ -63,4 +60,8 @@ public class UtilGui {
 //            btn.setEnabled(!btn.isEnabled());
 //        }
 //    }
+
+    public static void changeStateButtons(JButton btlClear, JButton btlCancel, JButton btlEdit, JButton btlExit) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

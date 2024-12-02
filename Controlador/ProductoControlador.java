@@ -5,7 +5,10 @@
 package Controlador;
 
 import DateBase.DataBase;
+import Modelo.Clientes.ClienteDAO;
+import Modelo.Clientes.ClientesMapper;
 import Modelo.Productos.ProductoDTO;
+import Modelo.Productos.ProductoMapper;
 import Modelo.Productos.ProductosDAO;
 import Vistas.Vista;
 import java.util.List;
@@ -18,12 +21,24 @@ import java.util.stream.Collectors;
  * @author DaniTini
  */
 public class ProductoControlador {
-    
-      private ProductosDAO dao;
+
+    private ProductosDAO dao;
     private final Vista vista;
+    private ProductoMapper mapper;
+
+    public ProductoControlador(Vista vista, ProductoMapper mapper) {
+        this.vista = vista;
+        this.mapper = mapper;
+        try {
+            dao = new ProductosDAO(DataBase.getConnection());
+        } catch (SQLException ex) {
+            vista.showError("Error al conectar con la Base de Datos");
+        }
+    }
 
     public ProductoControlador(Vista vista) {
         this.vista = vista;
+        mapper = new ProductoMapper();
         try {
             dao = new ProductosDAO(DataBase.getConnection());
         } catch (SQLException ex) {
@@ -38,13 +53,13 @@ public class ProductoControlador {
         }
         try {
             if (!validatePK(producto.getCodigo())) {
-                vista.showError("El código ingresado ya está registrado");
+                vista.showError("La cédula ingresada ya se encuentra registrada");
                 return;
             }
-            dao.create(producto);
-            vista.showMessage("Producto guardado correctamente");
+            dao.create(mapper.toDTO(producto));
+            vista.showMessage("Datos guardados correctamente");
         } catch (SQLException ex) {
-            vista.showError("Error al guardar los datos: " + ex.getMessage());
+            vista.showError("Ocurrió un error al guardar los datos: " + ex.getMessage());
         }
     }
 
@@ -119,6 +134,5 @@ public class ProductoControlador {
             return false;
         }
     }
-    
-    
+
 }

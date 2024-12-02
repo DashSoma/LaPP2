@@ -198,6 +198,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="- -"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFechaIngActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="txtCategorias">
           <Properties>
@@ -296,14 +299,26 @@
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JButton" name="btlAdd">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btlAddActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btlClear">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btlClearActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btlCancel">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btlCancelActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btlEdit">
         </Component>
         <Component class="javax.swing.JButton" name="btlExit">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btlExitActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

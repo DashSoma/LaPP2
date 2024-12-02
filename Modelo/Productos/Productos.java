@@ -1,6 +1,7 @@
 package Modelo.Productos;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 /**
  *
@@ -53,6 +54,22 @@ public class Productos {
         return fechaPIngresado;
     }
 
+    public void setFechaPIngresado(LocalDate fechaPIngresado) {
+        if (fechaPIngresado == null) {
+            throw new IllegalArgumentException("La fecha no puede ser nulo");
+         }
+        this.fechaPIngresado = fechaPIngresado;
+    }    
+
+    public static int calculateFecha(LocalDate birthDate) {
+        if (birthDate == null) {
+            throw new IllegalArgumentException("La fecha no puede ser nula");
+        }
+        return Period.between(birthDate, LocalDate.now()).getYears();
+    }
+    
+    
+    
     public void setPrecio(int precio) {
         this.precio = precio;
     }
