@@ -98,14 +98,23 @@ public class ProveedorDAO extends DAO<ProveedorDTO>{
 
     @Override
     public boolean delete(Object id) throws SQLException {
-        if(id == null || String.valueOf(id).trim().isEmpty()){
-            return false;
-        }
-        String query = "CALL ProveedorDelete(?)";
-        try(PreparedStatement stmt = connection.prepareStatement(query)){
-            stmt.setString(1, String.valueOf(id));
-            return stmt.executeUpdate() > 0;
-        } 
+//        if(id == null || String.valueOf(id).trim().isEmpty()){
+//            return false;
+//        }
+//        String query = "CALL ProveedorDelete(?)";
+//        try(PreparedStatement stmt = connection.prepareStatement(query)){
+//            stmt.setInt(1, String.valueOf(id));
+//            return stmt.executeUpdate() > 0;
+//        } 
+        if (id == null || !(id instanceof Integer)) {
+        return false;
+    }
+
+    String query = "CALL ProveedorDelete(?)";
+    try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        stmt.setInt(1, (Integer) id); // Realizamos el cast a Integer
+        return stmt.executeUpdate() > 0;
+    }
     }
     
     public boolean validatePk(Object id)throws SQLException{
