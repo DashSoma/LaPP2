@@ -15,13 +15,13 @@ import java.sql.Date;
 public class ProductoDTO {
 
     
-    private final int codigo = 0;
-    private final String nombre = null;
-    private final String categoria = null;
-    private final int precio = 0;
-    private final int cantDisponible = 0;
-    private final String proveedor = null;
-    private final Date fechaPIngresado = null;
+    private final int codigo;
+    private final String nombre;
+    private final String categoria ;
+    private final int precio;
+    private final int cantDisponible;
+    private final String proveedor;
+    private final Date fechaPIngresado;
 
     public int getCodigo() {
         return codigo;
@@ -52,7 +52,18 @@ public class ProductoDTO {
     }
 
     public ProductoDTO(int codigo, String nombre, String categoria, int precio, int cantDisponible, String proveedor, Date fechaPIngresado) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.categoria = categoria;
+        this.precio = precio;
+        this.cantDisponible = cantDisponible;
+        this.proveedor = proveedor;
+        this.fechaPIngresado = fechaPIngresado;
     }
+
+    
+
+    
     
     
 }

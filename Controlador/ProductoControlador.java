@@ -9,6 +9,7 @@ import Modelo.Clientes.ClienteDAO;
 import Modelo.Clientes.ClientesMapper;
 import Modelo.Productos.ProductoDTO;
 import Modelo.Productos.ProductoMapper;
+import Modelo.Productos.Productos;
 import Modelo.Productos.ProductosDAO;
 import Vistas.Vista;
 import java.util.List;
@@ -46,7 +47,7 @@ public class ProductoControlador {
         }
     }
 
-    public void create(ProductoDTO producto) {
+    public void create(Productos producto) {
         if (producto == null || !validateRequired(producto)) {
             vista.showError("Faltan datos requeridos");
             return;

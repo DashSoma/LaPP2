@@ -4,17 +4,16 @@
  */
 package Vista.Productos;
 
-import Controller.ClienteControlador;
-import Controller.ProductoControlador;
+import Controlador.ProductoControlador;
 import Modelo.Clientes.Cliente;
-import Modelo.Productos.ProductoDTO;
 import Modelo.Productos.Productos;
 import Utils.UtilDate;
 import Utils.UtilGui;
 import Vistas.Vista;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import static javax.management.Query.value;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -29,7 +28,7 @@ public class FrmProductos extends javax.swing.JInternalFrame implements Vista<Pr
      public FrmProductos(java.awt.Frame parent, boolean modal) {
         initComponents();
         productControl = new ProductoControlador(this);
-        setLocationRelativeTo(null);
+         setLocation(WIDTH, WIDTH);
         productControl.readAll();
     }
 
@@ -61,6 +60,8 @@ public class FrmProductos extends javax.swing.JInternalFrame implements Vista<Pr
         btlCancel = new javax.swing.JButton();
         btlEdit = new javax.swing.JButton();
         btlExit = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TblProductos = new javax.swing.JTable();
 
         jPanel1.setBorder(new javax.swing.border.MatteBorder(null));
 
@@ -97,23 +98,19 @@ public class FrmProductos extends javax.swing.JInternalFrame implements Vista<Pr
                             .addComponent(LbCodigo)
                             .addComponent(jLabel3))
                         .addGap(35, 35, 35)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                            .addComponent(txtNombre)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
                         .addComponent(txtCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
-                        .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(18, 18, 18)
@@ -121,8 +118,12 @@ public class FrmProductos extends javax.swing.JInternalFrame implements Vista<Pr
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGap(18, 18, 18)
-                        .addComponent(txtFechaIng, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(108, 108, 108))
+                        .addComponent(txtFechaIng, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(94, 94, 94))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,6 +233,19 @@ public class FrmProductos extends javax.swing.JInternalFrame implements Vista<Pr
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
+        TblProductos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Codigo", "Nombre", "Categoria", "Precio", "CantidadDisponible", "Proveedores", "FechaIngreso"
+            }
+        ));
+        jScrollPane1.setViewportView(TblProductos);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -241,7 +255,8 @@ public class FrmProductos extends javax.swing.JInternalFrame implements Vista<Pr
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -250,9 +265,11 @@ public class FrmProductos extends javax.swing.JInternalFrame implements Vista<Pr
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -266,8 +283,8 @@ public class FrmProductos extends javax.swing.JInternalFrame implements Vista<Pr
         product=new Productos(
                 txtNombre.getText(),
                 txtCategorias.getToolTipText(),
-                txtPrecio.getText(),
-                txtDisponible.getText(),
+                Integer.parseInt(txtPrecio.getText()),
+                Integer.parseInt (txtDisponible.getText()),
                 txtProvedores.getToolTipText()
         );
         productControl.create(product);
@@ -308,9 +325,18 @@ public class FrmProductos extends javax.swing.JInternalFrame implements Vista<Pr
         }
         txtFechaIng.setText(String.valueOf(Productos.calculateFecha(UtilDate.toLocalDate(date))));    }//GEN-LAST:event_txtFechaIngActionPerformed
 
+    public JTable getTblProductos() {
+        return TblProductos;
+    }
+    
+    
+    
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LbCodigo;
+    private javax.swing.JTable TblProductos;
     private javax.swing.JButton btlAdd;
     private javax.swing.JButton btlCancel;
     private javax.swing.JButton btlClear;
@@ -326,6 +352,7 @@ public class FrmProductos extends javax.swing.JInternalFrame implements Vista<Pr
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> txtCategorias;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtDisponible;
@@ -337,18 +364,26 @@ public class FrmProductos extends javax.swing.JInternalFrame implements Vista<Pr
 
     @Override
     public void show(Productos ent ) {
-        txtCodigo.setText(product.getCodigo());
+        txtCodigo.setText(String.valueOf( product.getCodigo()));
         txtNombre.setText(product.getNombre());
         txtCategorias.setToolTipText(product.getCategoria());
-        txtPrecio.setText(product.getPrecio());
-        txtDisponible.setText(product.getCantDisponible());
+        txtPrecio.setText(String.valueOf(product.getPrecio()));  
+        txtDisponible.setText(String.valueOf(product.getCantDisponible()));
         txtProvedores.setToolTipText(product.getProveedor());
-        txtFechaIng.setText(product.getFechaPIngresado());
-    }
+        txtFechaIng.setText(product.getFechaPIngresado().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));    }
     @Override
     public void showAll(List<Productos> ents) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+for (Productos client : ents) {
+            System.out.println(client.toString());
+        }
+        DefaultTableModel model = (DefaultTableModel) TblProductos.getModel();
+        model.setRowCount(0);
+        for (Productos c : ents) {
+            model.addRow(new Object[]{c.getCodigo(), c.getNombre(),
+                c.getCategoria(), c.getPrecio(), c.getCantDisponible(), c.getProveedor(), c.getFechaPIngresado()});
+        }
+        txtDisponible.setText(String.valueOf(model.getRowCount()));
+    }    
 
     @Override
     public void showMessage(String msg) {
@@ -363,10 +398,6 @@ public class FrmProductos extends javax.swing.JInternalFrame implements Vista<Pr
     @Override
     public boolean validateRequired() {
         return UtilGui.validateFields(txtCodigo,txtNombre,txtCategorias,txtPrecio,txtDisponible, txtProvedores, txtFechaIng);
-    }
-
-    private void setLocationRelativeTo(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     private void SetEditableStateTxts(boolean b) {
