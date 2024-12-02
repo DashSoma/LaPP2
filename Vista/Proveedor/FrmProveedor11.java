@@ -43,7 +43,6 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
         lblTelefono = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
         txtContacto = new javax.swing.JFormattedTextField();
-        txtId = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnInsertar = new javax.swing.JButton();
@@ -248,12 +247,10 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
                                     .addComponent(lblTelefono)
                                     .addComponent(lblDireccion))
                                 .addGap(29, 29, 29)
-                                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(txtDireccion, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtContacto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
-                                        .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING)))
+                                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtDireccion, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtContacto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addGap(38, 38, 38)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jScrollPane1))))
@@ -272,9 +269,7 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlDatosLayout.createSequentialGroup()
-                        .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNombreC)
@@ -317,11 +312,11 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        txtId.setText("");
+//        txtId.setText("");
         txtNombre.setText("");
         txtContacto.setText("");
         txtDireccion.setText("");
-        txtId.requestFocus();
+//        txtId.requestFocus();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
 
@@ -346,10 +341,10 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
     private void tblProveedorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProveedorMousePressed
         if (evt.getClickCount() == 1) {
             int row = tblProveedor.getSelectedRow();  // Obtiene la fila seleccionada
-            txtId.setText(String.valueOf(tblProveedor.getValueAt(row, 0)));
-            txtNombre.setText(String.valueOf(tblProveedor.getValueAt(row, 1)));
-            txtDireccion.setText(String.valueOf(tblProveedor.getValueAt(row, 2)));
-            txtContacto.setText(String.valueOf(tblProveedor.getValueAt(row, 3)));
+//            txtId.setText(String.valueOf(tblProveedor.getValueAt(row, 0)));
+            txtNombre.setText(String.valueOf(tblProveedor.getValueAt(row, 0)));
+            txtDireccion.setText(String.valueOf(tblProveedor.getValueAt(row, 1)));
+            txtContacto.setText(String.valueOf(tblProveedor.getValueAt(row, 2)));
 
         }
     }//GEN-LAST:event_tblProveedorMousePressed
@@ -386,22 +381,21 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
 //        } else {
 //            JOptionPane.showMessageDialog(this, "Se debe seleccionar 1 registro");
 //        }
-        if (tblProveedor.getSelectedRowCount() == 1) {
+         if (tblProveedor.getSelectedRowCount() == 1) {
             int fila = tblProveedor.getSelectedRow();
-            int id = (int) tblProveedor.getValueAt(fila, 0);  // Obtén el ID del proveedor seleccionado
 
-            // Solo se permite modificar el campo de contacto
-            if (!txtContacto.getText().isEmpty()) {
-                // Creamos un nuevo objeto Proveedor solo con los campos que se desean actualizar
-                proveedor = new Proveedor(id, txtNombre.getText(), txtContacto.getText(), txtDireccion.getText());
-                Controlador.update(proveedor);  // Llamamos al controlador para actualizar solo el contacto
-                Controlador.readAll();  // Recargamos la lista de proveedores
-                btnLimpiarActionPerformed(null);  // Limpiamos los campos del formulario
+            if (!txtNombre.getText().isEmpty()) {
+                proveedor = new Proveedor(txtNombre.getText(), txtContacto.getText(),
+                        txtDireccion.getText());
+                Controlador.update(proveedor);
+                Controlador.readAll();
+        
+                btnLimpiarActionPerformed(null);
             } else {
-                JOptionPane.showMessageDialog(this, "El campo de contacto no puede estar vacío.");
+                JOptionPane.showMessageDialog(this, "Los campos no pueden estar vacíos");
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un proveedor.");
+            JOptionPane.showMessageDialog(this, "Se debe seleccionar 1 registro");
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -494,7 +488,6 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
     private javax.swing.JTextField txtCant;
     private javax.swing.JFormattedTextField txtContacto;
     private javax.swing.JTextField txtDireccion;
-    private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 

@@ -128,13 +128,13 @@ public class ProveedorControlador {
 //            vista.showError("Ocurrio un error al actualizar los datos: " + ex.getMessage());
 //        }
 
+
         if (proveedor == null || !validateRequired(proveedor)) {
             vista.showError("Faltan datos requeridos");
             return;
         }
         try {
-            // El ID se maneja automáticamente (no se valida si el ID es válido, ya que se supone que existe)
-            dao.update(mapper.toDTO(proveedor));  // Solo actualiza el contacto, no el ID
+            dao.update(mapper.toDTO(proveedor));
             vista.showMessage("Datos actualizados correctamente");
         } catch (SQLException ex) {
             vista.showError("Ocurrió un error al actualizar los datos: " + ex.getMessage());
