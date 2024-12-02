@@ -1,11 +1,8 @@
 package Vista.Proveedor;
 
-import Controller.ClienteControlador;
 import Controller.ProveedorControlador;
 import Vistas.*;
-import Modelo.Clientes.Cliente;
 import Modelo.Proveedores.Proveedor;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -46,6 +43,8 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
         lblTelefono = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
         txtContacto = new javax.swing.JFormattedTextField();
+        txtId = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProveedor = new javax.swing.JTable();
         pnlBotones = new javax.swing.JPanel();
@@ -79,15 +78,21 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
         lblTelefono.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblTelefono.setText("Teléfono:");
 
+        jLabel1.setText("Id:");
+
         javax.swing.GroupLayout pnlDatosLayout = new javax.swing.GroupLayout(pnlDatos);
         pnlDatos.setLayout(pnlDatosLayout);
         pnlDatosLayout.setHorizontalGroup(
             pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDatosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblNombreC)
+                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblNombreC)
+                    .addComponent(jLabel1))
                 .addGap(107, 107, 107)
-                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38)
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTelefono)
@@ -102,21 +107,28 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
             pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDatosLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblDireccion)
-                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlDatosLayout.createSequentialGroup()
                         .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtContacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblTelefono))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(pnlDatosLayout.createSequentialGroup()
-                        .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblNombreC))
-                        .addGap(332, 332, 332))))
+                        .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblDireccion)
+                            .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)
+                        .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(pnlDatosLayout.createSequentialGroup()
+                                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtContacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblTelefono))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(pnlDatosLayout.createSequentialGroup()
+                                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblNombreC))
+                                .addGap(332, 332, 332))))))
         );
 
         tblProveedor.setAutoCreateRowSorter(true);
@@ -284,10 +296,11 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        txtId.setText("");
         txtNombre.setText("");
         txtContacto.setText("");
         txtDireccion.setText("");
-//        txtId.requestFocus();
+        txtId.requestFocus();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
 
@@ -312,9 +325,10 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
     private void tblProveedorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProveedorMousePressed
         if (evt.getClickCount() == 1) {
             int row = tblProveedor.getSelectedRow();  // Obtiene la fila seleccionada
-            txtNombre.setText(String.valueOf(tblProveedor.getValueAt(row, 0)));
-            txtDireccion.setText(String.valueOf(tblProveedor.getValueAt(row, 1)));
-            txtContacto.setText(String.valueOf(tblProveedor.getValueAt(row, 2)));
+            txtId.setText(String.valueOf(tblProveedor.getValueAt(row, 0)));
+            txtNombre.setText(String.valueOf(tblProveedor.getValueAt(row, 1)));
+            txtDireccion.setText(String.valueOf(tblProveedor.getValueAt(row, 2)));
+            txtContacto.setText(String.valueOf(tblProveedor.getValueAt(row, 3)));
 
         }
     }//GEN-LAST:event_tblProveedorMousePressed
@@ -545,6 +559,7 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnInsertar;
     private javax.swing.JButton btnLimpiar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblBuscar;
     private javax.swing.JLabel lblCant;
@@ -558,6 +573,7 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
     private javax.swing.JTextField txtCant;
     private javax.swing.JFormattedTextField txtContacto;
     private javax.swing.JTextField txtDireccion;
+    private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 
