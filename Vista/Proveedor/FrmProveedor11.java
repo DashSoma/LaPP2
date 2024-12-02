@@ -16,7 +16,6 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
 
     ProveedorControlador Controlador;
     Proveedor proveedor;
-//hola
     DefaultTableModel model;
 
     public FrmProveedor11() {
@@ -237,7 +236,7 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlDatosLayout.createSequentialGroup()
                         .addComponent(lblBuscar)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtBuscar))
                     .addGroup(pnlDatosLayout.createSequentialGroup()
                         .addContainerGap()
@@ -356,29 +355,54 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
     }//GEN-LAST:event_tblProveedorMousePressed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        Controlador.delete(proveedor);
-        Controlador.readAll();
+//        Controlador.delete(proveedor);
+//        Controlador.readAll();
+        int row = tblProveedor.getSelectedRow();
+        if (row != -1) {
+            int id = (int) tblProveedor.getValueAt(row, 0);
+            Proveedor proveedor = new Proveedor(id);
+            Controlador.delete(proveedor);
+            Controlador.readAll();
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un proveedor para eliminar.");
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
 
+//        if (tblProveedor.getSelectedRowCount() == 1) {
+//            int fila = tblProveedor.getSelectedRow();
+//
+//            if (!txtNombre.getText().isEmpty()) {
+//                proveedor = new Proveedor(txtNombre.getText(), txtContacto.getText(),
+//                        txtDireccion.getText());
+//                Controlador.update(proveedor);
+//                Controlador.readAll();
+//
+//                btnLimpiarActionPerformed(null);
+//            } else {
+//                JOptionPane.showMessageDialog(this, "Los campos no pueden estar vacíos");
+//            }
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Se debe seleccionar 1 registro");
+//        }
         if (tblProveedor.getSelectedRowCount() == 1) {
             int fila = tblProveedor.getSelectedRow();
+            int id = (int) tblProveedor.getValueAt(fila, 0);  // Obtén el ID del proveedor seleccionado
 
-            if (!txtNombre.getText().isEmpty()) {
-                proveedor = new Proveedor(txtNombre.getText(), txtContacto.getText(),
-                        txtDireccion.getText());
-                Controlador.update(proveedor);
-                Controlador.readAll();
-
-                btnLimpiarActionPerformed(null);
+            // Solo se permite modificar el campo de contacto
+            if (!txtContacto.getText().isEmpty()) {
+                // Creamos un nuevo objeto Proveedor solo con los campos que se desean actualizar
+                proveedor = new Proveedor(id, txtNombre.getText(), txtContacto.getText(), txtDireccion.getText());
+                Controlador.update(proveedor);  // Llamamos al controlador para actualizar solo el contacto
+                Controlador.readAll();  // Recargamos la lista de proveedores
+                btnLimpiarActionPerformed(null);  // Limpiamos los campos del formulario
             } else {
-                JOptionPane.showMessageDialog(this, "Los campos no pueden estar vacíos");
+                JOptionPane.showMessageDialog(this, "El campo de contacto no puede estar vacío.");
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Se debe seleccionar 1 registro");
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un proveedor.");
         }
-
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
@@ -433,133 +457,7 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
             java.util.logging.Logger.getLogger(FrmProveedor11.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

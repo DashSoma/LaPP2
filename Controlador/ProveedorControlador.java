@@ -30,7 +30,6 @@ public class ProveedorControlador {
 //        this.vista = vista;
 //        this.mapper = mapper;
 //    }
-    
     public ProveedorControlador(Vista vista) {
         this.vista = vista;
         mapper = new ProveedorMapper();
@@ -86,77 +85,75 @@ public class ProveedorControlador {
 //        } catch (SQLException ex) {
 //            vista.showError("Error al cargar los datos: "+ ex.getMessage());
 //        }
-//        
         try {
-            // Obtener los datos desde el DAO
             List<ProveedorDTO> dtoList = dao.readAll();
-
-            // Convertir los DTOs a entidades
             List<Proveedor> proveedorList = dtoList.stream()
                     .map(mapper::toEnt)
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());
-
-            // Enviar los datos a la vista
             vista.showAll(proveedorList);
-
         } catch (SQLException ex) {
             vista.showError("Error al cargar los datos: " + ex.getMessage());
         }
+//        try {
+//            // Obtener los datos desde el DAO
+//            List<ProveedorDTO> dtoList = dao.readAll();
+//
+//            // Convertir los DTOs a entidades
+//            List<Proveedor> proveedorList = dtoList.stream()
+//                    .map(mapper::toEnt)
+//                    .filter(Objects::nonNull)
+//                    .collect(Collectors.toList());
+//
+//            // Enviar los datos a la vista
+//            vista.showAll(proveedorList);
+//
+//        } catch (SQLException ex) {
+//            vista.showError("Error al cargar los datos: " + ex.getMessage());
+//        }
     }
 
     public void update(Proveedor proveedor) {
+//        if (proveedor == null || !validateRequired(proveedor)) {
+//            vista.showError("Faltan datos requeridos");
+//            return;
+//        }
+//        try {
+//            if (validatePK(proveedor.getId())) {
+//                vista.showError("La cedula ingresada no se encuentra registrada");
+//                return;
+//            }
+//            dao.update(mapper.toDTO(proveedor));
+//        } catch (SQLException ex) {
+//            vista.showError("Ocurrio un error al actualizar los datos: " + ex.getMessage());
+//        }
+
         if (proveedor == null || !validateRequired(proveedor)) {
             vista.showError("Faltan datos requeridos");
             return;
         }
         try {
-            if (validatePK(proveedor.getId())) {
-                vista.showError("La cedula ingresada no se encuentra registrada");
-                return;
-            }
-            dao.update(mapper.toDTO(proveedor));
+            // El ID se maneja automáticamente (no se valida si el ID es válido, ya que se supone que existe)
+            dao.update(mapper.toDTO(proveedor));  // Solo actualiza el contacto, no el ID
+            vista.showMessage("Datos actualizados correctamente");
         } catch (SQLException ex) {
-            vista.showError("Ocurrio un error al actualizar los datos: " + ex.getMessage());
+            vista.showError("Ocurrió un error al actualizar los datos: " + ex.getMessage());
         }
     }
 
     public void delete(Proveedor proveedor) {
-//        if(proveedor==null || !validateRequired(proveedor)) {
-//            vista.showError("No hay ningun cliente cargado actualmente");
-//            return;
-//        }
-//        try {
-//            if (validatePK(proveedor.getId())){
-//                vista.showError("La cedula ingresada no ya se encuentra registrada");
-//                return;
-//            }
-//            dao.delete(proveedor.getId());
-//        } catch (SQLException ex) {
-//            vista.showError("Ocurrio un error al eliminar los datos: "+ ex.getMessage());
-//        }
         if (proveedor == null || proveedor.getId() <= 0) {
             vista.showError("ID inválido para eliminar.");
             return;
         }
         try {
-            dao.delete(proveedor.getId()); // Llama al DAO para eliminar
+            dao.delete(proveedor.getId());  // Llama al DAO para eliminar por ID
             vista.showMessage("Proveedor eliminado correctamente.");
         } catch (SQLException ex) {
             vista.showError("Error al eliminar el proveedor: " + ex.getMessage());
         }
     }
 
-//    public boolean validateRequired(Proveedor proveedor) {
-//        return proveedor.getNombre() != null && !proveedor.getNombre().trim().isEmpty()
-//                && proveedor.getContacto() != null && !proveedor.getContacto().trim().isEmpty()
-//                && proveedor.getDireccion() != null && !proveedor.getDireccion().trim().isEmpty();
-//    }
-//    public boolean validateRequired(Proveedor proveedor) {
-//    return proveedor.getNombre() != null && !proveedor.getNombre().trim().isEmpty()
-//            && proveedor.getContacto() != null && !proveedor.getContacto().trim().isEmpty()
-//            && proveedor.getDireccion() != null && !proveedor.getDireccion().trim().isEmpty();
-//}
     public boolean validateRequired(Proveedor proveedor) {
         return proveedor.getNombre() != null && !proveedor.getNombre().trim().isEmpty()
                 && proveedor.getContacto() != null && !proveedor.getContacto().trim().isEmpty()
@@ -174,11 +171,34 @@ public class ProveedorControlador {
 
     public void readFiltered(String filter) {
         try {
-            List<Proveedor> filteredList = dao.search(filter); // Implementa la búsqueda en el DAO
+            List<Proveedor> filteredList = dao.search(filter);
             vista.showAll(filteredList); // Envía los resultados a la vista
         } catch (SQLException ex) {
             vista.showError("Error al filtrar datos: " + ex.getMessage());
         }
     }
+//    public boolean validateRequired(Proveedor proveedor) {
+//        return proveedor.getNombre() != null && !proveedor.getNombre().trim().isEmpty()
+//                && proveedor.getContacto() != null && !proveedor.getContacto().trim().isEmpty()
+//                && proveedor.getDireccion() != null && !proveedor.getDireccion().trim().isEmpty();
+//    }
+//
+//    public boolean validatePK(int id) {
+//        try {
+//            return dao.validatePk(id);
+//        } catch (SQLException ex) {
+//            System.out.println(ex.toString());
+//            return false;
+//        }
+//    }
+//
+//    public void readFiltered(String filter) {
+//        try {
+//            List<Proveedor> filteredList = dao.search(filter); // Implementa la búsqueda en el DAO
+//            vista.showAll(filteredList); // Envía los resultados a la vista
+//        } catch (SQLException ex) {
+//            vista.showError("Error al filtrar datos: " + ex.getMessage());
+//        }
+//    }
 
 }

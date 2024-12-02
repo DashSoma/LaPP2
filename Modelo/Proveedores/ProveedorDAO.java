@@ -86,14 +86,25 @@ public class ProveedorDAO extends DAO<ProveedorDTO>{
 
     @Override
     public boolean update(ProveedorDTO dto) throws SQLException {
-        if(dto == null){
-            return false;
-        }
-        String query = "CALL ProveedorUpdate(?)";
-        try(PreparedStatement stmt = connection.prepareStatement(query)){
-            stmt.setString(1, dto.getContacto());
-            return stmt.executeUpdate() > 0;
-        } 
+//        if(dto == null){
+//            return false;
+//        }
+//        String query = "CALL ProveedorUpdate(?)";
+//        try(PreparedStatement stmt = connection.prepareStatement(query)){
+//            stmt.setString(1, dto.getContacto());
+//            return stmt.executeUpdate() > 0;
+//        } 
+
+if (dto == null || dto.getContacto() == null || dto.getContacto().isEmpty()) {
+        return false;  // Asegúrate de que el contacto no sea nulo o vacío
+    }
+    
+    String query = "CALL ProveedorUpdate(?)";  // Llamamos al procedimiento almacenado
+    
+    try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        stmt.setString(1, dto.getContacto());  // Solo actualizamos el contacto
+        return stmt.executeUpdate() > 0;  // Si se actualiza, retorna true
+    } 
     }
 
     @Override

@@ -67,8 +67,10 @@ public class Proveedor {
         this.contacto = contacto;
         this.direccion = direccion;
     }
-    
-    
+
+    public Proveedor(int id) {
+        this.id = id;
+    }
     
 //    
 //    
