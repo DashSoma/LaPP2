@@ -369,8 +369,24 @@ public class FrmCliente11 extends javax.swing.JDialog implements Vista<Cliente> 
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
 
-        clienteController.update(cliente);
-        clienteController.readAll();
+          if (tblClient.getSelectedRowCount() == 1) {
+            int fila = tblClient.getSelectedRow();
+
+            if (!txtNombreCompl.getText().isEmpty()) {
+                cliente = new Cliente(txtCedula.getText(), txtNombreCompl.getText(), 
+                        txtDireccion.getText(), txtTelefono.getText(), txtEmail.getText());
+                clienteController.update(cliente);
+                clienteController.readAll();
+                   
+      
+        
+                btnLimpiarActionPerformed(null);
+            } else {
+                JOptionPane.showMessageDialog(this, "Los campos no pueden estar vacíos");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Se debe seleccionar 1 registro");
+        }
 
     }//GEN-LAST:event_btnEditarActionPerformed
 
