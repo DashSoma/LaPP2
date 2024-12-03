@@ -11,9 +11,18 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.mysql.cj.xdevapi.DatabaseObject;
+import com.mysql.cj.xdevapi.DeleteStatement;
+import com.mysql.cj.xdevapi.InsertStatement;
+import com.mysql.cj.xdevapi.Schema;
+import com.mysql.cj.xdevapi.SelectStatement;
+import com.mysql.cj.xdevapi.Session;
+import com.mysql.cj.xdevapi.Table;
+import com.mysql.cj.xdevapi.UpdateStatement;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  *
@@ -695,7 +704,67 @@ public class ProductosView extends javax.swing.JDialog {
             for (int i = 0; i < columnCount; i++) {
                 columnWidths[i] = 100f; // Ajusta el ancho de las columnas si es necesario
             }
-            Table pdfTable = new Table(columnWidths);
+            Table pdfTable = new Table(columnWidths) {
+                @Override
+                public InsertStatement insert() {
+                    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                }
+
+                @Override
+                public InsertStatement insert(String... strings) {
+                    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                }
+
+                @Override
+                public InsertStatement insert(Map<String, Object> map) {
+                    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                }
+
+                @Override
+                public SelectStatement select(String... strings) {
+                    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                }
+
+                @Override
+                public UpdateStatement update() {
+                    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                }
+
+                @Override
+                public DeleteStatement delete() {
+                    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                }
+
+                @Override
+                public long count() {
+                    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                }
+
+                @Override
+                public boolean isView() {
+                    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                }
+
+                @Override
+                public Session getSession() {
+                    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                }
+
+                @Override
+                public Schema getSchema() {
+                    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                }
+
+                @Override
+                public String getName() {
+                    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                }
+
+                @Override
+                public DatabaseObject.DbObjectStatus existsInDatabase() {
+                    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                }
+            };
 
             // Agregar encabezados al PDF
             for (int i = 0; i < columnCount; i++) {

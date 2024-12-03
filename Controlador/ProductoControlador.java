@@ -41,17 +41,27 @@ public class ProductoControlador {
         this(vista, new ProductoMapper());
     }
 
+<<<<<<< HEAD
     public void create(Productos producto) {
         if (producto == null || !validateRequired(producto)) {
+=======
+    public void create(Productos productos) {
+          if (productos == null || !validateRequired(null)) {
+>>>>>>> df446ee (Arreglos)
             vista.showError("Faltan datos requeridos");
             return;
         }
         try {
+<<<<<<< HEAD
             if (!validatePK(producto.getCodigo())) {
                 vista.showError("El ID ingresado ya se encuentra registrado");
                 return;
             }
             dao.create(mapper.toDTO(Producto));
+=======
+            // Crear el proveedor en la base de datos
+            dao.create(mapper.toDTO(productos));
+>>>>>>> df446ee (Arreglos)
             vista.showMessage("Datos guardados correctamente");
         } catch (SQLException ex) {
             vista.showError("Ocurrió un error al guardar los datos: " + ex.getMessage());
@@ -82,17 +92,22 @@ public class ProductoControlador {
         }
     }
 
+<<<<<<< HEAD
     public void update(ProductoDTO producto) {
         if (producto == null || !validateRequired(Producto)) {
+=======
+    public void update(ProductoDTO productos) {
+        if (productos == null || !validateRequired(productos)) {
+>>>>>>> df446ee (Arreglos)
             vista.showError("Faltan datos requeridos");
             return;
         }
         try {
-            if (validatePK(producto.getCodigo())) {
+            if (validatePK(productos.getCodigo())) {
                 vista.showError("El código ingresado no está registrado");
                 return;
             }
-            dao.update(producto);
+            dao.update(productos);
             vista.showMessage("Producto actualizado correctamente");
         } catch (SQLException ex) {
             vista.showError("Error al actualizar los datos: " + ex.getMessage());
@@ -112,6 +127,7 @@ public class ProductoControlador {
         }
     }
 
+<<<<<<< HEAD
     private boolean validateRequired(Productos producto) {
         return producto.getCodigo() != null && !producto.getCodigo().trim().isEmpty()
                 && producto.getNombre() != null && !producto.getNombre().trim().isEmpty()
@@ -119,6 +135,14 @@ public class ProductoControlador {
                 && producto.getPrecio() > 0
                 && producto.getCantDisponible() > 0
                 && producto.getProveedor() != null && !producto.getProveedor().trim().isEmpty();
+=======
+    private boolean validateRequired(ProductoDTO product) {
+        return product.getNombre() != null && !product.getNombre().trim().isEmpty()
+                && product.getCategoria() != null && !product.getCategoria().trim().isEmpty()
+                && product.getProveedor() != null && !product.getProveedor().trim().isEmpty()
+                && product.getPrecio() > 0
+                && product.getCantDisponible() > 0;
+>>>>>>> df446ee (Arreglos)
     }
 
     private boolean validatePK(int codigo) {

@@ -7,6 +7,7 @@ package Modelo.Productos;
 import DateBase.DataBase;
 import Modelo.Mapper.Mapper;
 import Modelo.Proveedores.ProveedorDAO;
+import Modelo.Proveedores.ProveedorDTO;
 import Modelo.Proveedores.ProveedorMapper;
 import java.sql.SQLException;
 
@@ -14,10 +15,10 @@ import java.sql.SQLException;
  *
  * @author dashs
  */
-public class ProductoMapper implements Mapper<Producto, ProductoDTO> {
+public class ProductoMapper implements Mapper<Productos, ProductoDTO> {
 
     @Override
-    public ProductoDTO toDTO(Producto ent) {
+    public ProductoDTO toDTO(Productos ent) {
         return new ProductoDTO(
                 ent.getCodigo(),
                 ent.getNombre(),
@@ -30,15 +31,15 @@ public class ProductoMapper implements Mapper<Producto, ProductoDTO> {
     }
 
     @Override
-    public Producto toEnt(ProductoDTO dto) {
+    public Productos toEnt(ProductoDTO dto) {
         try {
-            return new Producto(
+             new Productos(
                     dto.getCodigo(),
                     dto.getNombre(),
                     dto.getCategoria(),
                     dto.getPrecio(),
                     dto.getCantDisponible(),
-                    new ProveedorMapper().toEnt(new ProveedorDAO(DateBase.DataBase.getConnection()).read(dto.getProveedor()))
+                    new ProveedorMapper().toEnt(new ProveedorDTO(DateBase.DataBase.getConnection()).read(dto.getProveedor()))
             );
         } catch (SQLException ex) {
             throw new RuntimeException("Error while mapping RentalContractDTO to RentalContract", ex);

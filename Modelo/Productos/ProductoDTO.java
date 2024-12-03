@@ -43,7 +43,7 @@ public class ProductoDTO {
         return proveedor;
     }
 
-    public ProductoDTO(int codigo, String nombre, String categoria, double precio, int cantDisponible, int proveedor) {
+    public ProductoDTO(int codigo, String nombre, String categoria, int cantDisponible, int proveedor, int precio) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.categoria = categoria;

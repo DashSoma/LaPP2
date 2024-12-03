@@ -31,10 +31,6 @@ public class Productos {
         this.vTotalInventario = vTotalInventario;
     }
 
-    /**
-     * Constructor por defecto que inicializa los atributos con valores
-     * predeterminados.
-     */
     public Productos() {
         this.codigo = 0;
         this.nombre = "";

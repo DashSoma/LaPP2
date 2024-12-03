@@ -56,7 +56,6 @@ public class ProductosDAO extends DAO<ProductoDTO> {
                             rs.getInt(1), 
                             rs.getString(2), 
                             rs.getString(3), 
-                            rs.getDouble(4), 
                             rs.getInt(5),
                             rs.getInt(6));
                 }
@@ -76,7 +75,6 @@ public class ProductosDAO extends DAO<ProductoDTO> {
                             rs.getInt(1), 
                             rs.getString(2), 
                             rs.getString(3), 
-                            rs.getDouble(4), 
                             rs.getInt(5),
                             rs.getInt(6)));
                 }
@@ -105,7 +103,7 @@ public class ProductosDAO extends DAO<ProductoDTO> {
             return false;
         }
 
-        String query = "CALL ProveedorDelete(?)";
+        String query = "CALL ProductoDelete(?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, (Integer) id); // Realizamos el cast a Integer
             return stmt.executeUpdate() > 0;
