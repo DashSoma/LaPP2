@@ -2,6 +2,8 @@ package Modelo.Productos;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -9,15 +11,16 @@ import java.time.Period;
  */
 public class Productos {
 
-    private int codigo;
+      private int codigo;
     private String nombre;
     private String categoria;
     private int precio;
     private int cantDisponible;
     private String proveedor;
     private LocalDate fechaPIngresado = LocalDate.now();
+    private int vTotalInventario;
 
-    protected Productos(int codigo, String nombre, String categoria, int precio, int cantDisponible, String proveedor, LocalDate fechaDespido) {
+    public Productos(int codigo, String nombre, String categoria, int precio, int cantDisponible, String proveedor, LocalDate fechaDespido, int vTotalInventario) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.categoria = categoria;
@@ -25,22 +28,30 @@ public class Productos {
         this.cantDisponible = cantDisponible;
         this.proveedor = proveedor;
         this.fechaPIngresado = fechaDespido;
+        this.vTotalInventario = vTotalInventario;
     }
 
-    public int getPrecio() {
-        return precio;
-    }
-
-    public int getCantDisponible() {
-        return cantDisponible;
-    }
-
-    public LocalDate getFechaPIngresado() {
-        return fechaPIngresado;
+    /**
+     * Constructor por defecto que inicializa los atributos con valores
+     * predeterminados.
+     */
+    public Productos() {
+        this.codigo = 0;
+        this.nombre = "";
+        this.categoria = "";
+        this.fechaPIngresado = LocalDate.now();
+        this.precio = 0;
+        this.cantDisponible = 0;
+        this.proveedor = "";
+        this.vTotalInventario = 0;
     }
 
     public int getCodigo() {
         return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
     public String getNombre() {
@@ -48,9 +59,6 @@ public class Productos {
     }
 
     public void setNombre(String nombre) {
-        if (nombre == null) {
-            throw new IllegalArgumentException("El Nombre no puede ser nulo");
-        }
         this.nombre = nombre;
     }
 
@@ -59,10 +67,23 @@ public class Productos {
     }
 
     public void setCategoria(String categoria) {
-        if (categoria == null) {
-            throw new IllegalArgumentException("El Categoria no puede ser nulo");
-        }
         this.categoria = categoria;
+    }
+
+    public int getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(int precio) {
+        this.precio = precio;
+    }
+
+    public int getCantDisponible() {
+        return cantDisponible;
+    }
+
+    public void setCantDisponible(int cantDisponible) {
+        this.cantDisponible = cantDisponible;
     }
 
     public String getProveedor() {
@@ -70,45 +91,39 @@ public class Productos {
     }
 
     public void setProveedor(String proveedor) {
-        if (proveedor == null) {
-            throw new IllegalArgumentException("El proveedor no puede ser nulo");
-        }
         this.proveedor = proveedor;
     }
 
-    public void setFechaPIngresado(LocalDate fechaPIngresado) {
-        if (fechaPIngresado == null) {
-            throw new IllegalArgumentException("La fecha no puede ser nulo");
+    public LocalDate getFechaPIngresado() {
+        return fechaPIngresado;
+    }
+
+    public void setFechaPIngresado(LocalDate fechaDespido) {
+        this.fechaPIngresado = fechaDespido;
+    }
+
+    public int getvTotalInventario() {
+        return vTotalInventario;
+    }
+
+    public void setvTotalInventario(int vTotalInventario) {
+        this.vTotalInventario = vTotalInventario;
+    }
+
+    public static int calcularTotalInventario(ArrayList<Productos> listaProductos) {
+        int totalPrecios = 0;
+
+        for (Productos producto : listaProductos) {
+            int precio = producto.getPrecio();
+            totalPrecios += precio;
         }
-        this.fechaPIngresado = fechaPIngresado;
-    }
-
-    public static int calculateFecha(LocalDate birthDate) {
-        if (birthDate == null) {
-            throw new IllegalArgumentException("La fecha no puede ser nula");
+        if (totalPrecios == 0) {
+            JOptionPane.showMessageDialog(null, "No hay total de inventario que mostrar");
+        } else {
+            JOptionPane.showMessageDialog(null, "El total de precios es: " + totalPrecios);
         }
-        return Period.between(birthDate, LocalDate.now()).getYears();
+        return totalPrecios;
     }
-
-    public void setPrecio(int precio) {
-        this.precio = precio;
-    }
-
-    public void setCantDisponible(int cantDisponible) {
-        this.cantDisponible = cantDisponible;
-    }
-
-    
-    
-    public Productos(String nombre, String categoria, int precio, int cantDisponible, String proveedor) {
-        this.codigo = 0;
-        this.nombre = nombre;
-        this.categoria = categoria;
-        this.precio = 0;
-        this.cantDisponible = 0;
-        this.proveedor = proveedor;
-    }
-
    
 
 }
