@@ -71,6 +71,10 @@ public class Proveedor {
     public Proveedor(int id) {
         this.id = id;
     }
+
+    public Proveedor(String contacto) {
+        this.contacto = contacto;
+    }
     
 //    
 //    

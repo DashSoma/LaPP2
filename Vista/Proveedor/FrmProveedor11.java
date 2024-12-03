@@ -347,10 +347,10 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
     private void tblProveedorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProveedorMousePressed
         if (evt.getClickCount() == 1) {
             int row = tblProveedor.getSelectedRow();  // Obtiene la fila seleccionada
-            txtId.setText(String.valueOf(tblProveedor.getValueAt(row, 0)));
+//            txtId.setText(String.valueOf(tblProveedor.getValueAt(row, 0)));
             txtNombre.setText(String.valueOf(tblProveedor.getValueAt(row, 1)));
-            txtDireccion.setText(String.valueOf(tblProveedor.getValueAt(row, 2)));
-            txtContacto.setText(String.valueOf(tblProveedor.getValueAt(row, 3)));
+            txtContacto.setText(String.valueOf(tblProveedor.getValueAt(row, 2)));
+            txtDireccion.setText(String.valueOf(tblProveedor.getValueAt(row, 3)));
 
         }
     }//GEN-LAST:event_tblProveedorMousePressed
@@ -370,7 +370,7 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-
+//
 //        if (tblProveedor.getSelectedRowCount() == 1) {
 //            int fila = tblProveedor.getSelectedRow();
 //
@@ -387,12 +387,14 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
 //        } else {
 //            JOptionPane.showMessageDialog(this, "Se debe seleccionar 1 registro");
 //        }
+           
+        
+        
          if (tblProveedor.getSelectedRowCount() == 1) {
             int fila = tblProveedor.getSelectedRow();
 
             if (!txtNombre.getText().isEmpty()) {
-                proveedor = new Proveedor(txtNombre.getText(), txtContacto.getText(),
-                        txtDireccion.getText());
+                proveedor = new Proveedor(txtContacto.getText());
                 Controlador.update(proveedor);
                 Controlador.readAll();
         
