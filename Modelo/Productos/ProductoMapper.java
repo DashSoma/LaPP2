@@ -4,45 +4,45 @@
  */
 package Modelo.Productos;
 
+import DateBase.DataBase;
 import Modelo.Mapper.Mapper;
-import Utils.UtilDate;
+import Modelo.Proveedores.ProveedorDAO;
+import Modelo.Proveedores.ProveedorMapper;
+import java.sql.SQLException;
 
 /**
  *
- * @author La comadre Dash
+ * @author dashs
  */
-public class ProductoMapper implements Mapper<Productos, ProductoDTO> {
+public class ProductoMapper implements Mapper<Producto, ProductoDTO> {
 
     @Override
-    public ProductoDTO toDTO(Productos ent) {
+    public ProductoDTO toDTO(Producto ent) {
         return new ProductoDTO(
                 ent.getCodigo(),
                 ent.getNombre(),
                 ent.getCategoria(),
                 ent.getPrecio(),
                 ent.getCantDisponible(),
-                ent.getProveedor(),
-                UtilDate.toSqlDate(ent.getFechaPIngresado())
+                ent.getProveedor().getId()
         );
+
     }
 
     @Override
-public Productos toEnt(ProductoDTO dto) {
-    try {
-        return new Productos(
-                dto.getCodigo(),
-                dto.getNombre(),
-                dto.getCategoria(),
-                dto.getPrecio(),
-                dto.getCantDisponible(),
-                dto.getProveedor(),
-                UtilDate.toLocalDate(dto.getFechaPIngresado())
-        );
-    } catch (Exception e) {
-        e.printStackTrace();
-        return null;
+    public Producto toEnt(ProductoDTO dto) {
+        try {
+            return new Producto(
+                    dto.getCodigo(),
+                    dto.getNombre(),
+                    dto.getCategoria(),
+                    dto.getPrecio(),
+                    dto.getCantDisponible(),
+                    new ProveedorMapper().toEnt(new ProveedorDAO(DateBase.DataBase.getConnection()).read(dto.getProveedor()))
+            );
+        } catch (SQLException ex) {
+            throw new RuntimeException("Error while mapping RentalContractDTO to RentalContract", ex);
+        }
     }
-}
-
 
 }

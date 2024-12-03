@@ -4,9 +4,7 @@
  */
 package Modelo.Productos;
 
-import java.time.LocalDate;
-import java.sql.Date;
-
+import Modelo.Proveedores.Proveedor;
 
 /**
  *
@@ -14,14 +12,12 @@ import java.sql.Date;
  */
 public class ProductoDTO {
 
-    
     private final int codigo;
     private final String nombre;
-    private final String categoria ;
-    private final int precio;
+    private final String categoria;
+    private final double precio;
     private final int cantDisponible;
-    private final String proveedor;
-    private final Date fechaPIngresado;
+    private final int proveedor;
 
     public int getCodigo() {
         return codigo;
@@ -35,7 +31,7 @@ public class ProductoDTO {
         return categoria;
     }
 
-    public int getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
@@ -43,27 +39,17 @@ public class ProductoDTO {
         return cantDisponible;
     }
 
-    public String getProveedor() {
+    public int getProveedor() {
         return proveedor;
     }
 
-    public Date getFechaPIngresado() {
-        return fechaPIngresado;
-    }
-
-    public ProductoDTO(int codigo, String nombre, String categoria, int precio, int cantDisponible, String proveedor, Date fechaPIngresado) {
+    public ProductoDTO(int codigo, String nombre, String categoria, double precio, int cantDisponible, int proveedor) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.categoria = categoria;
         this.precio = precio;
         this.cantDisponible = cantDisponible;
         this.proveedor = proveedor;
-        this.fechaPIngresado = fechaPIngresado;
     }
 
-    
-
-    
-    
-    
 }
