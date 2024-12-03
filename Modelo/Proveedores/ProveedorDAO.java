@@ -86,34 +86,23 @@ public class ProveedorDAO extends DAO<ProveedorDTO> {
 
     @Override
     public boolean update(ProveedorDTO dto) throws SQLException {
-        if(dto == null){
+//    if (dto != null && dto.getId() > 0 
+//    && dto.getContacto() != null && !dto.getContacto().isEmpty()) {
+//}
+        if (dto != null && dto.getId() > 0) {
             return false;
         }
-        String query = "CALL ProveedorUpdate(?)";
-        try(PreparedStatement stmt = connection.prepareStatement(query)){
-            stmt.setString(1, dto.getContacto());
+
+        String query = "CALL ProveedorUpdate(?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, dto.getId());
+            stmt.setString(2, dto.getContacto());
             return stmt.executeUpdate() > 0;
-        } 
-// Verificamos que el objeto DTO y sus campos no sean nulos o vacíos
-  
-//        if (dto == null || dto.getContacto() == null || dto.getContacto().isEmpty()) {
-//            return false;  // Asegúrate de que el contacto no sea nulo o vacío
-//        }
-//
-//        String query = "CALL ProveedorUpdate(?)";  // Llamamos al procedimiento almacenado
-//
-//        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-////            stmt.setString(1, dto.getContacto());  // Solo actualizamos el contacto
-//            stmt.setInt(1, dto.getId());
-//            stmt.setString(2, dto.getNombre());
-//            stmt.setString(3, dto.getContacto());
-//            stmt.setString(4, dto.getDireccion());
-//            return stmt.executeUpdate() > 0;  // Si se actualiza, retorna true
-//        }
+        }
     }
 
     @Override
-    public boolean delete(Object id) throws SQLException { 
+    public boolean delete(Object id) throws SQLException {
         if (id == null || !(id instanceof Integer)) {
             return false;
         }
