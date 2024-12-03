@@ -113,5 +113,25 @@ public class ClienteDAO extends DAO<ClienteDTO> {
     public boolean validatePK(Object id) throws SQLException {
         return read(id) == null;
     }
+    
+    
+        public void deleteByCedula(String cedula) {
+          String sql = "DELETE FROM clientes WHERE cedula = ?"; 
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            
+            stmt.setString(1, cedula);
+            
+           
+            int rowsAffected = stmt.executeUpdate();
+            
+            if (rowsAffected == 0) {
+                throw new SQLException("No se encontró un cliente con la cédula: " + cedula);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al eliminar el cliente: " + e.getMessage(), e);
+        }
+    
+    }
 
 }

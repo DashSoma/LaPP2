@@ -17,7 +17,6 @@ public class FrmCliente11 extends javax.swing.JDialog implements Vista<Cliente> 
 
     ClienteControlador clienteController;
     Cliente cliente;
-//hola
     DefaultTableModel model;
 
     public FrmCliente11() {
@@ -27,7 +26,6 @@ public class FrmCliente11 extends javax.swing.JDialog implements Vista<Cliente> 
     public FrmCliente11(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        //Permite hacer la referencia a la conexión de Base de Datos
         clienteController = new ClienteControlador(this);
         setLocationRelativeTo(null);
         clienteController.readAll();
@@ -372,11 +370,34 @@ public class FrmCliente11 extends javax.swing.JDialog implements Vista<Cliente> 
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
         try {
-            cliente = new Cliente(txtCedula.getText(), txtNombreCompl.getText(),
-                    txtDireccion.getText(), txtTelefono.getText(), txtEmail.getText());
+            String cedula = txtCedula.getText().trim();
+            String telefono = txtTelefono.getText().trim();
+
+            if (!cedula.matches("\\d+")) { 
+                JOptionPane.showMessageDialog(this, "La cédula debe contener solo números.", "Error de validación", JOptionPane.ERROR_MESSAGE);
+                txtCedula.requestFocus();
+                return;
+            }
+
+            if (!telefono.matches("\\d+")) { 
+                JOptionPane.showMessageDialog(this, "El teléfono debe contener solo números.", "Error de validación", JOptionPane.ERROR_MESSAGE);
+                txtTelefono.requestFocus();
+                return;
+            }
+
+            cliente = new Cliente(
+                    cedula,
+                    txtNombreCompl.getText().trim(),
+                    txtDireccion.getText().trim(),
+                    telefono,
+                    txtEmail.getText().trim()
+            );
             clienteController.create(cliente);
             clienteController.readAll();
             btnLimpiarActionPerformed(null);
+
+            JOptionPane.showMessageDialog(this, "Cliente agregado exitosamente.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+
         } catch (Exception e) {
             showError("Error al agregar cliente: " + e.getMessage());
         }
@@ -401,23 +422,41 @@ public class FrmCliente11 extends javax.swing.JDialog implements Vista<Cliente> 
     }//GEN-LAST:event_tblClientMousePressed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        clienteController.delete(cliente);
-        clienteController.readAll();
+        if (tblClient.getSelectedRowCount() == 1) {
+            int fila = tblClient.getSelectedRow();
+            String cedulaCliente = String.valueOf(tblClient.getValueAt(fila, 0));
+
+            int opcion = JOptionPane.showConfirmDialog(
+                    this,
+                    "¿Estás seguro de que deseas eliminar al cliente con cédula: " + cedulaCliente + "?",
+                    "Confirmar eliminación",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE
+            );
+
+            if (opcion == JOptionPane.YES_OPTION) {
+                clienteController.deleteByCedula(cedulaCliente);
+                clienteController.readAll();
+                JOptionPane.showMessageDialog(this, "Cliente eliminado correctamente.", "Eliminación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Eliminación cancelada.", "Operación cancelada", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Se debe seleccionar 1 registro para eliminar.", "Error de selección", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
 
-          if (tblClient.getSelectedRowCount() == 1) {
+        if (tblClient.getSelectedRowCount() == 1) {
             int fila = tblClient.getSelectedRow();
 
             if (!txtNombreCompl.getText().isEmpty()) {
-                cliente = new Cliente(txtCedula.getText(), txtNombreCompl.getText(), 
+                cliente = new Cliente(txtCedula.getText(), txtNombreCompl.getText(),
                         txtDireccion.getText(), txtTelefono.getText(), txtEmail.getText());
                 clienteController.update(cliente);
                 clienteController.readAll();
-                   
-      
-        
+
                 btnLimpiarActionPerformed(null);
             } else {
                 JOptionPane.showMessageDialog(this, "Los campos no pueden estar vacíos");

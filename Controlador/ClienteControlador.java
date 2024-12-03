@@ -143,4 +143,14 @@ public class ClienteControlador {
             return false;
         }
     }
+    
+     public void deleteByCedula(String cedula) {
+        
+        try {
+           
+            dao.deleteByCedula(cedula);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al eliminar el cliente: " + e.getMessage());
+        }
+    }
 }
