@@ -25,7 +25,7 @@ public class ProductoControlador {
 
     private ProductosDAO dao;
     private final Vista vista;
-    private ProductoMapper mapper;
+    private final ProductoMapper mapper;
 
     public ProductoControlador(Vista vista, ProductoMapper mapper) {
         this.vista = vista;
@@ -33,28 +33,25 @@ public class ProductoControlador {
         try {
             dao = new ProductosDAO(DataBase.getConnection());
         } catch (SQLException ex) {
-            vista.showError("Error al conectar con la Base de Datos");
+            vista.showError("Error al conectar con la Base de Datos: " + ex.getMessage());
         }
     }
 
     public ProductoControlador(Vista vista) {
-        this.vista = vista;
-        mapper = new ProductoMapper();
-        try {
-            dao = new ProductosDAO(DataBase.getConnection());
-        } catch (SQLException ex) {
-            vista.showError("Error al conectar con la Base de Datos");
-        }
+        this(vista, new ProductoMapper());
     }
 
     public void create(Productos producto) {
-          if (producto == null || !validateRequired(producto)) {
+        if (producto == null || !validateRequired(producto)) {
             vista.showError("Faltan datos requeridos");
             return;
         }
         try {
-            // Crear el proveedor en la base de datos
-            dao.create(mapper.toDTO(producto));
+            if (!validatePK(producto.getCodigo())) {
+                vista.showError("El ID ingresado ya se encuentra registrado");
+                return;
+            }
+            dao.create(mapper.toDTO(Producto));
             vista.showMessage("Datos guardados correctamente");
         } catch (SQLException ex) {
             vista.showError("Ocurrió un error al guardar los datos: " + ex.getMessage());
@@ -86,7 +83,7 @@ public class ProductoControlador {
     }
 
     public void update(ProductoDTO producto) {
-        if (producto == null || !validateRequired(producto)) {
+        if (producto == null || !validateRequired(Producto)) {
             vista.showError("Faltan datos requeridos");
             return;
         }
@@ -115,20 +112,20 @@ public class ProductoControlador {
         }
     }
 
-    private boolean validateRequired(ProductoDTO producto) {
-        return producto.getNombre() != null && !producto.getNombre().trim().isEmpty()
+    private boolean validateRequired(Productos producto) {
+        return producto.getCodigo() != null && !producto.getCodigo().trim().isEmpty()
+                && producto.getNombre() != null && !producto.getNombre().trim().isEmpty()
                 && producto.getCategoria() != null && !producto.getCategoria().trim().isEmpty()
-                && producto.getProveedor() != null && !producto.getProveedor().trim().isEmpty()
                 && producto.getPrecio() > 0
-                && producto.getCantDisponible() > 0;
+                && producto.getCantDisponible() > 0
+                && producto.getProveedor() != null && !producto.getProveedor().trim().isEmpty();
     }
 
     private boolean validatePK(int codigo) {
         try {
-            ProductoDTO producto = dao.read(codigo);
-            return producto == null;
+            return dao.read(codigo) == null;
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            System.out.println("Error al validar PK: " + ex.getMessage());
             return false;
         }
     }
