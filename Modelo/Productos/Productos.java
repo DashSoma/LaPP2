@@ -2,7 +2,6 @@ package Modelo.Productos;
 
 import Modelo.Proveedores.Proveedor;
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -17,7 +16,7 @@ public class Productos {
     private String categoria;
     private int precio;
     private int cantDisponible;
-    private Proveedor proveedor; // Cambiado a objeto Proveedor
+    private Proveedor proveedor;
     private LocalDate fechaPIngresado = LocalDate.now();
     private int vTotalInventario;
 
@@ -39,7 +38,7 @@ public class Productos {
         this.fechaPIngresado = LocalDate.now();
         this.precio = 0;
         this.cantDisponible = 0;
-        this.proveedor = new Proveedor();  // Inicialización con un objeto Proveedor por defecto
+        this.proveedor = new Proveedor(); 
         this.vTotalInventario = 0;
     }
     

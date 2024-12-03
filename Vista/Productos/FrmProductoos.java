@@ -16,20 +16,19 @@ import java.util.List;
  *
  * @author DaniTini
  */
-public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Productos> {
+public class FrmProductoos extends javax.swing.JDialog implements Vista<Productos> {
 
     ProductoControlador Control;
     Productos product;
     DefaultTableModel model;
 
-    public FrmProveedor11() {
+    public FrmProductoos() {
         initComponents();
     }
 
-    public FrmProveedor11(java.awt.Frame parent, boolean modal) {
+    public FrmProductoos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        //Permite hacer la referencia a la conexión de Base de Datos
         Control = new ProductoControlador(this);
         setLocationRelativeTo(null);
         Control.readAll();
@@ -45,7 +44,7 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Product
         txtNombre = new javax.swing.JTextField();
         lblDireccion = new javax.swing.JLabel();
         lblTelefono = new javax.swing.JLabel();
-        txtDireccion = new javax.swing.JTextField();
+        txtPrecio = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnInsertar = new javax.swing.JButton();
@@ -53,13 +52,14 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Product
         btnEliminar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         lblBuscar = new javax.swing.JLabel();
-        lblCant = new javax.swing.JLabel();
-        txtCant = new javax.swing.JTextField();
         txtCodigo = new javax.swing.JTextField();
-        cbxCategoria = new javax.swing.JComboBox<>();
         lblDireccion1 = new javax.swing.JLabel();
         lblDireccion2 = new javax.swing.JLabel();
         cbxProveedor = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblInsert = new javax.swing.JTable();
+        txtCanti = new javax.swing.JTextField();
+        txtCategoria = new javax.swing.JTextField();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -164,7 +164,7 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Product
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnInsertar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -189,22 +189,7 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Product
         lblBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/search.png"))); // NOI18N
         lblBuscar.setText("Buscar: ");
 
-        lblCant.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblCant.setForeground(new java.awt.Color(255, 255, 255));
-        lblCant.setText("Cantidad de registros:");
-
-        txtCant.setEditable(false);
-        txtCant.setBackground(new java.awt.Color(255, 255, 255));
-        txtCant.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtCant.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCantActionPerformed(evt);
-            }
-        });
-
         txtCodigo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
-        cbxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Electronica", "VideoJuego" }));
 
         lblDireccion1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblDireccion1.setForeground(new java.awt.Color(255, 255, 255));
@@ -216,51 +201,66 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Product
 
         cbxProveedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Intel", "Ryzer" }));
 
+        tblInsert.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Codigo", "Nombre", "Categoria", "Precio", "CantidadDisponible", "Proveedor", "FechaIngreso"
+            }
+        ));
+        jScrollPane1.setViewportView(tblInsert);
+
+        txtCategoria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout pnlDatosLayout = new javax.swing.GroupLayout(pnlDatos);
         pnlDatos.setLayout(pnlDatosLayout);
         pnlDatosLayout.setHorizontalGroup(
             pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53))
+            .addComponent(jScrollPane1)
             .addGroup(pnlDatosLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosLayout.createSequentialGroup()
-                        .addComponent(lblDireccion1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblBuscar)
-                        .addGap(69, 69, 69))
                     .addGroup(pnlDatosLayout.createSequentialGroup()
-                        .addComponent(lblCant)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtCant, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lblDireccion2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbxProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlDatosLayout.createSequentialGroup()
-                        .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(pnlDatosLayout.createSequentialGroup()
-                                .addComponent(lblDireccion2)
-                                .addGap(26, 26, 26)
-                                .addComponent(cbxProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlDatosLayout.createSequentialGroup()
+                                .addComponent(lblDireccion1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtCanti))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDatosLayout.createSequentialGroup()
                                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblNombreC)
-                                    .addComponent(lblDireccion)
-                                    .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(lblTelefono, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGap(29, 29, 29)
-                                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtDireccion, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblNombreC))
+                                .addGap(18, 18, 18)
+                                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
-                                    .addComponent(cbxCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27))))
+                                    .addComponent(txtNombre)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDatosLayout.createSequentialGroup()
+                                .addComponent(lblDireccion)
+                                .addGap(42, 42, 42)
+                                .addComponent(txtPrecio))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDatosLayout.createSequentialGroup()
+                                .addComponent(lblTelefono)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(275, 275, 275)
+                        .addComponent(lblBuscar)))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
         pnlDatosLayout.setVerticalGroup(
             pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDatosLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlDatosLayout.createSequentialGroup()
                         .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
@@ -269,29 +269,27 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Product
                         .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNombreC)
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGap(20, 20, 20)
                         .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblTelefono)
-                            .addComponent(cbxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblDireccion)
-                            .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(lblDireccion1)
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblDireccion2)
-                            .addComponent(cbxProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(264, 264, 264)
-                        .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblCant)
-                            .addComponent(txtCant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(pnlDatosLayout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblBuscar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblDireccion)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDireccion1)
+                    .addComponent(lblBuscar)
+                    .addComponent(txtCanti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDireccion2)
+                    .addComponent(cbxProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -302,7 +300,10 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Product
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pnlDatos.getAccessibleContext().setAccessibleName("Datos Clientes");
@@ -311,10 +312,11 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Product
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-//        txtId.setText("");
+//      txtId.setText("");
         txtNombre.setText("");
-        txtContacto.setText("");
-        txtDireccion.setText("");
+        cbxCategoria.setToolTipText("");
+        txtPrecio.setText("");
+        cbxProveedor.setToolTipText("");
         txtCodigo.requestFocus();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
@@ -339,30 +341,29 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Product
 
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-//        Controlador.delete(proveedor);
-//        Controlador.readAll();
-        int row = tblProveedor.getSelectedRow();
-        if (row != -1) {
-            int id = (int) tblProveedor.getValueAt(row, 0);
-            Proveedor proveedor = new Proveedor(id);
-            Controlador.delete(proveedor);
-            Controlador.readAll();
-        } else {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un proveedor para eliminar.");
-        }
+////        Controlador.delete(proveedor);
+////        Controlador.readAll();
+//        int row = tblProveedor.getSelectedRow();
+//        if (row != -1) {
+//            int id = (int) tblProveedor.getValueAt(row, 0);
+//            Proveedor proveedor = new Proveedor(id);
+//            Control.delete(product);
+//            Control.readAll();
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Debe seleccionar un proveedor para eliminar.");
+//        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-//
-//        if (tblProveedor.getSelectedRowCount() == 1) {
+
+//         if (tblProveedor.getSelectedRowCount() == 1) {
 //            int fila = tblProveedor.getSelectedRow();
 //
 //            if (!txtNombre.getText().isEmpty()) {
-//                proveedor = new Proveedor(txtNombre.getText(), txtContacto.getText(),
-//                        txtDireccion.getText());
-//                Controlador.update(proveedor);
-//                Controlador.readAll();
-//
+//                product = new Productos(txtContacto.getText());
+//                Control.update(product);
+//                Control.readAll();
+//        
 //                btnLimpiarActionPerformed(null);
 //            } else {
 //                JOptionPane.showMessageDialog(this, "Los campos no pueden estar vacíos");
@@ -370,24 +371,6 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Product
 //        } else {
 //            JOptionPane.showMessageDialog(this, "Se debe seleccionar 1 registro");
 //        }
-           
-        
-        
-         if (tblProveedor.getSelectedRowCount() == 1) {
-            int fila = tblProveedor.getSelectedRow();
-
-            if (!txtNombre.getText().isEmpty()) {
-                proveedor = new Proveedor(txtContacto.getText());
-                Controlador.update(proveedor);
-                Controlador.readAll();
-        
-                btnLimpiarActionPerformed(null);
-            } else {
-                JOptionPane.showMessageDialog(this, "Los campos no pueden estar vacíos");
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Se debe seleccionar 1 registro");
-        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
@@ -399,10 +382,6 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Product
 
     }//GEN-LAST:event_formWindowActivated
 
-    private void txtCantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCantActionPerformed
-
 //    private boolean existe(String cedula) {
 //        for (Cliente c : lista) {
 //            if (c.getCedula().equals(cedula)) {
@@ -411,9 +390,9 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Product
 //        }
 //        return false;
 //    }
-    public JTable getTblColaborador() {
-        return tblProveedor;
-    }
+//    public JTable getTblColaborador() {
+//        return tblProveedor;
+//    }
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -461,67 +440,51 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Product
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnInsertar;
     private javax.swing.JButton btnLimpiar;
-    private javax.swing.JComboBox<String> cbxCategoria;
     private javax.swing.JComboBox<String> cbxProveedor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblBuscar;
-    private javax.swing.JLabel lblCant;
     private javax.swing.JLabel lblDireccion;
     private javax.swing.JLabel lblDireccion1;
     private javax.swing.JLabel lblDireccion2;
     private javax.swing.JLabel lblNombreC;
     private javax.swing.JLabel lblTelefono;
     private javax.swing.JPanel pnlDatos;
-    private javax.swing.JTextField txtCant;
+    private javax.swing.JTable tblInsert;
+    private javax.swing.JTextField txtCanti;
+    private javax.swing.JTextField txtCategoria;
     private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
-
-    @Override
-    public void show(Proveedor ent) {
-        txtNombre.setText(proveedor.getNombre());
-        txtContacto.setText(proveedor.getContacto());
-        txtDireccion.setText(proveedor.getDireccion());
-
-    }
-
-    @Override
-    public void showAll(List<Proveedor> ents) {
-        for (Proveedor proveed : ents) {
-            System.out.println(proveed.toString());
-        }
-        DefaultTableModel model = (DefaultTableModel) tblProveedor.getModel();
-        model.setRowCount(0);
-        for (Proveedor p : ents) {
-            model.addRow(new Object[]{p.getId(), p.getNombre(),
-                p.getContacto(), p.getDireccion()});
-        }
-        txtCant.setText(String.valueOf(model.getRowCount()));
-
-    }
-
-    @Override
-    public void showMessage(String msg) {
-        JOptionPane.showMessageDialog(this, msg, "Informacion", JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    @Override
-    public void showError(String err) {
-        JOptionPane.showMessageDialog(this, "Error: " + err, "Error", JOptionPane.ERROR_MESSAGE);
-    }
-
-    @Override
-    public boolean validateRequired() {
-//        return !txtId.getText().isEmpty() && !txtNombre.getText().isEmpty();
-        return txtNombre != null && !txtNombre.getText().trim().isEmpty();
-    }
 
     @Override
     public void show(Productos ent) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    @Override
+    public void showAll(List<Productos> ents) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void showMessage(String msg) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void showError(String err) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean validateRequired() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+  
 
 }
