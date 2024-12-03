@@ -1,5 +1,6 @@
 package Modelo.Productos;
 
+import Modelo.Proveedores.Proveedor;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -16,11 +17,11 @@ public class Productos {
     private String categoria;
     private int precio;
     private int cantDisponible;
-    private String proveedor;
+    private Proveedor proveedor; // Cambiado a objeto Proveedor
     private LocalDate fechaPIngresado = LocalDate.now();
     private int vTotalInventario;
 
-    public Productos(int codigo, String nombre, String categoria, int precio, int cantDisponible, String proveedor, LocalDate fechaDespido, int vTotalInventario) {
+    public Productos(int codigo, String nombre, String categoria, int precio, int cantDisponible, Proveedor proveedor, LocalDate fechaDespido, int vTotalInventario) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.categoria = categoria;
@@ -38,8 +39,18 @@ public class Productos {
         this.fechaPIngresado = LocalDate.now();
         this.precio = 0;
         this.cantDisponible = 0;
-        this.proveedor = "";
+        this.proveedor = new Proveedor();  // Inicialización con un objeto Proveedor por defecto
         this.vTotalInventario = 0;
+    }
+    
+    
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
     }
 
     public int getCodigo() {
@@ -82,14 +93,6 @@ public class Productos {
         this.cantDisponible = cantDisponible;
     }
 
-    public String getProveedor() {
-        return proveedor;
-    }
-
-    public void setProveedor(String proveedor) {
-        this.proveedor = proveedor;
-    }
-
     public LocalDate getFechaPIngresado() {
         return fechaPIngresado;
     }
@@ -120,6 +123,5 @@ public class Productos {
         }
         return totalPrecios;
     }
-   
 
 }

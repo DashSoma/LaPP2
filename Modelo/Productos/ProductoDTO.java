@@ -11,7 +11,7 @@ import Modelo.Proveedores.Proveedor;
  * @author DaniTini
  */
 public class ProductoDTO {
-
+    
     private final int codigo;
     private final String nombre;
     private final String categoria;
@@ -43,7 +43,8 @@ public class ProductoDTO {
         return proveedor;
     }
 
-    public ProductoDTO(int codigo, String nombre, String categoria, int cantDisponible, int proveedor, int precio) {
+  
+    public ProductoDTO(int codigo, String nombre, String categoria, double precio, int cantDisponible, int proveedor) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.categoria = categoria;

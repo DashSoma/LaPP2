@@ -6,10 +6,12 @@ package Modelo.Productos;
 
 import DateBase.DataBase;
 import Modelo.Mapper.Mapper;
+import Modelo.Proveedores.Proveedor;
 import Modelo.Proveedores.ProveedorDAO;
 import Modelo.Proveedores.ProveedorDTO;
 import Modelo.Proveedores.ProveedorMapper;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 /**
  *
@@ -17,7 +19,7 @@ import java.sql.SQLException;
  */
 public class ProductoMapper implements Mapper<Productos, ProductoDTO> {
 
-    @Override
+   @Override
     public ProductoDTO toDTO(Productos ent) {
         return new ProductoDTO(
                 ent.getCodigo(),
@@ -25,25 +27,28 @@ public class ProductoMapper implements Mapper<Productos, ProductoDTO> {
                 ent.getCategoria(),
                 ent.getPrecio(),
                 ent.getCantDisponible(),
-                ent.getProveedor().getId()
+                ent.getProveedor() != null ? ent.getProveedor().getId() : 0  
         );
-
     }
 
     @Override
     public Productos toEnt(ProductoDTO dto) {
-        try {
-             new Productos(
-                    dto.getCodigo(),
-                    dto.getNombre(),
-                    dto.getCategoria(),
-                    dto.getPrecio(),
-                    dto.getCantDisponible(),
-                    new ProveedorMapper().toEnt(new ProveedorDTO(DateBase.DataBase.getConnection()).read(dto.getProveedor()))
-            );
-        } catch (SQLException ex) {
-            throw new RuntimeException("Error while mapping RentalContractDTO to RentalContract", ex);
-        }
+     Proveedor proveedor = new ProveedorMapper().toEnt(new ProveedorDTO(
+            dto.getProveedor(),   
+            "", 
+            "", 
+            ""
+    ));
+ 
+    return new Productos(
+            dto.getCodigo(),
+            dto.getNombre(),
+            dto.getCategoria(),
+            (int) dto.getPrecio(),
+            dto.getCantDisponible(),
+            proveedor,  
+            LocalDate.now(),        
+            0  
+    );
     }
-
 }

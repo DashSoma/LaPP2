@@ -27,37 +27,39 @@ public class ProductosDAO extends DAO<ProductoDTO> {
 
     @Override
     public boolean create(ProductoDTO dto) throws SQLException {
-        if(dto == null || !validateFk(dto.getProveedor())){
+        if (dto == null || !validateFk(dto.getProveedor())) {
             return false;
         }
         String query = "CALL ProductoCreate(?,?,?,?,?,?)";
-        try(PreparedStatement stmt = connection.prepareStatement(query)){
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, dto.getCodigo());
             stmt.setString(2, dto.getNombre());
             stmt.setString(3, dto.getCategoria());
-            stmt.setDouble(4, dto.getPrecio());
-            stmt.setInt(5,dto.getCantDisponible());
+            stmt.setDouble(4, dto.getPrecio()); 
+            stmt.setInt(5, dto.getCantDisponible());
             stmt.setInt(6, dto.getProveedor());
             return stmt.executeUpdate() == 1;
-        } 
+        }
     }
 
     @Override
     public ProductoDTO read(Object id) throws SQLException {
-        if(id == null || String.valueOf(id).trim().isEmpty()){
+        if (id == null || String.valueOf(id).trim().isEmpty()) {
             return null;
         }
         String query = "CALL ProductoRead(?)";
-        try(PreparedStatement stmt = connection.prepareStatement(query)){
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, String.valueOf(id));
-            try(ResultSet rs = stmt.executeQuery()){
-                if(rs.next()){
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
                     return new ProductoDTO(
-                            rs.getInt(1), 
-                            rs.getString(2), 
-                            rs.getString(3), 
+                            rs.getInt(1),
+                            rs.getString(2),
+                            rs.getString(3),
+                            rs.getDouble(4), 
                             rs.getInt(5),
-                            rs.getInt(6));
+                            rs.getInt(6)
+                    );
                 }
             }
         }
@@ -68,15 +70,17 @@ public class ProductosDAO extends DAO<ProductoDTO> {
     public List<ProductoDTO> readAll() throws SQLException {
         String query = "CALL ProductoReadAll(?)";
         List<ProductoDTO> list = new ArrayList<>();
-        try(PreparedStatement stmt = connection.prepareStatement(query)){
-            try(ResultSet rs = stmt.executeQuery()){
-                while(rs.next()){
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
                     list.add(new ProductoDTO(
-                            rs.getInt(1), 
-                            rs.getString(2), 
-                            rs.getString(3), 
+                            rs.getInt(1),
+                            rs.getString(2),
+                            rs.getString(3),
+                            rs.getDouble(4),
                             rs.getInt(5),
-                            rs.getInt(6)));
+                            rs.getInt(6)
+                    ));
                 }
             }
         }
@@ -93,7 +97,6 @@ public class ProductosDAO extends DAO<ProductoDTO> {
             stmt.setDouble(1, dto.getPrecio());
             stmt.setInt(2, dto.getCantDisponible());
             return stmt.executeUpdate() > 0;
-
         }
     }
 
@@ -105,13 +108,12 @@ public class ProductosDAO extends DAO<ProductoDTO> {
 
         String query = "CALL ProductoDelete(?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, (Integer) id); // Realizamos el cast a Integer
+            stmt.setInt(1, (Integer) id); // Cast to Integer
             return stmt.executeUpdate() > 0;
         }
     }
 
-    public boolean validateFk(Object id)throws SQLException{
-        return new ProveedorDAO(DataBase.getConnection()).read(id)!=null;
+    public boolean validateFk(Object id) throws SQLException {
+        return new ProveedorDAO(DataBase.getConnection()).read(id) != null;
     }
-    
 }

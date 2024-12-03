@@ -41,28 +41,17 @@ public class ProductoControlador {
 
     public void create(Productos producto) {
         if (producto == null || !validateRequired(producto)) {
-
-    
-        }
-    }
-
-    public void create(Productos productos) {
-        if (productos == null || !validateRequired(null)) {
-
             vista.showError("Faltan datos requeridos");
             return;
         }
         try {
 
             if (!validatePK(producto.getCodigo())) {
-                vista.showError("El ID ingresado ya se encuentra registrado");
+                vista.showError("El código ingresado ya se encuentra registrado");
                 return;
             }
-            dao.create(mapper.toDTO(Producto));
 
-            // Crear el proveedor en la base de datos
-            dao.create(mapper.toDTO(productos));
-
+            dao.create(mapper.toDTO(producto));
             vista.showMessage("Datos guardados correctamente");
         } catch (SQLException ex) {
             vista.showError("Ocurrió un error al guardar los datos: " + ex.getMessage());
@@ -93,25 +82,18 @@ public class ProductoControlador {
         }
     }
 
-   
     public void update(ProductoDTO producto) {
-        if (producto == null || !validateRequired(Producto)) {
-             
-        }
-    }
-
-    public void update(ProductoDTO productos) {
-        if (productos == null || !validateRequired(productos)) {
-            
+        if (producto == null || !validateRequired(producto)) {
             vista.showError("Faltan datos requeridos");
             return;
         }
         try {
-            if (validatePK(productos.getCodigo())) {
+
+            if (validatePK(producto.getCodigo())) {
                 vista.showError("El código ingresado no está registrado");
                 return;
             }
-            dao.update(productos);
+            dao.update(producto);
             vista.showMessage("Producto actualizado correctamente");
         } catch (SQLException ex) {
             vista.showError("Error al actualizar los datos: " + ex.getMessage());
@@ -120,6 +102,7 @@ public class ProductoControlador {
 
     public void delete(int codigo) {
         try {
+
             if (validatePK(codigo)) {
                 vista.showError("El código ingresado no está registrado");
                 return;
@@ -132,28 +115,28 @@ public class ProductoControlador {
     }
 
     private boolean validateRequired(Productos producto) {
-        return producto.getCodigo() != null && !producto.getCodigo().trim().isEmpty()
+        return producto.getCodigo() > 0
                 && producto.getNombre() != null && !producto.getNombre().trim().isEmpty()
                 && producto.getCategoria() != null && !producto.getCategoria().trim().isEmpty()
                 && producto.getPrecio() > 0
                 && producto.getCantDisponible() > 0
-                && producto.getProveedor() != null && !producto.getProveedor().trim().isEmpty();
+                && producto.getProveedor() != null;
+    }
 
-    private boolean validateRequired(ProductoDTO product) {
-        return product.getNombre() != null && !product.getNombre().trim().isEmpty()
-                && product.getCategoria() != null && !product.getCategoria().trim().isEmpty()
-                && product.getProveedor() != null && !product.getProveedor().trim().isEmpty()
-                && product.getPrecio() > 0
-                && product.getCantDisponible() > 0;
+    private boolean validateRequired(ProductoDTO producto) {
+        return producto.getNombre() != null && !producto.getNombre().trim().isEmpty()
+                && producto.getCategoria() != null && !producto.getCategoria().trim().isEmpty()
+                && producto.getProveedor() != 0
+                && producto.getPrecio() > 0
+                && producto.getCantDisponible() > 0;
     }
 
     private boolean validatePK(int codigo) {
         try {
-            return dao.read(codigo) == null;
+            return dao.read(codigo) != null;
         } catch (SQLException ex) {
             System.out.println("Error al validar PK: " + ex.getMessage());
             return false;
         }
     }
-
 }
