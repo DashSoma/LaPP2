@@ -206,7 +206,15 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
             new String [] {
                 "Id", "Nombre", "Contacto", "Direccion"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         tblProveedor.getTableHeader().setReorderingAllowed(false);
         tblProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -351,8 +359,10 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
             txtNombre.setText(String.valueOf(tblProveedor.getValueAt(row, 1)));
             txtContacto.setText(String.valueOf(tblProveedor.getValueAt(row, 2)));
             txtDireccion.setText(String.valueOf(tblProveedor.getValueAt(row, 3)));
-
+            
         }
+        
+       
     }//GEN-LAST:event_tblProveedorMousePressed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -370,31 +380,13 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-//
-//        if (tblProveedor.getSelectedRowCount() == 1) {
-//            int fila = tblProveedor.getSelectedRow();
-//
-//            if (!txtNombre.getText().isEmpty()) {
-//                proveedor = new Proveedor(txtNombre.getText(), txtContacto.getText(),
-//                        txtDireccion.getText());
-//                Controlador.update(proveedor);
-//                Controlador.readAll();
-//
-//                btnLimpiarActionPerformed(null);
-//            } else {
-//                JOptionPane.showMessageDialog(this, "Los campos no pueden estar vacíos");
-//            }
-//        } else {
-//            JOptionPane.showMessageDialog(this, "Se debe seleccionar 1 registro");
-//        }
-           
-        
-        
+
          if (tblProveedor.getSelectedRowCount() == 1) {
             int fila = tblProveedor.getSelectedRow();
 
             if (!txtNombre.getText().isEmpty()) {
-                proveedor = new Proveedor(txtContacto.getText());
+                 int row = tblProveedor.getSelectedRow();
+                proveedor = new Proveedor(Integer.parseInt(String.valueOf(tblProveedor.getValueAt(row, 0))),txtContacto.getText());
                 Controlador.update(proveedor);
                 Controlador.readAll();
         
@@ -424,14 +416,6 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCantActionPerformed
 
-//    private boolean existe(String cedula) {
-//        for (Cliente c : lista) {
-//            if (c.getCedula().equals(cedula)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
     public JTable getTblColaborador() {
         return tblProveedor;
     }
@@ -502,6 +486,11 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
 
     @Override
     public void show(Proveedor ent) {
+        
+        proveedor=ent;
+        if (ent==null) {
+            return;
+        }
         txtNombre.setText(proveedor.getNombre());
         txtContacto.setText(proveedor.getContacto());
         txtDireccion.setText(proveedor.getDireccion());
@@ -512,6 +501,7 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
     public void showAll(List<Proveedor> ents) {
         for (Proveedor proveed : ents) {
             System.out.println(proveed.toString());
+            
         }
         DefaultTableModel model = (DefaultTableModel) tblProveedor.getModel();
         model.setRowCount(0);
@@ -520,7 +510,6 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
                 p.getContacto(), p.getDireccion()});
         }
         txtCant.setText(String.valueOf(model.getRowCount()));
-
     }
 
     @Override
@@ -535,7 +524,6 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
 
     @Override
     public boolean validateRequired() {
-//        return !txtId.getText().isEmpty() && !txtNombre.getText().isEmpty();
         return txtNombre != null && !txtNombre.getText().trim().isEmpty();
     }
 

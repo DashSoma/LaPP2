@@ -72,8 +72,10 @@ public class Proveedor {
         this.id = id;
     }
 
-    public Proveedor(String contacto) {
+    public Proveedor(int id, String contacto) {
+        this.id = id;
         this.contacto = contacto;
+        
     }
     
 //    

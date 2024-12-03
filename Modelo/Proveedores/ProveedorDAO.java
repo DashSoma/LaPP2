@@ -95,7 +95,7 @@ public class ProveedorDAO extends DAO<ProveedorDTO> {
         if (dto == null) {
             return false;
         }
-        String query = "CALL ProveedorUpdate(?, ?)";
+        String query = "CALL ProveedorUpdate(?,?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, dto.getId());
             stmt.setString(2, dto.getContacto());
