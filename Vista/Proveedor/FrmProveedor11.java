@@ -55,6 +55,7 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
         tblProveedor = new javax.swing.JTable();
         lblCant = new javax.swing.JLabel();
         txtCant = new javax.swing.JTextField();
+        txtId = new javax.swing.JTextField();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -227,6 +228,8 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
             }
         });
 
+        txtId.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout pnlDatosLayout = new javax.swing.GroupLayout(pnlDatos);
         pnlDatos.setLayout(pnlDatosLayout);
         pnlDatosLayout.setHorizontalGroup(
@@ -250,7 +253,8 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
                                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(txtDireccion, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtContacto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE))
                                 .addGap(38, 38, 38)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jScrollPane1))))
@@ -269,7 +273,9 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlDatosLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNombreC)
@@ -316,7 +322,7 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
         txtNombre.setText("");
         txtContacto.setText("");
         txtDireccion.setText("");
-//        txtId.requestFocus();
+        txtId.requestFocus();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
 
@@ -341,10 +347,10 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
     private void tblProveedorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProveedorMousePressed
         if (evt.getClickCount() == 1) {
             int row = tblProveedor.getSelectedRow();  // Obtiene la fila seleccionada
-//            txtId.setText(String.valueOf(tblProveedor.getValueAt(row, 0)));
-            txtNombre.setText(String.valueOf(tblProveedor.getValueAt(row, 0)));
-            txtDireccion.setText(String.valueOf(tblProveedor.getValueAt(row, 1)));
-            txtContacto.setText(String.valueOf(tblProveedor.getValueAt(row, 2)));
+            txtId.setText(String.valueOf(tblProveedor.getValueAt(row, 0)));
+            txtNombre.setText(String.valueOf(tblProveedor.getValueAt(row, 1)));
+            txtDireccion.setText(String.valueOf(tblProveedor.getValueAt(row, 2)));
+            txtContacto.setText(String.valueOf(tblProveedor.getValueAt(row, 3)));
 
         }
     }//GEN-LAST:event_tblProveedorMousePressed
@@ -488,6 +494,7 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
     private javax.swing.JTextField txtCant;
     private javax.swing.JFormattedTextField txtContacto;
     private javax.swing.JTextField txtDireccion;
+    private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 
