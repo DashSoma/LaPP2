@@ -326,7 +326,7 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-//        txtId.setText("");
+
         txtNombre.setText("");
         txtContacto.setText("");
         txtDireccion.setText("");
@@ -349,20 +349,51 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
         String titulos[] = {"Id", "Nombre", "Contacto", "Dirección"};
+        DefaultTableModel modeloOriginal = (DefaultTableModel) tblProveedor.getModel();
+
+        DefaultTableModel model = new DefaultTableModel(null, titulos);
+
+        String searchQuery = txtBuscar.getText().trim().toLowerCase();
+
+        if (searchQuery.isEmpty()) {
+
+            for (int i = 0; i < modeloOriginal.getRowCount(); i++) {
+                String id = String.valueOf(modeloOriginal.getValueAt(i, 0));
+                String nombre = String.valueOf(modeloOriginal.getValueAt(i, 1));
+                String contacto = String.valueOf(modeloOriginal.getValueAt(i, 2));
+                String direccion = String.valueOf(modeloOriginal.getValueAt(i, 3));
+
+                model.addRow(new Object[]{id, nombre, contacto, direccion});
+            }
+        } else {
+
+            for (int i = 0; i < modeloOriginal.getRowCount(); i++) {
+                String id = String.valueOf(modeloOriginal.getValueAt(i, 0)).toLowerCase();
+                String nombre = String.valueOf(modeloOriginal.getValueAt(i, 1)).toLowerCase();
+                String contacto = String.valueOf(modeloOriginal.getValueAt(i, 2)).toLowerCase();
+                String direccion = String.valueOf(modeloOriginal.getValueAt(i, 3)).toLowerCase();
+
+                if (id.contains(searchQuery) || nombre.contains(searchQuery)
+                        || contacto.contains(searchQuery) || direccion.contains(searchQuery)) {
+                    model.addRow(new Object[]{id, nombre, contacto, direccion});
+                }
+            }
+        }
+        
+        tblProveedor.setModel(model);
 
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void tblProveedorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProveedorMousePressed
         if (evt.getClickCount() == 1) {
-            int row = tblProveedor.getSelectedRow();  // Obtiene la fila seleccionada
-//            txtId.setText(String.valueOf(tblProveedor.getValueAt(row, 0)));
+            int row = tblProveedor.getSelectedRow(); 
             txtNombre.setText(String.valueOf(tblProveedor.getValueAt(row, 1)));
             txtContacto.setText(String.valueOf(tblProveedor.getValueAt(row, 2)));
             txtDireccion.setText(String.valueOf(tblProveedor.getValueAt(row, 3)));
-            
+
         }
-        
-       
+
+
     }//GEN-LAST:event_tblProveedorMousePressed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -381,15 +412,15 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
 
-         if (tblProveedor.getSelectedRowCount() == 1) {
+        if (tblProveedor.getSelectedRowCount() == 1) {
             int fila = tblProveedor.getSelectedRow();
 
             if (!txtNombre.getText().isEmpty()) {
-                 int row = tblProveedor.getSelectedRow();
-                proveedor = new Proveedor(Integer.parseInt(String.valueOf(tblProveedor.getValueAt(row, 0))),txtContacto.getText());
+                int row = tblProveedor.getSelectedRow();
+                proveedor = new Proveedor(Integer.parseInt(String.valueOf(tblProveedor.getValueAt(row, 0))), txtContacto.getText());
                 Controlador.update(proveedor);
                 Controlador.readAll();
-        
+
                 btnLimpiarActionPerformed(null);
             } else {
                 JOptionPane.showMessageDialog(this, "Los campos no pueden estar vacíos");
@@ -486,9 +517,9 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
 
     @Override
     public void show(Proveedor ent) {
-        
-        proveedor=ent;
-        if (ent==null) {
+
+        proveedor = ent;
+        if (ent == null) {
             return;
         }
         txtNombre.setText(proveedor.getNombre());
@@ -501,7 +532,7 @@ public class FrmProveedor11 extends javax.swing.JDialog implements Vista<Proveed
     public void showAll(List<Proveedor> ents) {
         for (Proveedor proveed : ents) {
             System.out.println(proveed.toString());
-            
+
         }
         DefaultTableModel model = (DefaultTableModel) tblProveedor.getModel();
         model.setRowCount(0);

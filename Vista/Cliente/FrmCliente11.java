@@ -408,7 +408,39 @@ public class FrmCliente11 extends javax.swing.JDialog implements Vista<Cliente> 
 
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-        String titulos[] = {"Cédula", "Nombre Completo", "Dirección", "Teléfono", "Email"};
+        String titulos[] = {"Id", "Nombre", "Contacto", "Dirección"};
+        DefaultTableModel modeloOriginal = (DefaultTableModel) tblClient.getModel();
+        DefaultTableModel model = new DefaultTableModel(null, titulos);
+
+        String searchQuery = txtBuscar.getText().trim().toLowerCase();
+
+        if (searchQuery.isEmpty()) {
+      
+            for (int i = 0; i < modeloOriginal.getRowCount(); i++) {
+                String id = String.valueOf(modeloOriginal.getValueAt(i, 0));
+                String nombre = String.valueOf(modeloOriginal.getValueAt(i, 1));
+                String contacto = String.valueOf(modeloOriginal.getValueAt(i, 2));
+                String direccion = String.valueOf(modeloOriginal.getValueAt(i, 3));
+
+                model.addRow(new Object[]{id, nombre, contacto, direccion});
+            }
+        } else {
+            
+            for (int i = 0; i < modeloOriginal.getRowCount(); i++) {
+                String id = String.valueOf(modeloOriginal.getValueAt(i, 0)).toLowerCase();
+                String nombre = String.valueOf(modeloOriginal.getValueAt(i, 1)).toLowerCase();
+                String contacto = String.valueOf(modeloOriginal.getValueAt(i, 2)).toLowerCase();
+                String direccion = String.valueOf(modeloOriginal.getValueAt(i, 3)).toLowerCase();
+
+           
+                if (id.contains(searchQuery) || nombre.contains(searchQuery)
+                        || contacto.contains(searchQuery) || direccion.contains(searchQuery)) {
+                    model.addRow(new Object[]{id, nombre, contacto, direccion});
+                }
+            }
+        }
+
+        tblClient.setModel(model);
 
     }//GEN-LAST:event_txtBuscarKeyReleased
 
@@ -499,6 +531,7 @@ public class FrmCliente11 extends javax.swing.JDialog implements Vista<Cliente> 
 
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_txtBuscarActionPerformed
 
     private void txtCantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantActionPerformed
