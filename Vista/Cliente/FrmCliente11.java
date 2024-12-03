@@ -370,28 +370,32 @@ public class FrmCliente11 extends javax.swing.JDialog implements Vista<Cliente> 
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
         try {
+  
             String cedula = txtCedula.getText().trim();
+            String nombre = txtNombreCompl.getText().trim();
+            String direccion = txtDireccion.getText().trim();
             String telefono = txtTelefono.getText().trim();
+            String email = txtEmail.getText().trim();
 
-            if (!cedula.matches("\\d+")) { 
+            if (cedula.isEmpty() || nombre.isEmpty() || direccion.isEmpty() || telefono.isEmpty() || email.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Todos los campos deben estar llenos.", "Error de validación", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+           
+            if (!cedula.matches("\\d+")) {
                 JOptionPane.showMessageDialog(this, "La cédula debe contener solo números.", "Error de validación", JOptionPane.ERROR_MESSAGE);
                 txtCedula.requestFocus();
                 return;
             }
 
-            if (!telefono.matches("\\d+")) { 
+            if (!telefono.matches("\\d+")) {
                 JOptionPane.showMessageDialog(this, "El teléfono debe contener solo números.", "Error de validación", JOptionPane.ERROR_MESSAGE);
                 txtTelefono.requestFocus();
                 return;
             }
 
-            cliente = new Cliente(
-                    cedula,
-                    txtNombreCompl.getText().trim(),
-                    txtDireccion.getText().trim(),
-                    telefono,
-                    txtEmail.getText().trim()
-            );
+            cliente = new Cliente(cedula, nombre, direccion, telefono, email);
             clienteController.create(cliente);
             clienteController.readAll();
             btnLimpiarActionPerformed(null);
