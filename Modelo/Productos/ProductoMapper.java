@@ -46,9 +46,8 @@ public class ProductoMapper implements Mapper<Productos, ProductoDTO> {
             dto.getCategoria(),
             (int) dto.getPrecio(),
             dto.getCantDisponible(),
-            proveedor,  
-            LocalDate.now(),        
-            0  
+            proveedor  
+            
     );
     }
 }

@@ -20,15 +20,13 @@ public class Productos {
     private LocalDate fechaPIngresado = LocalDate.now();
     private int vTotalInventario;
 
-    public Productos(int codigo, String nombre, String categoria, int precio, int cantDisponible, Proveedor proveedor, LocalDate fechaDespido, int vTotalInventario) {
+    public Productos(int codigo, String nombre, String categoria, int precio, int cantDisponible, Proveedor proveedor) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.categoria = categoria;
         this.precio = precio;
         this.cantDisponible = cantDisponible;
         this.proveedor = proveedor;
-        this.fechaPIngresado = fechaDespido;
-        this.vTotalInventario = vTotalInventario;
     }
 
     public Productos() {
@@ -107,6 +105,8 @@ public class Productos {
     public void setvTotalInventario(int vTotalInventario) {
         this.vTotalInventario = vTotalInventario;
     }
+    
+   
 
     public static int calcularTotalInventario(ArrayList<Productos> listaProductos) {
         int totalPrecios = 0;

@@ -7,6 +7,7 @@ import Modelo.Productos.Productos;
 import Vistas.*;
 import Modelo.Proveedores.Proveedor;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -21,6 +22,8 @@ public class FrmProductoos extends javax.swing.JDialog implements Vista<Producto
     ProductoControlador Control;
     Productos product;
     DefaultTableModel model;
+    ArrayList<Productos> lista;
+    ArrayList<Proveedor> listaP;
 
     public FrmProductoos() {
         initComponents();
@@ -34,6 +37,56 @@ public class FrmProductoos extends javax.swing.JDialog implements Vista<Producto
         Control.readAll();
     }
 
+    
+    public void mostrarTabla() {
+        String titulos[] = {"Código", "Nombre", "Categoría",
+            "Precio", "CantDisponible", "Proveedor", "FechaProductoIngresado"};
+        model = new DefaultTableModel(null, titulos);
+        //No se usó el foreach porque el índice no lo estamos necesitando 
+        for (int i = 0; i < lista.size(); i++) {
+            product = lista.get(i);
+            Object nuevaFila[] = {product.getCodigo(), product.getNombre(),
+                product.getCategoria(), product.getPrecio(), product.getCantDisponible(),
+                product.getProveedor(), product.getFechaPIngresado()};
+
+            model.addRow(nuevaFila);
+        }
+        tblInsert.setModel(model);
+
+    }
+    
+    
+    private void EvaluarCantidadEdit() {
+        int cantidadDisponible = Integer.parseInt(txtCanti.getText());
+
+        if (cantidadDisponible >= 1 && cantidadDisponible < 15) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "El producto " + txtNombre.getText() + " está cerca de agotarse",
+                    "Solicitud de reabastecimiento",
+                    JOptionPane.WARNING_MESSAGE
+            );
+        } else if (cantidadDisponible == 0) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "El producto " + txtNombre.getText() + " ha sido agotado",
+                    "Solicitud de reabastecimiento",
+                    JOptionPane.WARNING_MESSAGE
+            );
+        }
+    }
+
+    private void EvaluarCantidadInsert() {
+        int cantidadDisponible = Integer.parseInt(txtCanti.getText());
+        if (cantidadDisponible >= 1 && cantidadDisponible < 15) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "El producto " + txtNombre.getText() + " ha sido registrado con una cantidad mínima en el inventario, \n(Evalúa el reabastecimiento del producto, \nDe igual manera el producto será registrado)",
+                    "Solicitud de mayor cantidad del producto",
+                    JOptionPane.WARNING_MESSAGE
+            );
+        }
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -60,6 +113,8 @@ public class FrmProductoos extends javax.swing.JDialog implements Vista<Producto
         tblInsert = new javax.swing.JTable();
         txtCanti = new javax.swing.JTextField();
         txtCategoria = new javax.swing.JTextField();
+        btnCalcular = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -200,6 +255,11 @@ public class FrmProductoos extends javax.swing.JDialog implements Vista<Producto
         lblDireccion2.setText("Proveedor:");
 
         cbxProveedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Intel", "Ryzer" }));
+        cbxProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxProveedorActionPerformed(evt);
+            }
+        });
 
         tblInsert.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -216,6 +276,19 @@ public class FrmProductoos extends javax.swing.JDialog implements Vista<Producto
 
         txtCategoria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
+        btnCalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalcularActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlDatosLayout = new javax.swing.GroupLayout(pnlDatos);
         pnlDatos.setLayout(pnlDatosLayout);
         pnlDatosLayout.setHorizontalGroup(
@@ -226,11 +299,13 @@ public class FrmProductoos extends javax.swing.JDialog implements Vista<Producto
                 .addGap(53, 53, 53))
             .addComponent(jScrollPane1)
             .addGroup(pnlDatosLayout.createSequentialGroup()
-                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(pnlDatosLayout.createSequentialGroup()
                         .addComponent(lblDireccion2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbxProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbxProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1))
                     .addGroup(pnlDatosLayout.createSequentialGroup()
                         .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(pnlDatosLayout.createSequentialGroup()
@@ -253,8 +328,14 @@ public class FrmProductoos extends javax.swing.JDialog implements Vista<Producto
                                 .addComponent(lblTelefono)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(275, 275, 275)
-                        .addComponent(lblBuscar)))
+                        .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlDatosLayout.createSequentialGroup()
+                                .addGap(275, 275, 275)
+                                .addComponent(lblBuscar))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(155, 155, 155)))))
                 .addContainerGap(102, Short.MAX_VALUE))
         );
         pnlDatosLayout.setVerticalGroup(
@@ -266,13 +347,18 @@ public class FrmProductoos extends javax.swing.JDialog implements Vista<Producto
                             .addComponent(jLabel1)
                             .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblNombreC)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(20, 20, 20)
-                        .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblTelefono)
-                            .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(pnlDatosLayout.createSequentialGroup()
+                                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblNombreC)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(20, 20, 20)
+                                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblTelefono)
+                                    .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(pnlDatosLayout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addComponent(btnCalcular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
                         .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -283,10 +369,15 @@ public class FrmProductoos extends javax.swing.JDialog implements Vista<Producto
                     .addComponent(lblDireccion1)
                     .addComponent(lblBuscar)
                     .addComponent(txtCanti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDireccion2)
-                    .addComponent(cbxProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlDatosLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblDireccion2)
+                            .addComponent(cbxProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnlDatosLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jButton1)))
                 .addGap(42, 42, 42)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -314,7 +405,7 @@ public class FrmProductoos extends javax.swing.JDialog implements Vista<Producto
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
 //      txtId.setText("");
         txtNombre.setText("");
-        cbxCategoria.setToolTipText("");
+        txtCanti.setToolTipText("");
         txtPrecio.setText("");
         cbxProveedor.setToolTipText("");
         txtCodigo.requestFocus();
@@ -323,14 +414,13 @@ public class FrmProductoos extends javax.swing.JDialog implements Vista<Producto
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
         try {
-            product = new Productos(Integer.parseInt(txtCodigo.getText()),
-                txtNombre.getText(),
-                txtCategorias.getToolTipText(),
-                Integer.parseInt(txtPrecio.getText()),
-                Integer.parseInt (txtDisponible.getText()),
-                txtProvedores.getToolTipText()
-                    
-        );
+            if (txtCodigo.getText().isEmpty() || txtNombre.getText().isEmpty()
+                    || txtCategoria.getText().isEmpty() || txtPrecio.getText().isEmpty()
+                    || txtCanti.getText().isEmpty() || cbxProveedor.getSelectedItem() == null
+                    || cbxProveedor.getSelectedItem().toString().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios");
+                return;
+            }
             Control.create(product);
             Control.readAll();
             btnLimpiarActionPerformed(null);
@@ -341,36 +431,77 @@ public class FrmProductoos extends javax.swing.JDialog implements Vista<Producto
 
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-////        Controlador.delete(proveedor);
-////        Controlador.readAll();
-//        int row = tblProveedor.getSelectedRow();
-//        if (row != -1) {
-//            int id = (int) tblProveedor.getValueAt(row, 0);
-//            Proveedor proveedor = new Proveedor(id);
-//            Control.delete(product);
-//            Control.readAll();
-//        } else {
-//            JOptionPane.showMessageDialog(this, "Debe seleccionar un proveedor para eliminar.");
-//        }
+ if (tblInsert.getSelectedRowCount() == 1) {
+            int resp = JOptionPane.showConfirmDialog(this, "¿Desea borrar el resgitro?");
+            if (resp == 0) {  //El usuario quiere eliminar, Respuesta si
+                int fila = tblInsert.getSelectedRow();
+                if (lista.remove(lista.get(fila))) {
+                    mostrarTabla();
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error de borrado");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Se debe seleccionar 1 registro");
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
 
-//         if (tblProveedor.getSelectedRowCount() == 1) {
-//            int fila = tblProveedor.getSelectedRow();
-//
-//            if (!txtNombre.getText().isEmpty()) {
-//                product = new Productos(txtContacto.getText());
-//                Control.update(product);
-//                Control.readAll();
-//        
-//                btnLimpiarActionPerformed(null);
-//            } else {
-//                JOptionPane.showMessageDialog(this, "Los campos no pueden estar vacíos");
-//            }
-//        } else {
-//            JOptionPane.showMessageDialog(this, "Se debe seleccionar 1 registro");
-//        }
+if (tblInsert.getSelectedRowCount() == 1) {
+            int fila = tblInsert.getSelectedRow();
+            product = new Productos();
+
+            if (!txtNombre.getText().isEmpty()) {
+                try {
+                    int codigo = Integer.parseInt(tblInsert.getValueAt(fila, 0).toString());
+                    product.setCodigo(codigo);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Código no válido para editar");
+                    txtCodigo.setText("");
+                    txtCodigo.requestFocus();
+                    return;
+                }
+
+                product.setNombre(txtNombre.getText());
+                product.setCategoria(txtCategoria.getText());
+
+                try {
+                    int precio = Integer.parseInt(txtPrecio.getText());
+                    product.setPrecio(precio);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Precio no válido para editar");
+                    txtPrecio.setText("");
+                    txtPrecio.requestFocus();
+                    return;
+                }
+
+                try {
+                    int cantDisponible = Integer.parseInt(txtCanti.getText());
+                    product.setCantDisponible(cantDisponible);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Cantidad no válida para editar");
+                    txtCanti.setText("");
+                    txtCanti.requestFocus();
+                    return;
+                }
+
+                //product.setProveedor((cbxProveedor.getItemAt(cbxProveedor.getSelectedIndex())));
+
+                EvaluarCantidadEdit();
+                if (lista.set(fila, product) != null) {
+                    JOptionPane.showMessageDialog(this, "Producto editado");
+                    mostrarTabla();
+                    btnLimpiarActionPerformed(null);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error al editar");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Se debe seleccionar 1 registro");
+        }
+
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
@@ -382,24 +513,35 @@ public class FrmProductoos extends javax.swing.JDialog implements Vista<Producto
 
     }//GEN-LAST:event_formWindowActivated
 
-//    private boolean existe(String cedula) {
-//        for (Cliente c : lista) {
-//            if (c.getCedula().equals(cedula)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-//    public JTable getTblColaborador() {
-//        return tblProveedor;
-//    }
+    private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
+        Productos.calcularTotalInventario(lista);
+    }//GEN-LAST:event_btnCalcularActionPerformed
 
+    
+    private void cbxProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProveedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxProveedorActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        ProductosBuscaView view = new ProductosBuscaView(null,true);
+        view.setLocationRelativeTo(this);
+        view.setVisible(true);
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private boolean existe(String Nombre) {
+        for (Productos c : lista) {
+            if (c.getNombre().equals(Nombre)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public JTable getTblProductos() {
+        return tblInsert;
+    }
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+      
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -417,10 +559,8 @@ public class FrmProductoos extends javax.swing.JDialog implements Vista<Producto
             java.util.logging.Logger.getLogger(FrmProveedor11.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
 
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 FrmProveedor11 dialog = new FrmProveedor11(new javax.swing.JFrame(), true);
@@ -436,11 +576,13 @@ public class FrmProductoos extends javax.swing.JDialog implements Vista<Producto
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCalcular;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnInsertar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JComboBox<String> cbxProveedor;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -484,7 +626,5 @@ public class FrmProductoos extends javax.swing.JDialog implements Vista<Producto
     public boolean validateRequired() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-  
 
 }

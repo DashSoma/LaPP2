@@ -72,7 +72,7 @@ public class FrmMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        FrmProductos frm = new FrmProductos(null,true);
+        FrmProductoos frm = new FrmProductoos(null,true);
         jDesktopPane.add(frm);
         frm.show();        
     }//GEN-LAST:event_jMenuItem1ActionPerformed
