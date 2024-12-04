@@ -1,15 +1,17 @@
-package Vista.Productos;
+package Modelo.Productos222;
 
-import Controlador.ProductoControlador;
-import Controlador.ProveedorControlador;
+import Modelo.Clientes.*;
+
 import Modelo.Productos222.Productos;
-import Vistas.*;
 import Modelo.Proveedores.Proveedor;
+import controlador.ProveedorControlador;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
+import java.util.ResourceBundle.Control;
+import vista.Vista;
 
 /**
  *
@@ -20,7 +22,6 @@ public class FrmProducto extends javax.swing.JDialog implements Vista<Productos>
     ProveedorControlador Controlador;
     Proveedor proveedor;
     DefaultTableModel model;
-    ProductoControlador Control;
     Productos product;
     ArrayList<Productos> lista;
     ArrayList<Proveedor> listaP;
@@ -549,6 +550,12 @@ public class FrmProducto extends javax.swing.JDialog implements Vista<Productos>
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(FrmProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 

@@ -1,6 +1,6 @@
 package Vistas;
 
-import Modelo.Productos.Productos;
+import Modelo.Productos222.Productos;
 import clases.Planilla;
 import clases.Pluses;
 import clases.PlusesColab;

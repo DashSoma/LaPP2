@@ -4,7 +4,7 @@
  */
 package Vistas;
 
-import Modelo.Productos.Productos;
+import Modelo.Productos222.Productos;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;

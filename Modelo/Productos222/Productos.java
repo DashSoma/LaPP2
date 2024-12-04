@@ -1,4 +1,4 @@
-package Modelo.Productos;
+package Modelo.Productos222;
 
 import Modelo.Proveedores.Proveedor;
 import java.time.LocalDate;

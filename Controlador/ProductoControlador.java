@@ -5,10 +5,10 @@
 package Controlador;
 
 import DateBase.DataBase;
-import Modelo.Productos.ProductoDTO;
-import Modelo.Productos.ProductoMapper;
-import Modelo.Productos.Productos;
-import Modelo.Productos.ProductosDAO;
+import Modelo.Productos222.ProductoDTO;
+import Modelo.Productos222.ProductoMapper;
+import Modelo.Productos222.Productos;
+import Modelo.Productos222.ProductosDAO;
 import Vistas.Vista;
 import java.util.List;
 import java.util.Objects;

@@ -2,7 +2,7 @@ package Vista.Productos;
 
 import Controlador.ProductoControlador;
 
-import Modelo.Productos.Productos;
+import Modelo.Productos222.Productos;
 import Vistas.*;
 import Modelo.Proveedores.Proveedor;
 import Vista.Proveedor.FrmProveedor11;
