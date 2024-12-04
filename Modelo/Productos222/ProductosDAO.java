@@ -19,101 +19,102 @@ import java.util.List;
  *
  * @author DaniTini
  */
-public class ProductosDAO extends DAO<ProductoDTO> {
+public class ProductosDAO extends DAO<ProductosDTO> {
 
-    public ProductosDAO(Connection connection) {
+   public ProductosDAO(Connection connection) {
         super(connection);
     }
 
     @Override
-    public boolean create(ProductoDTO dto) throws SQLException {
-        if (dto == null || !validateFk(dto.getProveedor())) {
+    public boolean create(ProductosDTO dto) throws SQLException {
+        if (dto == null || !validatePk(dto.getCodigo())) {
             return false;
         }
-        String query = "CALL ProductoCreate(?,?,?,?,?,?)";
+        String query = "Call ProductoCreate(?,?,?,?,?,?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, dto.getCodigo());
             stmt.setString(2, dto.getNombre());
             stmt.setString(3, dto.getCategoria());
-            stmt.setDouble(4, dto.getPrecio()); 
+            stmt.setDouble(4, dto.getPrecio());
             stmt.setInt(5, dto.getCantDisponible());
             stmt.setInt(6, dto.getProveedor());
-            return stmt.executeUpdate() == 1;
+            return stmt.executeUpdate() > 0;
         }
     }
 
     @Override
-    public ProductoDTO read(Object id) throws SQLException {
+    public ProductosDTO read(Object id) throws SQLException {
         if (id == null || String.valueOf(id).trim().isEmpty()) {
             return null;
         }
-        String query = "CALL ProductoRead(?)";
+        String query = "Call ProductoRead(?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, String.valueOf(id));
+            stmt.setInt(1, Integer.parseInt(id.toString()));
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return new ProductoDTO(
-                            rs.getInt(1),
-                            rs.getString(2),
-                            rs.getString(3),
-                            rs.getDouble(4), 
-                            rs.getInt(5),
-                            rs.getInt(6)
+                    return new ProductosDTO(
+                            rs.getInt(1), // Código
+                            rs.getString(2), // Nombre
+                            rs.getString(3), // Categoría
+                            rs.getDouble(4), // Precio
+                            rs.getInt(5), // Cantidad disponible
+                            rs.getInt(6) // Proveedor (ID)
                     );
                 }
             }
+            return null;
         }
-        return null;
     }
 
     @Override
-    public List<ProductoDTO> readAll() throws SQLException {
-        String query = "CALL ProductoReadAll(?)";
-        List<ProductoDTO> list = new ArrayList<>();
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    list.add(new ProductoDTO(
-                            rs.getInt(1),
-                            rs.getString(2),
-                            rs.getString(3),
-                            rs.getDouble(4),
-                            rs.getInt(5),
-                            rs.getInt(6)
-                    ));
-                }
+    public List<ProductosDTO> readAll() throws SQLException {
+        String query = "Call ProductoReadAll()";
+        List<ProductosDTO> list = new ArrayList<>();
+        try (PreparedStatement stmt = connection.prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                list.add(new ProductosDTO(
+                        rs.getInt(1), // Código
+                        rs.getString(2), // Nombre
+                        rs.getString(3), // Categoría
+                        rs.getDouble(4), // Precio
+                        rs.getInt(5), // Cantidad disponible
+                        rs.getInt(6)));
             }
         }
         return list;
     }
 
     @Override
-    public boolean update(ProductoDTO dto) throws SQLException {
+    public boolean update(ProductosDTO dto) throws SQLException {
         if (dto == null) {
             return false;
         }
-        String query = "Call ProductoUpdate(?,?)";
+        String query = "Call ProductoUpdate(?,?,?,?,?,?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setDouble(1, dto.getPrecio());
-            stmt.setInt(2, dto.getCantDisponible());
+            stmt.setInt(1, dto.getCodigo());
+            stmt.setString(2, dto.getNombre());
+            stmt.setString(3, dto.getCategoria());
+            stmt.setDouble(4, dto.getPrecio());
+            stmt.setInt(5, dto.getCantDisponible());
+            stmt.setInt(6, dto.getProveedor());
             return stmt.executeUpdate() > 0;
         }
+
     }
 
     @Override
     public boolean delete(Object id) throws SQLException {
-        if (id == null || !(id instanceof Integer)) {
+        if (id == null || String.valueOf(id).trim().isEmpty()) {
             return false;
         }
-
-        String query = "CALL ProductoDelete(?)";
+        String query = "Call ProductoDelete(?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, (Integer) id); // Cast to Integer
+            stmt.setInt(1, Integer.parseInt(id.toString()));
             return stmt.executeUpdate() > 0;
         }
     }
 
-    public boolean validateFk(Object id) throws SQLException {
-        return new ProveedorDAO(DataBase.getConnection()).read(id) != null;
+    public boolean validatePk(Object id) throws SQLException {
+        return read(id) == null;
     }
 }

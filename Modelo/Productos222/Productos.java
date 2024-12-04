@@ -11,45 +11,35 @@ import javax.swing.JOptionPane;
  */
 public class Productos {
 
-      private int codigo;
+     private int codigo;
     private String nombre;
     private String categoria;
-    private int precio;
+    private double precio; 
     private int cantDisponible;
-    private Proveedor proveedor;
-    private LocalDate fechaPIngresado = LocalDate.now();
-    private int vTotalInventario;
+    private int proveedor; 
+    private LocalDate fechaPIngresado;
 
-    public Productos(int codigo, String nombre, String categoria, int precio, int cantDisponible, Proveedor proveedor) {
+    public Productos() {
+        this.codigo = 0;
+        this.nombre = "";
+        this.categoria = "";
+        this.precio = 0.0;
+        this.cantDisponible = 0;
+        this.proveedor = 0;
+        this.fechaPIngresado = LocalDate.now();
+    }
+
+    public Productos(int codigo, String nombre, String categoria, double precio, int cantDisponible, int proveedor, LocalDate fechaPIngresado) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.categoria = categoria;
         this.precio = precio;
         this.cantDisponible = cantDisponible;
         this.proveedor = proveedor;
+        this.fechaPIngresado = fechaPIngresado;
     }
 
-    public Productos() {
-        this.codigo = 0;
-        this.nombre = "";
-        this.categoria = "";
-        this.fechaPIngresado = LocalDate.now();
-        this.precio = 0;
-        this.cantDisponible = 0;
-        this.proveedor = new Proveedor(); 
-        this.vTotalInventario = 0;
-    }
-    
-    
-
-    public Proveedor getProveedor() {
-        return proveedor;
-    }
-
-    public void setProveedor(Proveedor proveedor) {
-        this.proveedor = proveedor;
-    }
-
+    // Getters y setters
     public int getCodigo() {
         return codigo;
     }
@@ -74,11 +64,11 @@ public class Productos {
         this.categoria = categoria;
     }
 
-    public int getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(int precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
 
@@ -90,37 +80,19 @@ public class Productos {
         this.cantDisponible = cantDisponible;
     }
 
+    public int getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(int proveedor) {
+        this.proveedor = proveedor;
+    }
+
     public LocalDate getFechaPIngresado() {
         return fechaPIngresado;
     }
 
-    public void setFechaPIngresado(LocalDate fechaDespido) {
-        this.fechaPIngresado = fechaDespido;
+    public void setFechaPIngresado(LocalDate fechaPIngresado) {
+        this.fechaPIngresado = fechaPIngresado;
     }
-
-    public int getvTotalInventario() {
-        return vTotalInventario;
-    }
-
-    public void setvTotalInventario(int vTotalInventario) {
-        this.vTotalInventario = vTotalInventario;
-    }
-    
-   
-
-    public static int calcularTotalInventario(ArrayList<Productos> listaProductos) {
-        int totalPrecios = 0;
-
-        for (Productos producto : listaProductos) {
-            int precio = producto.getPrecio();
-            totalPrecios += precio;
-        }
-        if (totalPrecios == 0) {
-            JOptionPane.showMessageDialog(null, "No hay total de inventario que mostrar");
-        } else {
-            JOptionPane.showMessageDialog(null, "El total de precios es: " + totalPrecios);
-        }
-        return totalPrecios;
-    }
-
 }
