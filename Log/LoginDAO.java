@@ -18,13 +18,13 @@ public class LoginDAO {
     ResultSet rs;
     Conexion cn = new Conexion();
     
-    public login log(String correo, String pass){
+    public login log(String nombre, String pass){
         login l = new login();
-        String sql = "SELECT * FROM usuarios WHERE user= ? AND pass = ?";
+        String sql = "SELECT * FROM usuarios WHERE nombre= ? AND pass = ?";
         try{
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
-            ps.setString(1, correo);
+            ps.setString(1, nombre);
             ps.setString(2, pass);
             rs=ps.executeQuery();
             if (rs.next()){

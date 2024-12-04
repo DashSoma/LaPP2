@@ -6,6 +6,7 @@ package Vistas;
 
 import Log.LoginDAO;
 import Log.login;
+import Vista.Proveedor.FrmProveedor11;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,10 +25,10 @@ public class Login extends javax.swing.JFrame {
     }
 
     public void validar(){
-        String correo = txtCorreo.getText();
+        String nombre = txtCorreo.getText();
         String pass = String.valueOf(txtPass.getText());
-        if(!"".equals(correo)||!"".equals(pass));
-        lg = login.log(correo, pass);
+        if(!"".equals(nombre)||!"".equals(pass));
+        lg = login.log(nombre, pass);
         if (lg.getCorreo()!=null && lg.getPass()!=null){
             Sistema sis = new Sistema();
             sis.setVisible(true);
@@ -151,6 +152,8 @@ public class Login extends javax.swing.JFrame {
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
         // TODO add your handling code here:
         validar();
+        FrmProveedor11 winColaborador = new FrmProveedor11();
+        winColaborador.setVisible(true);
     }//GEN-LAST:event_btnIniciarActionPerformed
 
     /**

@@ -38,6 +38,16 @@ public class FrmProducto extends javax.swing.JDialog implements Vista<Productos>
         setLocationRelativeTo(null);
         Control.readAll();
     }
+    
+    public boolean existe(int id) {
+        for (int i = 0; i < lista.size(); i++) {
+            product = lista.get(i);
+            if (product.getCodigo() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -413,30 +423,83 @@ public class FrmProducto extends javax.swing.JDialog implements Vista<Productos>
 
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
+
 //        try {
-//            proveedor = new Proveedor(txtNombre.getText(), txtCategoria.getText(),
-//                    txtPrecio.getText());
+//            if (txtCodigo.getText().isEmpty() || txtNombre.getText().isEmpty()
+//                    || txtCategoria.getText().isEmpty() || txtPrecio.getText().isEmpty()
+//                    || txtCantidad.getText().isEmpty() || cbxProveedor.getSelectedItem() == null
+//                    || cbxProveedor.getSelectedItem().toString().isEmpty()) {
+//                JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios");
+//                return;
+//            }
 //            Control.create(product);
 //            Control.readAll();
 //            btnLimpiarActionPerformed(null);
 //        } catch (Exception e) {
-//            showError("Error al agregar proveedor: " + e.getMessage());
+//            showError("Error al agregar producto: " + e.getMessage());
 //        }
-//        
         try {
-            if (txtCodigo.getText().isEmpty() || txtNombre.getText().isEmpty()
-                    || txtCategoria.getText().isEmpty() || txtPrecio.getText().isEmpty()
-                    || txtCantidad.getText().isEmpty() || cbxProveedor.getSelectedItem() == null
-                    || cbxProveedor.getSelectedItem().toString().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios");
+
+            if (Integer.parseInt(txtCodigo.getText()) <= 0) {
+                JOptionPane.showMessageDialog(this, "El código debe ser un número positivo");
                 return;
             }
-            Control.create(product);
-            Control.readAll();
-            btnLimpiarActionPerformed(null);
-        } catch (Exception e) {
-            showError("Error al agregar producto: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El código debe ser un número válido");
+            return;
         }
+
+        if (existe(Integer.parseInt(txtCodigo.getText()))) {
+            JOptionPane.showMessageDialog(this, "El código ya existe");
+            return;
+        }
+
+        if (txtCodigo.getText().isEmpty() || txtNombre.getText().isEmpty()
+                || txtCategoria.getText().isEmpty() || txtPrecio.getText().isEmpty()
+                || txtCantidad.getText().isEmpty() || cbxProveedor.getSelectedItem() == null
+                || cbxProveedor.getSelectedItem().toString().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios");
+            return;
+        }
+
+        try {
+            if (Integer.parseInt(txtPrecio.getText()) <= 0) {
+                JOptionPane.showMessageDialog(this, "El precio debe ser un número positivo");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El precio debe ser un número válido");
+            return;
+        }
+
+        try {
+            if (Integer.parseInt(txtCantidad.getText())
+                    < 0) {
+                JOptionPane.showMessageDialog(this, "La cantidad no puede ser negativa");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "La cantidad debe ser un número válido");
+            return;
+        }
+
+// Si todas las validaciones son correctas, crear el objeto y agregarlo a la lista
+        Productos productos = new Productos();
+        productos.setCodigo(Integer.parseInt(txtCodigo.getText()));
+        productos.setNombre(txtNombre.getText());
+        productos.setCategoria(txtCategoria.getText());
+        productos.setPrecio(Integer.parseInt(txtPrecio.getText()));
+        productos.setCantDisponible(Integer.parseInt(txtCantidad.getText()));
+        productos.setProveedor(cbxProveedor.getSelectedItem().toString());
+
+// Evaluar la cantidad a insertar
+//        EvaluarCantidadInsert();
+        lista.add(productos);
+        Control.create(productos);
+        JOptionPane.showMessageDialog(this, "Producto agregado");
+        Control.readAll();
+        btnLimpiarActionPerformed(null);
+
     }//GEN-LAST:event_btnInsertarActionPerformed
 
 
@@ -452,10 +515,10 @@ public class FrmProducto extends javax.swing.JDialog implements Vista<Productos>
             txtNombre.setText(String.valueOf(tblProductos.getValueAt(row, 1)));
             txtCategoria.setText(String.valueOf(tblProductos.getValueAt(row, 2)));
             txtPrecio.setText(String.valueOf(tblProductos.getValueAt(row, 3)));
-            
+
         }
-        
-       
+
+
     }//GEN-LAST:event_tblProductosMousePressed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -474,15 +537,15 @@ public class FrmProducto extends javax.swing.JDialog implements Vista<Productos>
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
 
-         if (tblProductos.getSelectedRowCount() == 1) {
+        if (tblProductos.getSelectedRowCount() == 1) {
             int fila = tblProductos.getSelectedRow();
 
             if (!txtNombre.getText().isEmpty()) {
-                 int row = tblProductos.getSelectedRow();
-                proveedor = new Proveedor(Integer.parseInt(String.valueOf(tblProductos.getValueAt(row, 0))),txtCategoria.getText());
+                int row = tblProductos.getSelectedRow();
+                proveedor = new Proveedor(Integer.parseInt(String.valueOf(tblProductos.getValueAt(row, 0))), txtCategoria.getText());
                 Controlador.update(proveedor);
                 Controlador.readAll();
-        
+
                 btnLimpiarActionPerformed(null);
             } else {
                 JOptionPane.showMessageDialog(this, "Los campos no pueden estar vacíos");
@@ -518,7 +581,7 @@ public class FrmProducto extends javax.swing.JDialog implements Vista<Productos>
     }//GEN-LAST:event_btnCalcularActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        ProductosBusca view = new ProductosBusca(null,true);
+        ProductosBusca view = new ProductosBusca(null, true);
         view.setLocationRelativeTo(this);
         view.setVisible(true);
     }//GEN-LAST:event_btnBuscarActionPerformed
@@ -601,27 +664,27 @@ public class FrmProducto extends javax.swing.JDialog implements Vista<Productos>
 
     @Override
     public void show(Productos ent) {
-        product=ent;
-        if (ent==null) {
+        product = ent;
+        if (ent == null) {
             return;
         }
         txtNombre.setText(product.getNombre());
         txtCategoria.setText(product.getCategoria());
 //        txtPrecio.setText(product.getPrecio());
-        
+
     }
 
     @Override
     public void showAll(List<Productos> ents) {
         for (Productos produc : ents) {
             System.out.println(produc.toString());
-            
+
         }
         DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
         model.setRowCount(0);
         for (Productos p : ents) {
             model.addRow(new Object[]{p.getCodigo(), p.getNombre(),
-                p.getCategoria(), p.getPrecio(),p.getCantDisponible(),p.getProveedor()});
+                p.getCategoria(), p.getPrecio(), p.getCantDisponible(), p.getProveedor()});
         }
         txtCant.setText(String.valueOf(model.getRowCount()));
     }
@@ -642,7 +705,5 @@ public class FrmProducto extends javax.swing.JDialog implements Vista<Productos>
     public boolean validateRequired() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    
 
 }
